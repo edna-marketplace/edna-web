@@ -24,12 +24,23 @@ export const Link = styled('button', {
   borderRadius: '$sm',
 
   fontSize: '$lg',
-  color: '$base700',
 
   transition: 'background 0.2s',
 
-  '&:hover': {
+  '&:not(:active):hover': {
     cursor: 'pointer',
     background: '$base200'
+  },
+
+  variants: {
+    isActive: {
+      true: {
+        color: '$base700',
+        background: '$base200',
+      },
+      false: {
+        color: '$base500',
+      }
+    }
   }
 })
