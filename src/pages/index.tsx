@@ -1,5 +1,1 @@
-import { SpecialTitle } from '@edna-ui/react'
-
-export default function Home() {
-  return <SpecialTitle>Hello World</SpecialTitle>
-}
+export { default } from "./home"
