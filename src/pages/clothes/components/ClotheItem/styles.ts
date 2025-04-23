@@ -25,7 +25,9 @@ export const Container = styled('button', {
 export const ClotheImage = styled(Image, {
   marginBottom: '$1',
 
+  border: '1px solid $base500',
   borderRadius: '$sm',
+
   objectFit: 'cover',
 })
 

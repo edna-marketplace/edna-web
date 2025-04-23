@@ -7,7 +7,7 @@ type ClotheItemProps = ComponentProps<typeof Container>
 export function ClotheItem({ ...props }: ClotheItemProps) {
   return (
     <Container {...props}>
-      <ClotheImage src="https://github.com/matheusbarcc.png" alt="" width={188} height={188} />
+      <ClotheImage src="https://www.dolcegabbana.com/dw/image/v2/BKDB_PRD/on/demandware.static/-/Sites-15/default/dw3f42b3a6/images/zoom/GKLOMTFU1L5_N0000_1.jpg?sw=740&sh=944" alt="" width={188} height={188} />
       <Title size="sm">R$ 100</Title>
       <Title size="xs" color="base200">Terno preto Dolce & Ga...</Title>
 
