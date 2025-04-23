@@ -15,8 +15,10 @@ export const Main = styled('main', {
   padding: '32px 200px'
 })
 
-export const Separator = styled('div', {
+export const ClothesContainer = styled('div', {
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'center',
+  gap: '1px',
   width: '100%',
-  height: '1px',
-  background: '$base500',
 })

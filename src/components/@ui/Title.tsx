@@ -15,6 +15,13 @@ export const Title = styled('h3', {
       md: { fontSize: '$2xl' },
       lg: { fontSize: '$3xl' },
     },
+    color: {
+      base100: { color: '$base100' },
+      base200: { color: '$base200' },
+      base300: { color: '$base300' },
+      base400: { color: '$base400' },
+      base500: { color: '$base500' },
+    }
   },
 
   defaultVariants: {

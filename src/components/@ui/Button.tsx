@@ -3,7 +3,7 @@ import { ComponentProps, ElementType } from 'react'
 
 export const Button = styled('button', {
   all: 'unset',
-  borderRadius: '$md',
+  borderRadius: '$sm',
   fontSize: '$sm',
   fontWeight: '$regular',
   fontFamily: '$default',

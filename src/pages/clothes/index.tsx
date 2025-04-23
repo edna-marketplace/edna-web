@@ -1,6 +1,7 @@
-import { Container, Main } from "./styles";
+import { ClothesContainer, Container, Main } from "./styles";
 import { Header } from "@/components/Header";
-import { FiltersContainer } from "./components/FiltersContainer";
+import { FilterCard } from "./components/FilterCard";
+import { ClotheItem } from "./components/ClotheItem";
 
 export default function Clothes() {
   return (
@@ -11,8 +12,16 @@ export default function Clothes() {
       />
 
       <Main>
-        <FiltersContainer />
+        <FilterCard />
 
+        <ClothesContainer>
+          <ClotheItem />
+          <ClotheItem />
+          <ClotheItem />
+          <ClotheItem />
+          <ClotheItem />
+          <ClotheItem />
+        </ClothesContainer>
       </Main>
     </Container>
   )
