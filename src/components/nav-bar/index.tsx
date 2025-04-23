@@ -15,7 +15,7 @@ export function NavBar() {
       >
         <House
           weight={currentPath === "/" ? "fill" : "regular"}
-          size={35}
+          size={30}
         />
         Início
       </Link>
@@ -25,7 +25,7 @@ export function NavBar() {
       >
         <TShirt
           weight={currentPath === "/clothes" ? "fill" : "regular"}
-          size={35}
+          size={30}
         />
         Peças
       </Link>
@@ -35,7 +35,7 @@ export function NavBar() {
       >
         <ClipboardText
           weight={currentPath === "/orders" ? "fill" : "regular"}
-          size={35}
+          size={30}
         />
         Pedidos
       </Link>
@@ -45,7 +45,7 @@ export function NavBar() {
       >
         <Storefront
           weight={currentPath === "/store" ? "fill" : "regular"}
-          size={35}
+          size={30}
         />
         Brechó
       </Link>

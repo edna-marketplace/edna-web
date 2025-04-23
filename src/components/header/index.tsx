@@ -1,4 +1,3 @@
-import { Head } from "next/document";
 import { Container, Content } from "./styles";
 import { SpecialTitle, Text } from "@edna-ui/react";
 
@@ -18,7 +17,7 @@ export function Header({ title, description, hasBackButton }: HeaderProps) {
         <SpecialTitle size="xl">
           {title}
         </SpecialTitle>
-        <Text size="lg">
+        <Text size="md">
           {description}
         </Text>
       </Content>

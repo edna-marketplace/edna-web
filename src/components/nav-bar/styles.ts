@@ -4,7 +4,7 @@ export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  gap: '$6',
+  gap: '$4',
 
   width: '230px',
   minHeight: '100vh',
@@ -18,12 +18,12 @@ export const Link = styled('button', {
 
   display: 'flex',
   alignItems: 'center',
-  gap: '$4',
+  gap: '$3',
 
   padding: '$3 $4',
   borderRadius: '$sm',
 
-  fontSize: '$lg',
+  fontSize: '$md',
 
   transition: 'background 0.2s',
 
