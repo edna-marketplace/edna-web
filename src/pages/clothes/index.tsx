@@ -1,5 +1,5 @@
 import { Container, Main } from "./styles";
-import { Header } from "@/components/header";
+import { Header } from "@/components/Header";
 import { FiltersContainer } from "./components/FiltersContainer";
 
 export default function Clothes() {

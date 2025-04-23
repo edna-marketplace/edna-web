@@ -1,5 +1,6 @@
+import { SpecialTitle } from "../@ui/SpecialTitle";
+import { Text } from "../@ui/Text";
 import { Container, Content } from "./styles";
-import { SpecialTitle, Text } from "@edna-ui/react";
 
 export interface HeaderProps {
   title: string,

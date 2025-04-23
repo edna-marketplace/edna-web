@@ -1,6 +1,6 @@
-import { SpecialTitle } from "@edna-ui/react";
+import { SpecialTitle } from "@/components/@ui/SpecialTitle";
 import { Container } from "./styles";
-import { Header } from "@/components/header";
+import { Header } from "@/components/Header";
 import { getCurrentPeriodMessage } from "@/utils/get-current-period-message";
 
 export default function Home() {

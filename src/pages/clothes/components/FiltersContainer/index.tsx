@@ -1,8 +1,8 @@
 import { SelectItem, Text } from "@edna-ui/react"
 import { Container } from "./styles"
-import { SelectInput } from "@/components/ui/SelectInput"
-import { TextInput } from "@/components/ui/TextInput"
-import { Button } from "@/components/ui/Button"
+import { SelectInput } from "@/components/@ui/SelectInput"
+import { TextInput } from "@/components/@ui/TextInput"
+import { Button } from "@/components/@ui/Button"
 import { Plus, SlidersHorizontal } from "@phosphor-icons/react"
 
 export function FiltersContainer() {

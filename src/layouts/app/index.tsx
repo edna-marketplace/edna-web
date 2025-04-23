@@ -1,4 +1,4 @@
-import { NavBar } from "@/components/nav-bar"
+import { NavBar } from "@/components/NavBar"
 import { Container } from "./styles"
 export interface AppLayoutProps {
   children: React.ReactNode
