@@ -1,6 +1,7 @@
 import { styled } from "@edna-ui/react";
 
 export const Container = styled('div', {
+  position: 'fixed',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -44,3 +45,38 @@ export const Link = styled('button', {
     }
   }
 })
+
+export const DrawerToggle = styled('button', {
+  position: 'fixed',
+  top: '$4',
+  left: '$4',
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  zIndex: 1000,
+});
+
+export const DrawerOverlay = styled('div', {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100vw',
+  height: '100vh',
+  backgroundColor: 'rgba(0,0,0,0.5)',
+  zIndex: 999,
+});
+
+export const DrawerContent = styled('div', {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '230px',
+  height: '100vh',
+  background: '$base100',
+  padding: '$8',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '$4',
+  zIndex: 1000,
+  transition: 'transform 0.3s ease-in-out',
+});

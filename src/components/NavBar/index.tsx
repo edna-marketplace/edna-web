@@ -1,54 +1,55 @@
-import { ClipboardText, House, Storefront, TShirt } from "@phosphor-icons/react";
-import { Container, Link } from "./styles";
+import { useState } from "react";
+import { ClipboardText, House, Storefront, TShirt, List } from "@phosphor-icons/react";
+import { Container, Link, DrawerOverlay, DrawerContent, DrawerToggle } from "./styles";
 import { useRouter } from "next/router";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 
 export function NavBar() {
   const router = useRouter();
-
   const currentPath = router.pathname;
+  const isMobile = useIsMobile();
+  const [isOpen, setIsOpen] = useState(false);
 
-  return (
-    <Container>
+  const links = [
+    { path: "/", label: "Início", icon: House },
+    { path: "/clothes", label: "Peças", icon: TShirt },
+    { path: "/orders", label: "Pedidos", icon: ClipboardText },
+    { path: "/store", label: "Brechó", icon: Storefront },
+  ];
+
+  const renderLinks = () =>
+    links.map(({ path, label, icon: Icon }) => (
       <Link
-        isActive={currentPath === "/"}
-        onClick={() => router.push("/")}
+        key={path}
+        isActive={currentPath === path}
+        onClick={() => {
+          router.push(path);
+          setIsOpen(false); // close drawer after click
+        }}
       >
-        <House
-          weight={currentPath === "/" ? "fill" : "regular"}
-          size={30}
-        />
-        Início
+        <Icon weight={currentPath === path ? "fill" : "regular"} size={30} />
+        {label}
       </Link>
-      <Link
-        isActive={currentPath === "/clothes"}
-        onClick={() => router.push("/clothes")}
-      >
-        <TShirt
-          weight={currentPath === "/clothes" ? "fill" : "regular"}
-          size={30}
-        />
-        Peças
-      </Link>
-      <Link
-        isActive={currentPath === "/orders"}
-        onClick={() => router.push("/orders")}
-      >
-        <ClipboardText
-          weight={currentPath === "/orders" ? "fill" : "regular"}
-          size={30}
-        />
-        Pedidos
-      </Link>
-      <Link
-        isActive={currentPath === "/store"}
-        onClick={() => router.push("/store")}
-      >
-        <Storefront
-          weight={currentPath === "/store" ? "fill" : "regular"}
-          size={30}
-        />
-        Brechó
-      </Link>
-    </Container>
-  )
+    ));
+
+  if (isMobile) {
+    return (
+      <>
+        <DrawerToggle onClick={() => setIsOpen(true)}>
+          <List size={28} />
+        </DrawerToggle>
+
+        {isOpen && (
+          <>
+            <DrawerOverlay onClick={() => setIsOpen(false)} />
+            <DrawerContent>
+              {renderLinks()}
+            </DrawerContent>
+          </>
+        )}
+      </>
+    );
+  }
+
+  return <Container>{renderLinks()}</Container>;
 }

@@ -1,4 +1,4 @@
-import { styled, Text } from "@edna-ui/react";
+import { SpecialTitle, styled, Text } from "@edna-ui/react";
 
 export const Container = styled('div', {
   display: 'flex',
@@ -9,7 +9,16 @@ export const Container = styled('div', {
 
   background: '$base600',
 
-  padding: '100px 200px 36px'
+  padding: '100px 200px 36px',
+
+  '@media (max-width: 1200px)': {
+    padding: '50px 100px 16px',
+    height: '150px',
+  },
+  '@media (max-width: 768px)': {
+    padding: '$1 $4 $2 $20',
+    height: '115px',
+  }
 })
 
 export const Content = styled('div', {
@@ -19,9 +28,5 @@ export const Content = styled('div', {
   gap: '$2',
 
   height: '100%',
-
-  [`${Text}`]: {
-    color: '$base300'
-  }
 })
 

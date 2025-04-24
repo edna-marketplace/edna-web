@@ -6,6 +6,8 @@ import { Button } from "@/components/@ui/Button"
 import { Plus, SlidersHorizontal } from "@phosphor-icons/react"
 
 export function FilterCard() {
+
+
   return (
     <Container>
       <div>
@@ -66,7 +68,7 @@ export function FilterCard() {
       </Button>
       <Button>
         <Plus size={17} />
-        Adicionar peça
+        Nova peça
       </Button>
     </Container>
   )
