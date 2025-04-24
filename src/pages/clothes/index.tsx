@@ -2,8 +2,15 @@ import { ClothesContainer, Container, Main } from "./styles";
 import { Header } from "@/components/Header";
 import { FilterCard } from "./components/FilterCard";
 import { ClotheItem } from "./components/ClotheItem";
+import { useRouter } from "next/router";
 
 export default function Clothes() {
+  const router = useRouter();
+
+  function handleClotheDetails() {
+    router.push("/clothes/1");
+  }
+
   return (
     <Container>
       <Header
@@ -15,7 +22,7 @@ export default function Clothes() {
         <FilterCard />
 
         <ClothesContainer>
-          <ClotheItem />
+          <ClotheItem onClick={handleClotheDetails} />
           <ClotheItem />
           <ClotheItem />
           <ClotheItem />

@@ -34,6 +34,7 @@ export const Main = styled('main', {
 export const ClothesContainer = styled('div', {
   display: 'grid',
   gridTemplateColumns: 'repeat(6, 1fr)',
+  placeItems: 'center',
   width: '100%',
   '@xl': {
     gridTemplateColumns: 'repeat(5, 1fr)',

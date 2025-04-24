@@ -8,6 +8,7 @@ export const Container = styled('button', {
   flexDirection: 'column',
   gap: '$1',
 
+  maxWidth: '170px',
   padding: '$3',
 
   border: '1px solid transparent',
