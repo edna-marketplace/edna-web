@@ -11,7 +11,7 @@ export function FilterCard() {
   return (
     <Container>
       <div>
-        <Text type="label">Categoria</Text>
+        <Text type="label" size="sm">Categoria</Text>
         <SelectInput placeholder="Selecionar">
           <SelectItem value="T_SHIRT">Camiseta</SelectItem>
           <SelectItem value="SOCIAL_SHIRT">Camisa social</SelectItem>
@@ -23,7 +23,7 @@ export function FilterCard() {
         </SelectInput>
       </div>
       <div>
-        <Text type="label">Marca</Text>
+        <Text type="label" size="sm">Marca</Text>
         <SelectInput placeholder="Selecionar">
           <SelectItem value="NIKE">Nike</SelectItem>
           <SelectItem value="ADIDAS">Adidas</SelectItem>
@@ -36,7 +36,7 @@ export function FilterCard() {
         </SelectInput>
       </div>
       <div>
-        <Text type="label">Tamanho</Text>
+        <Text type="label" size="sm">Tamanho</Text>
         <SelectInput placeholder="Selecionar">
           <SelectItem value="XS">PP</SelectItem>
           <SelectItem value="S">P</SelectItem>
@@ -58,8 +58,8 @@ export function FilterCard() {
           <SelectItem value="OTHER">Outro</SelectItem>
         </SelectInput>
       </div>
-      <div style={{ width: '35%', flex: 'unset' }}>
-        <Text type="label">Nome</Text>
+      <div style={{ width: '25%', flex: 'unset' }}>
+        <Text type="label" size="sm">Nome</Text>
         <TextInput placeholder="Pesquisar" />
       </div>
       <Button variant="secondary">

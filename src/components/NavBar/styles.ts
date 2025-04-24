@@ -10,6 +10,10 @@ export const Container = styled('div', {
   width: '230px',
   minHeight: '100vh',
 
+  '@media (max-width: 1500px)': {
+    width: '200px',
+  },
+
   background: '$base100',
   padding: '$8'
 })
