@@ -24,7 +24,7 @@ export const Main = styled('main', {
   padding: '$8 $40',
 
   '@media (max-width: 1500px)': {
-    padding: '$8 $16',
+    padding: '$8 $12',
   },
   '@media (max-width: 768px)': {
     padding: '$8 $4 $8 $12',

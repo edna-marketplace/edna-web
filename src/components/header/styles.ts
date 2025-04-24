@@ -12,7 +12,7 @@ export const Container = styled('div', {
   padding: '$20 $40 $8',
 
   '@media (max-width: 1500px)': {
-    padding: '$12 $16 $4',
+    padding: '$12 $12 $4',
     height: '$40',
   },
   '@media (max-width: 768px)': {
