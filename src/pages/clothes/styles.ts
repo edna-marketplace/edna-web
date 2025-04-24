@@ -7,11 +7,11 @@ export const Container = styled('div', {
   marginLeft: '230px',
   width: '100%',
 
-  '@media (max-width: 1500px)': {
+  '@xl': {
     marginLeft: '200px'
   },
 
-  '@media (max-width: 768px)': {
+  '@md': {
     marginLeft: '0',
   }
 })
@@ -23,10 +23,10 @@ export const Main = styled('main', {
 
   padding: '$8 $40',
 
-  '@media (max-width: 1500px)': {
+  '@xl': {
     padding: '$8 $12',
   },
-  '@media (max-width: 768px)': {
+  '@md': {
     padding: '$8 $4 $8 $12',
   }
 })
@@ -35,16 +35,16 @@ export const ClothesContainer = styled('div', {
   display: 'grid',
   gridTemplateColumns: 'repeat(6, 1fr)',
   width: '100%',
-  '@media (max-width: 1500px)': {
+  '@xl': {
     gridTemplateColumns: 'repeat(5, 1fr)',
   },
-  '@media (max-width: 1200px)': {
+  '@lg': {
     gridTemplateColumns: 'repeat(4, 1fr)',
   },
-  '@media (max-width: 992px)': {
+  '@md': {
     gridTemplateColumns: 'repeat(3, 1fr)',
   },
-  '@media (max-width: 650px)': {
+  '@sm': {
     gridTemplateColumns: 'repeat(2, 1fr)',
   }
 })

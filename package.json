@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@edna-ui/react": "^1.0.7",
+    "@edna-ui/react": "^1.0.8",
     "@edna-ui/tokens": "^1.0.1",
     "@phosphor-icons/react": "^2.1.7",
     "@types/node": "18.11.14",
