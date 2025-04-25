@@ -15,7 +15,7 @@ export const SelectInputTrigger = styled(SelectPrimitive.Trigger, {
   height: '55px',
   width: '100%',
 
-  fontSize: '$xs',
+  fontSize: '$sm',
 
   display: 'flex',
   alignItems: 'center',
@@ -23,10 +23,17 @@ export const SelectInputTrigger = styled(SelectPrimitive.Trigger, {
 
   cursor: 'pointer',
 
+  transition: 'border-color 0.2s',
+
+  '&:not(:disabled):hover': {
+    borderColor: '$base400',
+  },
+
   '&:disabled': {
     opacity: 0.5,
     cursor: 'not-allowed',
   },
+
 })
 
 export const SelectInputValue = styled(SelectPrimitive.Value, {

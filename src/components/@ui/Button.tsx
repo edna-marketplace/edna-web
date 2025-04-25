@@ -20,12 +20,13 @@ export const Button = styled('button', {
   cursor: 'pointer',
 
   svg: {
-    width: '$4',
-    height: '$4',
+    width: '$5',
+    height: '$5',
   },
 
   '&:disabled': {
     cursor: 'not-allowed',
+    opacity: '.5',
   },
 
   '&:focus': {
@@ -43,10 +44,6 @@ export const Button = styled('button', {
         '&:not(:disabled):hover': {
           background: '$base200',
         },
-
-        '&:disabled': {
-          opacity: '.5',
-        },
       },
 
       secondary: {
@@ -58,10 +55,6 @@ export const Button = styled('button', {
         '&:not(:disabled):hover': {
           borderColor: '$base400',
         },
-
-        '&:disabled': {
-          opacity: '.5',
-        },
       },
 
       tertiary: {
@@ -70,11 +63,20 @@ export const Button = styled('button', {
         '&:not(:disabled):hover': {
           color: '$base300',
         },
-
-        '&:disabled': {
-          opacity: '.5',
-        },
       },
+
+      destructive: {
+        color: '$red400',
+        background: '$red600',
+
+        fontWeight: '$bold',
+
+        border: '2px solid transparent',
+
+        '&:not(:disabled):hover': {
+          borderColor: '$red500',
+        },
+      }
     },
 
     size: {

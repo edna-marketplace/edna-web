@@ -22,6 +22,12 @@ export const TextInputContainer = styled('div', {
     opacity: 0.5,
     cursor: 'not-allowed',
   },
+
+  transition: 'border-color 0.2s',
+
+  '&:not(:disabled):hover': {
+    borderColor: '$base400',
+  },
 })
 
 export const Prefix = styled('span', {
@@ -29,7 +35,8 @@ export const Prefix = styled('span', {
   fontSize: '$sm',
   color: '$base400',
   fontWeight: 'regular',
-  padding: '$3 $4',
+  padding: '$4',
+  height: '53px',
   borderRight: '1px solid $base500',
 })
 

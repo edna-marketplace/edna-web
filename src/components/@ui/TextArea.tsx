@@ -16,6 +16,12 @@ export const TextArea = styled('textarea', {
   resize: 'none',
   minHeight: 80,
 
+  transition: 'border-color 0.2s',
+
+  '&:not(:disabled):hover': {
+    borderColor: '$base400',
+  },
+
   '&:focus': {
     outline: 0,
     boxShadow: '0 0 0 2px $colors$black',
