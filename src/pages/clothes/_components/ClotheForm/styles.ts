@@ -1,5 +1,6 @@
 import { Card } from "@/components/@ui/Card"
 import { styled } from "@edna-ui/react"
+import Image from "next/image"
 
 export const FormContainer = styled('form', {
   display: 'grid',
@@ -25,10 +26,11 @@ export const FormCard = styled(Card, {
 
 export const Section = styled('div', {
   display: 'flex',
+  flexWrap: 'wrap',
   alignItems: 'center',
-  gap: '$4',
+  justifyContent: 'center',
 
-  padding: '$5 $7',
+  padding: '$5 $5 $3',
 
   background: '$base500',
   borderRadius: '$sm',

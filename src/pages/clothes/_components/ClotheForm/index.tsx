@@ -14,22 +14,50 @@ import { Controller, useForm } from "react-hook-form";
 import { LabeledTextInput } from "@/components/@ui/LabeledTextInput";
 import { TextInput } from "@/components/@ui/TextInput";
 import { LabeledTextArea } from "@/components/@ui/TextArea/index";
+import { FileInput } from "@/components/@ui/FileInput";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { ImagePreviewItem } from "../ImagePreviewItem";
 
 export interface ClotheFormProps {
   clothe?: any
 }
 
+
 export function ClotheForm({ clothe }: ClotheFormProps) {
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const router = useRouter();
 
-  const { control, watch } = useForm()
+  const { control, watch, setValue } = useForm()
 
   const brandField = watch("brand");
   const sizeField = watch("size");
+  const watchedImages = watch("images");
+
+  const imagesField: File[] = Array.isArray(watchedImages) ? watchedImages : [];
+
+  function handleRemoveImage(name: string) {
+    const filtered = imagesField.filter((f) => f.name !== name);
+    setValue("images", filtered, { shouldDirty: true, shouldValidate: true });
+  }
 
   function handleGoBack() {
     router.push("/clothes");
   }
+
+  useEffect(() => {
+    const urls = imagesField.map((file) => URL.createObjectURL(file));
+    setImagePreviews(urls);
+
+    console.log(watchedImages)
+    console.log(imagesField)
+
+    return () => {
+      urls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [imagesField]);
+
+  console.log(imagePreviews)
 
   return (
     <FormContainer >
@@ -122,18 +150,39 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
         <LabeledTextArea css={{ flex: 1 }} label="Descrição (opcional)" />
 
         <div>
-          <Button css={{ flex: 1, minWidth: '160px' }} variant="secondary">
-            <UploadSimple />
-            Escolher fotos
-          </Button>
+          <Controller
+            name="images"
+            control={control}
+            defaultValue={[]}
+            render={({ field }) => (
+              <FileInput
+                placeholder="Escolher fotos"
+                onChange={(event) => {
+                  const files = event.target.files ? Array.from(event.target.files) : [];
+                  field.onChange(files);
+                }}
+              />
+            )}
+          />
 
           <Text css={{ maxWidth: '400px', minWidth: '190px' }} size="sm">
-            No máximo 5 imagens nos formatos JPEG, JPG ou PNG com até 5MB.
+            No máximo 5 imagens nos formatos JPEG, JPG ou PNG com até 5MB (Recomendado: 1080x1920).
           </Text>
         </div>
 
         <Section css={{ minHeight: '140px' }}>
-          <Text css={{ flex: 1, opacity: .6 }} size="md">Nenhuma foto selecionada</Text>
+          {imagePreviews.length > 0 ? (
+            imagesField.map((file, i) => (
+              <ImagePreviewItem
+                key={file.name}
+                name={file.name}            // ← pass the file’s name
+                src={imagePreviews[i]}
+                onRemove={handleRemoveImage}
+              />
+            ))
+          ) : (
+            <Text css={{ flex: 1, opacity: .6 }} size="md">Nenhuma foto selecionada</Text>
+          )}
         </Section>
       </FormCard>
       <div></div>
@@ -161,6 +210,6 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
           </Button>
         </div>
       </ButtonContainer>
-    </FormContainer>
+    </FormContainer >
   )
 }
