@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentProps, forwardRef, ElementRef, useState } from 'react'
 import {
   Input,

@@ -10,9 +10,10 @@ import { SelectInput } from "@/components/@ui/SelectInput";
 import { SelectItem } from "@/components/@ui/SelectItem";
 import { Text } from "@/components/@ui/Text";
 import { TextArea } from "@/components/@ui/TextArea";
-import { TextInput } from "@/components/@ui/TextInput";
 import { Controller, useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { LabeledTextInput } from "@/components/@ui/LabeledTextInput";
+import { TextInput } from "@/components/@ui/TextInput";
+import { LabeledTextArea } from "@/components/@ui/TextArea/index";
 
 export interface ClotheFormProps {
   clothe?: any
@@ -21,7 +22,7 @@ export interface ClotheFormProps {
 export function ClotheForm({ clothe }: ClotheFormProps) {
   const router = useRouter();
 
-  const { register, control, watch } = useForm()
+  const { control, watch } = useForm()
 
   const brandField = watch("brand");
   const sizeField = watch("size");
@@ -34,7 +35,7 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
     <FormContainer >
       <FormCard>
         <div>
-          <TextInput css={{ flex: 1, minWidth: '200px' }} placeholder="Nome da peça" />
+          <LabeledTextInput css={{ flex: 1, minWidth: '200px' }} label="Nome da peça" />
           <TextInput css={{ flex: 1, minWidth: '130px', maxWidth: '200px' }} prefix="R$" placeholder="00,00" />
         </div>
 
@@ -45,7 +46,7 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
         </Section>
 
         <div>
-          <SelectInput placeholder="Categoria">
+          <SelectInput label="Categoria">
             {Categories.map((category) => (
               <SelectItem key={category.value} value={category.value}>
                 {category.display}
@@ -53,7 +54,7 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
             ))}
           </SelectInput>
 
-          <SelectInput placeholder="Gênero">
+          <SelectInput label="Gênero">
             {Genders.map((gender) => (
               <SelectItem key={gender.value} value={gender.value}>
                 {gender.display}
@@ -70,7 +71,7 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
               <SelectInput
                 value={field.value}
                 onValueChange={field.onChange}
-                placeholder="Marca"
+                label="Marca"
               >
                 {Brands.map((brand) => (
                   <SelectItem key={brand.value} value={brand.value}>
@@ -88,7 +89,7 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
               <SelectInput
                 value={field.value}
                 onValueChange={field.onChange}
-                placeholder="Tamanho"
+                label="Tamanho"
               >
                 {Sizes.map((size) => (
                   <SelectItem key={size.value} value={size.value}>
@@ -102,23 +103,23 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
 
         <div>
           {brandField === "OTHER" && (
-            <TextInput css={{ width: '49%' }} placeholder="Nome da marca" />
+            <LabeledTextInput css={{ width: '49%' }} label="Marca (Outra)" />
           )}
           {sizeField === "OTHER" && (
-            <TextInput css={{ width: '49%', marginLeft: 'auto' }} placeholder="Tamanho" />
+            <LabeledTextInput css={{ width: '49%', marginLeft: 'auto' }} label="Tamanho (Outro)" />
           )}
         </div>
 
         <Separator />
 
         <div>
-          <TextInput placeholder="Tecido" />
-          <TextInput placeholder="Cor" />
+          <LabeledTextInput label="Tecido" />
+          <LabeledTextInput label="Cor" />
         </div>
       </FormCard>
 
       <FormCard>
-        <TextArea css={{ flex: 1 }} placeholder="Descrição (opcional)" />
+        <LabeledTextArea css={{ flex: 1 }} label="Descrição (opcional)" />
 
         <div>
           <Button css={{ flex: 1, minWidth: '160px' }} variant="secondary">

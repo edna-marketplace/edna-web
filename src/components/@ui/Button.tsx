@@ -84,7 +84,7 @@ export const Button = styled('button', {
         height: 38,
       },
       md: {
-        height: 53,
+        height: 57,
       },
     },
   },

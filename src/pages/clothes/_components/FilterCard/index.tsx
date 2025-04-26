@@ -1,7 +1,7 @@
 import { SelectItem, Text } from "@edna-ui/react"
 import { Container } from "./styles"
 import { SelectInput } from "@/components/@ui/SelectInput"
-import { TextInput } from "@/components/@ui/TextInput"
+import { LabeledTextInput } from "@/components/@ui/LabeledTextInput"
 import { Button } from "@/components/@ui/Button"
 import { Plus, SlidersHorizontal } from "@phosphor-icons/react"
 import { Brands, Categories, Sizes } from "@/utils/select-data"
@@ -16,7 +16,7 @@ export function FilterCard() {
   return (
     <Container>
       <div>
-        <SelectInput placeholder="Categoria">
+        <SelectInput label="Categoria">
           {Categories.map((category) => (
             <SelectItem key={category.value} value={category.value}>
               {category.display}
@@ -25,7 +25,7 @@ export function FilterCard() {
         </SelectInput>
       </div>
       <div>
-        <SelectInput placeholder="Marca">
+        <SelectInput label="Marca">
           {Brands.map((brand) => (
             <SelectItem key={brand.value} value={brand.value}>
               {brand.display}
@@ -34,7 +34,7 @@ export function FilterCard() {
         </SelectInput>
       </div>
       <div>
-        <SelectInput placeholder="Tamanho">
+        <SelectInput label="Tamanho">
           {Sizes.map((size) => (
             <SelectItem key={size.value} value={size.value}>
               {size.display}
@@ -43,7 +43,7 @@ export function FilterCard() {
         </SelectInput>
       </div>
       <div style={{ width: '30%', flex: 'unset' }}>
-        <TextInput placeholder="Nome da peça" />
+        <LabeledTextInput label="Nome da peça" />
       </div>
       <Button variant="secondary">
         <SlidersHorizontal size={17} />

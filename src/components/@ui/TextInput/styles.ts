@@ -67,7 +67,7 @@ export const Input = styled('input', {
   border: 0,
   padding: '$3 $4',
 
-  height: '53px',
+  height: '57px',
   width: '100%',
 
   '&:focus': {
@@ -80,5 +80,6 @@ export const Input = styled('input', {
 
   '&::placeholder': {
     color: '$base400',
+    userSelect: 'none',
   },
 })
