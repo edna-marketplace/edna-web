@@ -7,7 +7,7 @@ import { Plus, SlidersHorizontal } from "@phosphor-icons/react"
 import { Brands, Categories, Sizes } from "@/utils/select-data"
 import { useRouter } from "next/router"
 
-export function FilterCard() {
+export function FilterForm() {
   const router = useRouter()
 
   function handleNewClothe() {
@@ -42,7 +42,7 @@ export function FilterCard() {
           ))}
         </SelectInput>
       </div>
-      <div style={{ width: '30%', flex: 'unset' }}>
+      <div style={{ width: '30%', minWidth: '200px', flex: 'unset' }}>
         <LabeledTextInput label="Nome da peça" />
       </div>
       <Button variant="secondary">

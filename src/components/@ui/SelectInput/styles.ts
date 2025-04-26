@@ -12,6 +12,8 @@ export const FloatingLabelContainer = styled('div', {
   width: '100%',
   padding: "$2 0 0 0",
 
+  minWidth: '130px',
+
   '&:has(button:disabled)': {
     opacity: 0.5,
     cursor: 'not-allowed',

@@ -1,6 +1,6 @@
 import { ClothesContainer, Container, Main } from "./styles";
 import { Header } from "@/components/Header";
-import { FilterCard } from "./_components/FilterCard";
+import { FilterForm } from "./_components/FilterForm";
 import { ClotheItem } from "./_components/ClotheItem";
 import { useRouter } from "next/router";
 
@@ -19,7 +19,7 @@ export default function Clothes() {
       />
 
       <Main>
-        <FilterCard />
+        <FilterForm />
 
         <ClothesContainer>
           <ClotheItem onClick={handleClotheDetails} />
