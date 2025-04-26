@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Container, Main } from "./styles";
 
 import { Header } from "@/components/Header";
-import { ClotheForm } from "../components/ClotheForm";
+import { ClotheForm } from "../_components/ClotheForm";
 
 export default function ClotheDetails() {
   const router = useRouter();

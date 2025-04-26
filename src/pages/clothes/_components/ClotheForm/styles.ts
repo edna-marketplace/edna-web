@@ -1,7 +1,7 @@
 import { Card } from "@/components/@ui/Card"
 import { styled } from "@edna-ui/react"
 
-export const FormContainer = styled('div', {
+export const FormContainer = styled('form', {
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
   gap: '$4',

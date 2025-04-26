@@ -1,16 +1,18 @@
+import { ArrowsClockwise, Check, Trash, UploadSimple } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
-import { UploadSimple, Trash, ArrowsClockwise, Check } from "@phosphor-icons/react";
 
-import { Categories, Brands, Genders, Sizes } from "@/utils/select-data";
+import { Brands, Categories, Genders, Sizes } from "@/utils/select-data";
 
-import { FormContainer, FormCard, Section, Separator, ButtonContainer } from "./styles";
+import { ButtonContainer, FormCard, FormContainer, Section, Separator } from "./styles";
 
-import { TextInput } from "@/components/@ui/TextInput";
-import { Text } from "@/components/@ui/Text";
+import { Button } from "@/components/@ui/Button";
 import { SelectInput } from "@/components/@ui/SelectInput";
 import { SelectItem } from "@/components/@ui/SelectItem";
+import { Text } from "@/components/@ui/Text";
 import { TextArea } from "@/components/@ui/TextArea";
-import { Button } from "@/components/@ui/Button";
+import { TextInput } from "@/components/@ui/TextInput";
+import { Controller, useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 export interface ClotheFormProps {
   clothe?: any
@@ -19,12 +21,17 @@ export interface ClotheFormProps {
 export function ClotheForm({ clothe }: ClotheFormProps) {
   const router = useRouter();
 
+  const { register, control, watch } = useForm()
+
+  const brandField = watch("brand");
+  const sizeField = watch("size");
+
   function handleGoBack() {
     router.push("/clothes");
   }
 
   return (
-    <FormContainer>
+    <FormContainer >
       <FormCard>
         <div>
           <TextInput css={{ flex: 1, minWidth: '200px' }} placeholder="Nome da peça" />
@@ -46,16 +53,6 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
             ))}
           </SelectInput>
 
-          <SelectInput placeholder="Marca">
-            {Brands.map((brand) => (
-              <SelectItem key={brand.value} value={brand.value}>
-                {brand.display}
-              </SelectItem>
-            ))}
-          </SelectInput>
-        </div>
-
-        <div>
           <SelectInput placeholder="Gênero">
             {Genders.map((gender) => (
               <SelectItem key={gender.value} value={gender.value}>
@@ -63,13 +60,53 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
               </SelectItem>
             ))}
           </SelectInput>
-          <SelectInput placeholder="Tamanho">
-            {Sizes.map((size) => (
-              <SelectItem key={size.value} value={size.value}>
-                {size.display}
-              </SelectItem>
-            ))}
-          </SelectInput>
+        </div>
+
+        <div>
+          <Controller
+            name="brand"
+            control={control}
+            render={({ field }) => (
+              <SelectInput
+                value={field.value}
+                onValueChange={field.onChange}
+                placeholder="Marca"
+              >
+                {Brands.map((brand) => (
+                  <SelectItem key={brand.value} value={brand.value}>
+                    {brand.display}
+                  </SelectItem>
+                ))}
+              </SelectInput>
+            )}
+          />
+
+          <Controller
+            name="size"
+            control={control}
+            render={({ field }) => (
+              <SelectInput
+                value={field.value}
+                onValueChange={field.onChange}
+                placeholder="Tamanho"
+              >
+                {Sizes.map((size) => (
+                  <SelectItem key={size.value} value={size.value}>
+                    {size.display}
+                  </SelectItem>
+                ))}
+              </SelectInput>
+            )}
+          />
+        </div>
+
+        <div>
+          {brandField === "OTHER" && (
+            <TextInput css={{ width: '49%' }} placeholder="Nome da marca" />
+          )}
+          {sizeField === "OTHER" && (
+            <TextInput css={{ width: '49%', marginLeft: 'auto' }} placeholder="Tamanho" />
+          )}
         </div>
 
         <Separator />

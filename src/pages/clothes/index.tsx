@@ -1,7 +1,7 @@
 import { ClothesContainer, Container, Main } from "./styles";
 import { Header } from "@/components/Header";
-import { FilterCard } from "./components/FilterCard";
-import { ClotheItem } from "./components/ClotheItem";
+import { FilterCard } from "./_components/FilterCard";
+import { ClotheItem } from "./_components/ClotheItem";
 import { useRouter } from "next/router";
 
 export default function Clothes() {
