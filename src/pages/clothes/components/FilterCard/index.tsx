@@ -5,10 +5,14 @@ import { TextInput } from "@/components/@ui/TextInput"
 import { Button } from "@/components/@ui/Button"
 import { Plus, SlidersHorizontal } from "@phosphor-icons/react"
 import { Brands, Categories, Sizes } from "@/utils/select-data"
+import { useRouter } from "next/router"
 
 export function FilterCard() {
+  const router = useRouter()
 
-
+  function handleNewClothe() {
+    router.push("/clothes/new")
+  }
   return (
     <Container>
       <div>
@@ -45,7 +49,7 @@ export function FilterCard() {
         <SlidersHorizontal size={17} />
         Filtros
       </Button>
-      <Button>
+      <Button onClick={handleNewClothe}>
         <Plus size={17} />
         Nova peça
       </Button>

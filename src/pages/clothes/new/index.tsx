@@ -22,7 +22,7 @@ export default function ClotheDetails() {
 
       <form action="">
         <Main>
-          <ClotheForm clothe="a" />
+          <ClotheForm />
         </Main>
       </form>
 
