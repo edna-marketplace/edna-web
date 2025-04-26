@@ -1,4 +1,4 @@
-import { SelectItem, Text } from "@edna-ui/react"
+import { SelectItem } from "@/components/@ui/SelectItem"
 import { Container } from "./styles"
 import { SelectInput } from "@/components/@ui/SelectInput"
 import { LabeledTextInput } from "@/components/@ui/LabeledTextInput"

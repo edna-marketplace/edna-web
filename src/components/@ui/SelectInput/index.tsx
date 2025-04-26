@@ -26,12 +26,6 @@ export const SelectInput = forwardRef<
   const [selectedValue, setSelectedValue] = useState<string | undefined>(value as string || defaultValue as string || '');
   const isFloating = selectedValue !== '';
 
-  useEffect(() => {
-    if (value !== undefined) {
-      setSelectedValue(value as string);
-    }
-  }, [value]);
-
   const handleOpenChange = (newOpen: boolean) => {
     if (onOpenChange) {
       onOpenChange(newOpen);
