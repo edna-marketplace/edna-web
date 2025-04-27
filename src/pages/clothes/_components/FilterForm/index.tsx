@@ -6,6 +6,7 @@ import { Button } from "@/components/@ui/Button"
 import { Plus, SlidersHorizontal } from "@phosphor-icons/react"
 import { Brands, Categories, Sizes } from "@/utils/select-data"
 import { useRouter } from "next/router"
+import { TextInput } from "@/components/@ui/TextInput"
 
 export function FilterForm() {
   const router = useRouter()
@@ -16,7 +17,7 @@ export function FilterForm() {
   return (
     <Container>
       <div>
-        <SelectInput label="Categoria">
+        <SelectInput placeholder="Categoria">
           {Categories.map((category) => (
             <SelectItem key={category.value} value={category.value}>
               {category.display}
@@ -25,7 +26,7 @@ export function FilterForm() {
         </SelectInput>
       </div>
       <div>
-        <SelectInput label="Marca">
+        <SelectInput placeholder="Marca">
           {Brands.map((brand) => (
             <SelectItem key={brand.value} value={brand.value}>
               {brand.display}
@@ -34,7 +35,7 @@ export function FilterForm() {
         </SelectInput>
       </div>
       <div>
-        <SelectInput label="Tamanho">
+        <SelectInput placeholder="Tamanho">
           {Sizes.map((size) => (
             <SelectItem key={size.value} value={size.value}>
               {size.display}
@@ -43,7 +44,7 @@ export function FilterForm() {
         </SelectInput>
       </div>
       <div style={{ width: '30%', minWidth: '200px', flex: 'unset' }}>
-        <LabeledTextInput label="Nome da peça" />
+        <TextInput placeholder="Nome da peça" />
       </div>
       <Button variant="secondary">
         <SlidersHorizontal size={17} />

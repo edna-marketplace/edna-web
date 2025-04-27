@@ -11,8 +11,8 @@ export default function Clothes() {
 
   const router = useRouter()
 
-  function handleClotheDetails() {
-    router.push("/clothes/1")
+  function handleClotheDetails(clotheId: string) {
+    router.push(`/clothes/${clotheId}`)
   }
 
   async function handleFetchClothesWithFilter() {
@@ -36,7 +36,7 @@ export default function Clothes() {
 
         <ClothesContainer>
           {clothes.map((clothe) => (
-            <ClotheItem clothe={clothe} onClick={handleClotheDetails} />
+            <ClotheItem clothe={clothe} onClick={() => handleClotheDetails(clothe.id)} />
           ))}
         </ClothesContainer>
       </Main>

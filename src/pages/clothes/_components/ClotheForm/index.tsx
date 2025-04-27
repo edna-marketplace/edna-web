@@ -14,7 +14,7 @@ import { SelectItem } from "@/components/@ui/SelectItem";
 import { Text } from "@/components/@ui/Text";
 import { LabeledTextInput } from "@/components/@ui/LabeledTextInput";
 import { TextInput } from "@/components/@ui/TextInput";
-import { LabeledTextArea } from "@/components/@ui/TextArea/index";
+import { LabeledTextArea } from "@/components/@ui/LabeledTextArea/index";
 import { FileInput } from "@/components/@ui/FileInput";
 
 import { ArrowsClockwise, Check, Trash } from "@phosphor-icons/react";
@@ -23,17 +23,19 @@ import { z } from "zod";
 
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createClothe } from "@/api/create-clothe";
+import { Clothe, createClothe } from "@/api/create-clothe";
 import { toast } from "sonner";
-export interface ClotheFormProps {
-  clotheId?: string
-}
+import { getClotheById } from "@/api/get-clothe-by-id";
+import { TextArea } from "@/components/@ui/TextArea";
 
 type ClotheFormData = z.infer<typeof ClotheFormSchema>;
 
-export function ClotheForm({ clotheId }: ClotheFormProps) {
+export function ClotheForm() {
+  const [clothe, setClothe] = useState<Clothe>()
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+
   const router = useRouter();
+  const clotheId = router.query.id as string
 
   const {
     register,
@@ -48,8 +50,8 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
 
   const brandField = watch("brand");
   const sizeField = watch("size");
-  const watchedImages = watch("images");
 
+  const watchedImages = watch("images");
   const imagesField: File[] = Array.isArray(watchedImages) ? watchedImages : [];
 
   function handleRemoveImage(name: string) {
@@ -89,22 +91,48 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
     }
   }
 
+  async function handleGetClotheById() {
+    const data = await getClotheById(clotheId);
+
+    setClothe(data);
+
+    if (data) {
+      setValue("name", data.name);
+      setValue("price", data.priceInCents);
+      setValue("category", data.category);
+      setValue("gender", data.gender);
+      setValue("brand", data.brand);
+      setValue("size", data.size);
+      setValue("fabric", data.fabric);
+      setValue("color", data.color);
+      setValue("description", data.description);
+      // setValue("images", data.images);
+    }
+  }
+
   useEffect(() => {
     const urls = imagesField.map((file) => URL.createObjectURL(file));
     setImagePreviews(urls);
+
+    if (clotheId) {
+      handleGetClotheById()
+    }
 
     return () => {
       urls.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [imagesField]);
 
+  console.log(clothe)
+
   return (
     <FormContainer onSubmit={handleSubmit(handleCreateClothe)}>
       <FormCard>
         <div>
           <InputContainer css={{ flex: 1, minWidth: '200px' }}>
-            <LabeledTextInput
-              label="Nome da peça"
+            <Text type="label">Nome da peça</Text>
+            <TextInput
+              placeholder="Nome da peça"
               hasError={!!errors.name}
               {...register("name")}
             />
@@ -118,6 +146,7 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
           </InputContainer>
 
           <InputContainer css={{ flex: 1, minWidth: '130px', maxWidth: '200px' }}>
+            <Text type="label">Preço</Text>
             <TextInput
               prefix="R$"
               placeholder="00,00"
@@ -143,15 +172,16 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
 
         <div>
           <InputContainer>
+            <Text type="label">Categoria</Text>
             <Controller
               name="category"
               control={control}
               render={({ field }) => (
                 <SelectInput
-                  value={field.value}
                   onValueChange={field.onChange}
-                  label="Categoria"
+                  placeholder={"Categoria"}
                   hasError={!!errors.category}
+                  {...field}
                 >
                   {Categories.map((category) => (
                     <SelectItem key={category.value} value={category.value}>
@@ -171,6 +201,7 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
           </InputContainer>
 
           <InputContainer>
+            <Text type="label">Gênero</Text>
             <Controller
               name="gender"
               control={control}
@@ -178,7 +209,7 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
                 <SelectInput
                   value={field.value}
                   onValueChange={field.onChange}
-                  label="Gênero"
+                  placeholder="Gênero"
                   hasError={!!errors.gender}
                 >
                   {Genders.map((gender) => (
@@ -201,6 +232,7 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
 
         <div>
           <InputContainer>
+            <Text type="label">Marca</Text>
             <Controller
               name="brand"
               control={control}
@@ -208,7 +240,7 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
                 <SelectInput
                   value={field.value}
                   onValueChange={field.onChange}
-                  label="Marca"
+                  placeholder="Marca"
                   hasError={!!errors.brand}
                 >
                   {Brands.map((brand) => (
@@ -229,6 +261,7 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
           </InputContainer>
 
           <InputContainer>
+            <Text type="label">Tamanho</Text>
             <Controller
               name="size"
               control={control}
@@ -236,7 +269,7 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
                 <SelectInput
                   value={field.value}
                   onValueChange={field.onChange}
-                  label="Tamanho"
+                  placeholder="Tamanho"
                   hasError={!!errors.size}
                 >
                   {Sizes.map((size) => (
@@ -259,18 +292,24 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
 
         <div>
           {brandField === "OTHER" && (
-            <LabeledTextInput
-              css={{ width: '49%' }}
-              label="Marca (Outra)"
-              {...register("brandOther")}
-            />
+            <InputContainer>
+              <Text type="label">Marca (Outro)</Text>
+              <LabeledTextInput
+                css={{ width: '49%' }}
+                label="Marca (Outra)"
+                {...register("brandOther")}
+              />
+            </InputContainer>
           )}
           {sizeField === "OTHER" && (
-            <LabeledTextInput
-              css={{ width: '49%', marginLeft: 'auto' }}
-              label="Tamanho (Outro)"
-              {...register("sizeOther")}
-            />
+            <InputContainer>
+              <Text type="label">Tamanho (Outro)</Text>
+              <LabeledTextInput
+                css={{ width: '49%', marginLeft: 'auto' }}
+                label="Tamanho (Outro)"
+                {...register("sizeOther")}
+              />
+            </InputContainer>
           )}
         </div>
 
@@ -278,8 +317,9 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
 
         <div>
           <InputContainer>
-            <LabeledTextInput
-              label="Tecido"
+            <Text type="label">Tecido</Text>
+            <TextInput
+              placeholder="Tecido"
               hasError={!!errors.fabric}
               {...register("fabric")}
             />
@@ -293,8 +333,9 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
           </InputContainer>
 
           <InputContainer>
-            <LabeledTextInput
-              label="Cor"
+            <Text type="label">Cor</Text>
+            <TextInput
+              placeholder="Cor"
               hasError={!!errors.color}
               {...register("color")}
             />
@@ -310,9 +351,10 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
       </FormCard>
 
       <FormCard>
-        <LabeledTextArea
+        <Text type="label">Descrição (Opcional)</Text>
+        <TextArea
           css={{ flex: 1 }}
-          label="Descrição (opcional)"
+          placeholder="Descrição (opcional)"
           {...register("description")}
         />
 
@@ -364,7 +406,7 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
       </FormCard>
       <div></div>
       <ButtonContainer>
-        {clotheId && (
+        {clothe && (
           <Button type="button" variant="destructive">
             <Trash weight="bold" />
             Excluir
@@ -373,7 +415,7 @@ export function ClotheForm({ clotheId }: ClotheFormProps) {
         <div>
           <Button type="button" variant="tertiary" onClick={handleGoBack}>Cancelar</Button>
           <Button type="submit">
-            {clotheId ? (
+            {clothe ? (
               <>
                 <ArrowsClockwise />
                 Atualizar peça

@@ -1,20 +1,30 @@
 import { styled } from '@edna-ui/react'
 import * as SelectPrimitive from '@radix-ui/react-select'
 
-export const FloatingLabelContainer = styled('div', {
-  position: 'relative',
+export const SelectInputTrigger = styled(SelectPrimitive.Trigger, {
+  fontFamily: '$default',
+
   backgroundColor: '$base700',
+  color: '$base100',
   borderRadius: '$sm',
   boxSizing: 'border-box',
   border: '1px solid $base500',
+  padding: '$3 $4',
+  userSelect: 'none',
+
+  height: '59px',
+  minWidth: '130px',
+  width: '100%',
+
+  fontSize: '$sm',
+
   display: 'flex',
   alignItems: 'center',
-  width: '100%',
-  padding: "$2 0 0 0",
+  justifyContent: 'space-between',
 
-  minWidth: '130px',
+  cursor: 'pointer',
 
-  '&:has(button:disabled)': {
+  '&:disabled': {
     opacity: 0.5,
     cursor: 'not-allowed',
   },
@@ -34,72 +44,10 @@ export const FloatingLabelContainer = styled('div', {
   }
 })
 
-export const FloatingLabel = styled('label', {
-  position: 'absolute',
-  left: '$4',
-  pointerEvents: 'none',
-  fontFamily: '$default',
-  color: '$base400',
-  zIndex: 1,
-  userSelect: 'none',
-
-  transition: 'transform 0.2s ease-in-out, font-size 0.2s, top 0.2s ease-in-out',
-
-  variants: {
-    isFloating: {
-      true: {
-        transform: 'translateY(-50%)',
-        top: '0',
-        fontSize: '$sm',
-        backgroundColor: '$base600',
-        border: '1px solid $base500',
-        borderRadius: '$xs',
-        padding: '0 $1',
-        left: '11px',
-        color: '$base200',
-      },
-      false: {
-        top: '50%',
-        transform: 'translateY(-50%)',
-        fontSize: '14px',
-      }
-    }
-  }
-})
-
-export const SelectInputTrigger = styled(SelectPrimitive.Trigger, {
-  fontFamily: '$default',
-
-  backgroundColor: 'transparent',
-  color: '$black',
-  borderRadius: 0,
-  boxSizing: 'border-box',
-  border: 'none',
-  padding: '$3 $4',
-  userSelect: 'none',
-
-  height: '50px',
-  width: '100%',
-
-  fontSize: '$sm',
-
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-
-  cursor: 'pointer',
-
-  '&:disabled': {
-    opacity: 0.5,
-    cursor: 'not-allowed',
-  },
-})
-
 export const SelectInputValue = styled(SelectPrimitive.Value, {
   color: '$base100',
-  textAlign: 'left',
 
-  '&[data-placeholder]': {
+  '&::placeholder': {
     color: '$base500',
   },
 })
@@ -114,7 +62,6 @@ export const SelectInputContent = styled(SelectPrimitive.Content, {
   borderRadius: '$sm',
   overflow: 'hidden',
   width: 'var(--radix-select-trigger-width)',
-  zIndex: 1,
 })
 
 export const SelectInputViewport = styled(SelectPrimitive.Viewport, {
