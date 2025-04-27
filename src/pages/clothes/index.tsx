@@ -3,13 +3,26 @@ import { Header } from "@/components/Header";
 import { FilterForm } from "./_components/FilterForm";
 import { ClotheItem } from "./_components/ClotheItem";
 import { useRouter } from "next/router";
+import { ClotheSummary, fetchClothesWithFilter } from "@/api/fetch-clothes-with-filter";
+import { useEffect, useState } from "react";
 
 export default function Clothes() {
-  const router = useRouter();
+  const [clothes, setClothes] = useState<ClotheSummary[]>([])
+
+  const router = useRouter()
 
   function handleClotheDetails() {
-    router.push("/clothes/1");
+    router.push("/clothes/1")
   }
+
+  async function handleFetchClothesWithFilter() {
+    const data = await fetchClothesWithFilter()
+    setClothes(data.clothes)
+  }
+
+  useEffect(() => {
+    handleFetchClothesWithFilter()
+  }, [])
 
   return (
     <Container>
@@ -22,12 +35,9 @@ export default function Clothes() {
         <FilterForm />
 
         <ClothesContainer>
-          <ClotheItem onClick={handleClotheDetails} />
-          <ClotheItem />
-          <ClotheItem />
-          <ClotheItem />
-          <ClotheItem />
-          <ClotheItem />
+          {clothes.map((clothe) => (
+            <ClotheItem clothe={clothe} onClick={handleClotheDetails} />
+          ))}
         </ClothesContainer>
       </Main>
     </Container>

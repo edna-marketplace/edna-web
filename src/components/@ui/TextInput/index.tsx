@@ -29,6 +29,7 @@ export const TextInput = forwardRef<ElementRef<typeof Input>, TextInputProps>(
         <Input
           ref={ref}
           type={isPassword ? (showPassword ? 'text' : 'password') : props.type}
+          step={0.01}
           {...props}
         />
         {isPassword && (

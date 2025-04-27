@@ -23,13 +23,15 @@ import { z } from "zod";
 
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createClothe } from "@/api/create-clothe";
+import { toast } from "sonner";
 export interface ClotheFormProps {
-  clothe?: any
+  clotheId?: string
 }
 
 type ClotheFormData = z.infer<typeof ClotheFormSchema>;
 
-export function ClotheForm({ clothe }: ClotheFormProps) {
+export function ClotheForm({ clotheId }: ClotheFormProps) {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const router = useRouter();
 
@@ -59,8 +61,32 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
     router.push("/clothes");
   }
 
-  function handleCreateClothe(data: ClotheFormData) {
-    console.log(data)
+  async function handleCreateClothe(data: ClotheFormData) {
+    try {
+      createClothe({
+        clothe: {
+          name: data.name,
+          priceInCents: data.price,
+          description: data.description,
+          fabric: data.fabric,
+          color: data.color,
+          store: {},
+          deleted: false,
+          categoryOther: null,
+          brandOther: data.brandOther,
+          sizeOther: data.sizeOther,
+          category: data.category,
+          size: data.size,
+          brand: data.brand,
+          gender: data.gender
+        },
+        files: data.images
+      })
+
+      toast.success('Peça cadastrada com sucesso!')
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {
@@ -338,7 +364,7 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
       </FormCard>
       <div></div>
       <ButtonContainer>
-        {clothe && (
+        {clotheId && (
           <Button type="button" variant="destructive">
             <Trash weight="bold" />
             Excluir
@@ -347,7 +373,7 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
         <div>
           <Button type="button" variant="tertiary" onClick={handleGoBack}>Cancelar</Button>
           <Button type="submit">
-            {clothe ? (
+            {clotheId ? (
               <>
                 <ArrowsClockwise />
                 Atualizar peça

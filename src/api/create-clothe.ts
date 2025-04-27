@@ -1,0 +1,55 @@
+import { api } from "@/lib/axios"
+
+export interface CreateClotheBody {
+  clothe: {
+    name: string,
+    priceInCents: number,
+    description?: string | null,
+    fabric: string,
+    color: string,
+    store: object,
+    deleted: boolean
+    categoryOther?: string | null,
+    brandOther?: string | null,
+    sizeOther?: string | null,
+    category: 'T_SHIRT' | 'SOCIAL_SHIRT' | 'DRESS' | 'PANTS' | 'SHORTS' | 'HOODIE' | 'OTHER',
+    size:
+    'XS' |
+    'S' |
+    'M' |
+    'L' |
+    'XL_LARGER' |
+    'N_34' |
+    'N_36' |
+    'N_38' |
+    'N_40' |
+    'N_42' |
+    'N_44' |
+    'N_46' |
+    'N_48' |
+    'N_50' |
+    'N_52' |
+    'N_54' |
+    'N_56_LARGER' |
+    'OTHER',
+    brand: 'NIKE' | 'ADIDAS' | 'HERING' | 'ZARA' | 'FARM' | 'CEA' | 'RENNER' | 'OTHER',
+    gender: 'MALE' | 'FEMALE' | 'UNISEX',
+  },
+  files: File[]
+}
+
+export async function createClothe({ clothe, files }: CreateClotheBody) {
+  const formData = new FormData();
+
+  formData.append('clothe', JSON.stringify(clothe));
+
+  files.forEach((file) => {
+    formData.append('files', file);
+  });
+
+  return await api.post('/clothes', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}

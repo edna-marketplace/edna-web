@@ -21,7 +21,7 @@ export default function ClotheDetails() {
       />
 
       <Main>
-        <ClotheForm clothe="a" />
+        <ClotheForm clotheId="a" />
       </Main>
 
     </Container>
