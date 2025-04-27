@@ -1,5 +1,3 @@
-'use client'
-
 import { ComponentProps, ElementRef, forwardRef, useEffect, useState } from 'react';
 import {
   FloatingLabel,

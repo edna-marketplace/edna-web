@@ -28,6 +28,14 @@ export const TextInputContainer = styled('div', {
   '&:not(:disabled):hover': {
     borderColor: '$base400',
   },
+
+  variants: {
+    hasError: {
+      true: {
+        borderColor: 'red'
+      },
+    }
+  }
 })
 
 export const Prefix = styled('span', {
@@ -35,8 +43,8 @@ export const Prefix = styled('span', {
   fontSize: '$sm',
   color: '$base400',
   fontWeight: 'regular',
-  padding: '$4',
-  height: '53px',
+  padding: '18px',
+  height: '57px',
   borderRight: '1px solid $base500',
 })
 
@@ -45,7 +53,8 @@ export const Suffix = styled('span', {
   fontSize: '$sm',
   color: '$base400',
   fontWeight: 'regular',
-  padding: '$3 $4',
+  padding: '18px',
+  height: '57px',
   borderLeft: '1px solid $base500',
 })
 
@@ -81,5 +90,15 @@ export const Input = styled('input', {
   '&::placeholder': {
     color: '$base400',
     userSelect: 'none',
+  },
+
+  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+    '-webkit-appearance': 'none',
+    margin: 0,
+  },
+
+  // Remove spin buttons for Firefox
+  '[type="number"]': {
+    '-moz-appearance': 'textfield',
   },
 })

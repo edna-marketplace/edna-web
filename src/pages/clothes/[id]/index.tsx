@@ -20,11 +20,9 @@ export default function ClotheDetails() {
         goBack={handleGoBack}
       />
 
-      <form action="">
-        <Main>
-          <ClotheForm clothe="a" />
-        </Main>
-      </form>
+      <Main>
+        <ClotheForm clothe="a" />
+      </Main>
 
     </Container>
   );

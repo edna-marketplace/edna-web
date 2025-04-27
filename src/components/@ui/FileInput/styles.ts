@@ -29,6 +29,14 @@ export const FileInputContainer = styled('div', {
     borderColor: '$base400',
     cursor: 'pointer',
   },
+
+  variants: {
+    hasError: {
+      true: {
+        borderColor: 'red'
+      },
+    }
+  }
 })
 
 export const Input = styled('input', {

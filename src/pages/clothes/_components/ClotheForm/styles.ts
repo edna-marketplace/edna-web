@@ -1,6 +1,6 @@
 import { Card } from "@/components/@ui/Card"
+import { Text } from "@/components/@ui/Text"
 import { styled } from "@edna-ui/react"
-import Image from "next/image"
 
 export const FormContainer = styled('form', {
   display: 'grid',
@@ -15,7 +15,7 @@ export const FormContainer = styled('form', {
 export const FormCard = styled(Card, {
   display: 'flex',
   flexDirection: 'column',
-  gap: '$4',
+  paddingBottom: '0',
 
   '&>div': {
     display: 'flex',
@@ -31,6 +31,7 @@ export const Section = styled('div', {
   justifyContent: 'center',
 
   padding: '$5 $5 $3',
+  marginBottom: '$8',
 
   background: '$base500',
   borderRadius: '$sm',
@@ -42,6 +43,7 @@ export const Separator = styled('div', {
   width: '100%',
   height: '1px',
   background: '$base500',
+  marginBottom: '$8'
 })
 
 export const ButtonContainer = styled('div', {
@@ -58,4 +60,27 @@ export const ButtonContainer = styled('div', {
     flex: 1,
     justifyContent: 'flex-end',
   },
+})
+
+export const InputContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '$1',
+
+  width: '100%',
+})
+
+export const ErrorContainer = styled('div', {
+  height: '1.5rem',
+  margin: '0'
+})
+
+export const ErrorPlaceholder = styled('div', {
+  height: '1.5rem'
+})
+
+export const ErrorMessage = styled('p', {
+  color: 'red',
+  fontSize: '$sm',
+  height: '1.5rem',
 })

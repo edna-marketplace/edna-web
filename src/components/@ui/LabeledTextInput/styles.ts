@@ -4,7 +4,7 @@ import { styled } from '@edna-ui/react'
 export const Input = styled('input', {
   fontFamily: '$default',
   fontSize: '$sm',
-  color: '$base100',
+  color: '$black',
   fontWeight: 'regular',
   background: 'transparent',
   border: 0,
@@ -46,6 +46,14 @@ export const FloatingLabelContainer = styled('div', {
   '&:not(:disabled):hover': {
     borderColor: '$base400',
   },
+
+  variants: {
+    hasError: {
+      true: {
+        border: '1px solid red'
+      },
+    }
+  }
 })
 
 export const FloatingLabel = styled('label', {
@@ -69,13 +77,14 @@ export const FloatingLabel = styled('label', {
         borderRadius: '$xs',
         padding: '0 $1',
         left: '11px',
+        color: '$base200',
       },
       false: {
         top: '50%',
         transform: 'translateY(-50%)',
         fontSize: '14px',
       }
-    }
+    },
   }
 })
 

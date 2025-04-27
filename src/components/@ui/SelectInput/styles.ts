@@ -24,6 +24,14 @@ export const FloatingLabelContainer = styled('div', {
   '&:not(:disabled):hover': {
     borderColor: '$base400',
   },
+
+  variants: {
+    hasError: {
+      true: {
+        borderColor: 'red'
+      },
+    }
+  }
 })
 
 export const FloatingLabel = styled('label', {
@@ -48,6 +56,7 @@ export const FloatingLabel = styled('label', {
         borderRadius: '$xs',
         padding: '0 $1',
         left: '11px',
+        color: '$base200',
       },
       false: {
         top: '50%',
@@ -62,7 +71,7 @@ export const SelectInputTrigger = styled(SelectPrimitive.Trigger, {
   fontFamily: '$default',
 
   backgroundColor: 'transparent',
-  color: '$base100',
+  color: '$black',
   borderRadius: 0,
   boxSizing: 'border-box',
   border: 'none',

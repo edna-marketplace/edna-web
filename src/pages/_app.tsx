@@ -1,3 +1,5 @@
+'use client'
+
 import type { AppProps } from 'next/app'
 import { globalStyles } from '../styles/global'
 import { AppLayout } from '../layouts/App'

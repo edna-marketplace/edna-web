@@ -1,34 +1,48 @@
-import { ArrowsClockwise, Check, Trash, UploadSimple } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { Brands, Categories, Genders, Sizes } from "@/utils/select-data";
 
-import { ButtonContainer, FormCard, FormContainer, Section, Separator } from "./styles";
+import { ButtonContainer, ErrorContainer, ErrorMessage, ErrorPlaceholder, FormCard, FormContainer, InputContainer, Section, Separator } from "./styles";
+
+import { ImagePreviewItem } from "../ImagePreviewItem";
+import { ClotheFormSchema } from "../../_schemas/form-schema";
 
 import { Button } from "@/components/@ui/Button";
 import { SelectInput } from "@/components/@ui/SelectInput";
 import { SelectItem } from "@/components/@ui/SelectItem";
 import { Text } from "@/components/@ui/Text";
-import { TextArea } from "@/components/@ui/TextArea";
-import { Controller, useForm } from "react-hook-form";
 import { LabeledTextInput } from "@/components/@ui/LabeledTextInput";
 import { TextInput } from "@/components/@ui/TextInput";
 import { LabeledTextArea } from "@/components/@ui/TextArea/index";
 import { FileInput } from "@/components/@ui/FileInput";
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import { ImagePreviewItem } from "../ImagePreviewItem";
 
+import { ArrowsClockwise, Check, Trash } from "@phosphor-icons/react";
+
+import { z } from "zod";
+
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 export interface ClotheFormProps {
   clothe?: any
 }
 
+type ClotheFormData = z.infer<typeof ClotheFormSchema>;
 
 export function ClotheForm({ clothe }: ClotheFormProps) {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const router = useRouter();
 
-  const { control, watch, setValue } = useForm()
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    setValue,
+    formState: { errors }
+  } = useForm<ClotheFormData>({
+    resolver: zodResolver(ClotheFormSchema)
+  })
 
   const brandField = watch("brand");
   const sizeField = watch("size");
@@ -45,26 +59,54 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
     router.push("/clothes");
   }
 
+  function handleCreateClothe(data: ClotheFormData) {
+    console.log(data)
+  }
+
   useEffect(() => {
     const urls = imagesField.map((file) => URL.createObjectURL(file));
     setImagePreviews(urls);
-
-    console.log(watchedImages)
-    console.log(imagesField)
 
     return () => {
       urls.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [imagesField]);
 
-  console.log(imagePreviews)
-
   return (
-    <FormContainer >
+    <FormContainer onSubmit={handleSubmit(handleCreateClothe)}>
       <FormCard>
         <div>
-          <LabeledTextInput css={{ flex: 1, minWidth: '200px' }} label="Nome da peça" />
-          <TextInput css={{ flex: 1, minWidth: '130px', maxWidth: '200px' }} prefix="R$" placeholder="00,00" />
+          <InputContainer css={{ flex: 1, minWidth: '200px' }}>
+            <LabeledTextInput
+              label="Nome da peça"
+              hasError={!!errors.name}
+              {...register("name")}
+            />
+            <ErrorContainer>
+              {errors.name ? (
+                <ErrorMessage>{errors.name.message}</ErrorMessage>
+              ) : (
+                <ErrorPlaceholder />
+              )}
+            </ErrorContainer>
+          </InputContainer>
+
+          <InputContainer css={{ flex: 1, minWidth: '130px', maxWidth: '200px' }}>
+            <TextInput
+              prefix="R$"
+              placeholder="00,00"
+              type="number"
+              hasError={!!errors.price}
+              {...register("price", { valueAsNumber: true })}
+            />
+            <ErrorContainer>
+              {errors.price ? (
+                <ErrorMessage>{errors.price.message}</ErrorMessage>
+              ) : (
+                <ErrorPlaceholder />
+              )}
+            </ErrorContainer>
+          </InputContainer>
         </div>
 
         <Section>
@@ -74,98 +116,207 @@ export function ClotheForm({ clothe }: ClotheFormProps) {
         </Section>
 
         <div>
-          <SelectInput label="Categoria">
-            {Categories.map((category) => (
-              <SelectItem key={category.value} value={category.value}>
-                {category.display}
-              </SelectItem>
-            ))}
-          </SelectInput>
+          <InputContainer>
+            <Controller
+              name="category"
+              control={control}
+              render={({ field }) => (
+                <SelectInput
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  label="Categoria"
+                  hasError={!!errors.category}
+                >
+                  {Categories.map((category) => (
+                    <SelectItem key={category.value} value={category.value}>
+                      {category.display}
+                    </SelectItem>
+                  ))}
+                </SelectInput>
+              )}
+            />
+            <ErrorContainer>
+              {errors.category ? (
+                <ErrorMessage>{errors.category.message}</ErrorMessage>
+              ) : (
+                <ErrorPlaceholder />
+              )}
+            </ErrorContainer>
+          </InputContainer>
 
-          <SelectInput label="Gênero">
-            {Genders.map((gender) => (
-              <SelectItem key={gender.value} value={gender.value}>
-                {gender.display}
-              </SelectItem>
-            ))}
-          </SelectInput>
+          <InputContainer>
+            <Controller
+              name="gender"
+              control={control}
+              render={({ field }) => (
+                <SelectInput
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  label="Gênero"
+                  hasError={!!errors.gender}
+                >
+                  {Genders.map((gender) => (
+                    <SelectItem key={gender.value} value={gender.value}>
+                      {gender.display}
+                    </SelectItem>
+                  ))}
+                </SelectInput>
+              )}
+            />
+            <ErrorContainer>
+              {errors.gender ? (
+                <ErrorMessage>{errors.gender.message}</ErrorMessage>
+              ) : (
+                <ErrorPlaceholder />
+              )}
+            </ErrorContainer>
+          </InputContainer>
         </div>
 
         <div>
-          <Controller
-            name="brand"
-            control={control}
-            render={({ field }) => (
-              <SelectInput
-                value={field.value}
-                onValueChange={field.onChange}
-                label="Marca"
-              >
-                {Brands.map((brand) => (
-                  <SelectItem key={brand.value} value={brand.value}>
-                    {brand.display}
-                  </SelectItem>
-                ))}
-              </SelectInput>
-            )}
-          />
+          <InputContainer>
+            <Controller
+              name="brand"
+              control={control}
+              render={({ field }) => (
+                <SelectInput
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  label="Marca"
+                  hasError={!!errors.brand}
+                >
+                  {Brands.map((brand) => (
+                    <SelectItem key={brand.value} value={brand.value}>
+                      {brand.display}
+                    </SelectItem>
+                  ))}
+                </SelectInput>
+              )}
+            />
+            <ErrorContainer>
+              {errors.brand ? (
+                <ErrorMessage>{errors.brand.message}</ErrorMessage>
+              ) : (
+                <ErrorPlaceholder />
+              )}
+            </ErrorContainer>
+          </InputContainer>
 
-          <Controller
-            name="size"
-            control={control}
-            render={({ field }) => (
-              <SelectInput
-                value={field.value}
-                onValueChange={field.onChange}
-                label="Tamanho"
-              >
-                {Sizes.map((size) => (
-                  <SelectItem key={size.value} value={size.value}>
-                    {size.display}
-                  </SelectItem>
-                ))}
-              </SelectInput>
-            )}
-          />
+          <InputContainer>
+            <Controller
+              name="size"
+              control={control}
+              render={({ field }) => (
+                <SelectInput
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  label="Tamanho"
+                  hasError={!!errors.size}
+                >
+                  {Sizes.map((size) => (
+                    <SelectItem key={size.value} value={size.value}>
+                      {size.display}
+                    </SelectItem>
+                  ))}
+                </SelectInput>
+              )}
+            />
+            <ErrorContainer>
+              {errors.size ? (
+                <ErrorMessage>{errors.size.message}</ErrorMessage>
+              ) : (
+                <ErrorPlaceholder />
+              )}
+            </ErrorContainer>
+          </InputContainer>
         </div>
 
         <div>
           {brandField === "OTHER" && (
-            <LabeledTextInput css={{ width: '49%' }} label="Marca (Outra)" />
+            <LabeledTextInput
+              css={{ width: '49%' }}
+              label="Marca (Outra)"
+              {...register("brandOther")}
+            />
           )}
           {sizeField === "OTHER" && (
-            <LabeledTextInput css={{ width: '49%', marginLeft: 'auto' }} label="Tamanho (Outro)" />
+            <LabeledTextInput
+              css={{ width: '49%', marginLeft: 'auto' }}
+              label="Tamanho (Outro)"
+              {...register("sizeOther")}
+            />
           )}
         </div>
 
         <Separator />
 
         <div>
-          <LabeledTextInput label="Tecido" />
-          <LabeledTextInput label="Cor" />
+          <InputContainer>
+            <LabeledTextInput
+              label="Tecido"
+              hasError={!!errors.fabric}
+              {...register("fabric")}
+            />
+            <ErrorContainer>
+              {errors.fabric ? (
+                <ErrorMessage>{errors.fabric.message}</ErrorMessage>
+              ) : (
+                <ErrorPlaceholder />
+              )}
+            </ErrorContainer>
+          </InputContainer>
+
+          <InputContainer>
+            <LabeledTextInput
+              label="Cor"
+              hasError={!!errors.color}
+              {...register("color")}
+            />
+            <ErrorContainer>
+              {errors.color ? (
+                <ErrorMessage>{errors.color.message}</ErrorMessage>
+              ) : (
+                <ErrorPlaceholder />
+              )}
+            </ErrorContainer>
+          </InputContainer>
         </div>
       </FormCard>
 
       <FormCard>
-        <LabeledTextArea css={{ flex: 1 }} label="Descrição (opcional)" />
+        <LabeledTextArea
+          css={{ flex: 1 }}
+          label="Descrição (opcional)"
+          {...register("description")}
+        />
 
-        <div>
-          <Controller
-            name="images"
-            control={control}
-            defaultValue={[]}
-            render={({ field }) => (
-              <FileInput
-                placeholder="Escolher fotos"
-                onChange={(event) => {
-                  const files = event.target.files ? Array.from(event.target.files) : [];
-                  field.onChange(files);
-                }}
-              />
-            )}
-          />
+        <div style={{ marginTop: "32px" }}>
+          <InputContainer css={{ maxWidth: '200px' }}>
+            <Controller
+              name="images"
+              control={control}
+              defaultValue={[]}
+              render={({ field }) => (
+                <FileInput
+                  placeholder="Escolher fotos"
+                  hasError={!!errors.images}
+                  onChange={(event) => {
+                    const files = event.target.files ? Array.from(event.target.files) : [];
+                    field.onChange(files);
+                  }}
+                />
+              )}
+            />
+            <ErrorContainer>
+              {errors.images ? (
+                <ErrorMessage>{errors.images.message}</ErrorMessage>
+              ) : (
+                <ErrorPlaceholder />
+              )}
+            </ErrorContainer>
+          </InputContainer>
 
-          <Text css={{ maxWidth: '400px', minWidth: '190px' }} size="sm">
+          <Text css={{ maxWidth: '400px', minWidth: '190px', marginBottom: '1.5rem' }} size="xs">
             No máximo 5 imagens nos formatos JPEG, JPG ou PNG com até 5MB (Recomendado: 1080x1920).
           </Text>
         </div>

@@ -1,5 +1,3 @@
-'use client'
-
 import { ComponentProps, ElementRef, forwardRef } from 'react';
 import { toast } from 'sonner';
 import {
@@ -12,6 +10,7 @@ import { UploadSimple } from '@phosphor-icons/react/dist/ssr';
 export interface FileInputProps extends ComponentProps<typeof Input> {
   maxFiles?: number;
   maxSizeInMB?: number;
+  hasError?: boolean
 }
 
 export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
@@ -21,6 +20,7 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
     maxSizeInMB = 5,
     onChange,
     value: _value,
+    hasError,
     ...props
   }: FileInputProps, ref) => {
     const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
@@ -52,7 +52,7 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
     };
 
     return (
-      <FileInputContainer css={css}>
+      <FileInputContainer css={css} hasError={hasError}>
         <Label htmlFor="file-input">
           <UploadSimple size={17} />
           Escolher fotos

@@ -1,5 +1,3 @@
-'use client'
-
 import { ComponentProps, ElementRef, forwardRef, useState, useEffect } from 'react'
 import { CaretDown } from 'phosphor-react'
 import * as Select from '@radix-ui/react-select'
@@ -17,12 +15,13 @@ export interface SelectInputProps extends ComponentProps<typeof Select.Root> {
   css?: any
   placeholder?: string
   label: string
+  hasError?: boolean
 }
 
 export const SelectInput = forwardRef<
   ElementRef<typeof Select.Root>,
   SelectInputProps
->(({ children, placeholder, label, css, value, defaultValue, onValueChange, open, onOpenChange, ...props }: SelectInputProps, ref) => {
+>(({ children, placeholder, label, css, value, defaultValue, onValueChange, open, onOpenChange, hasError, ...props }: SelectInputProps, ref) => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>(value as string || defaultValue as string || '');
   const isFloating = selectedValue !== '';
 
@@ -42,7 +41,7 @@ export const SelectInput = forwardRef<
   };
 
   return (
-    <FloatingLabelContainer css={css}>
+    <FloatingLabelContainer css={css} hasError={hasError}>
       <FloatingLabel isFloating={isFloating}>
         {label}
       </FloatingLabel>

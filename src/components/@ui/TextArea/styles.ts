@@ -4,7 +4,7 @@ import { styled } from '@edna-ui/react'
 export const TextArea = styled('textarea', {
   fontFamily: '$default',
   fontSize: '$sm',
-  color: '$base100',
+  color: '$black',
   fontWeight: 'regular',
   background: 'transparent',
   border: 0,
@@ -69,6 +69,7 @@ export const FloatingLabel = styled('label', {
         borderRadius: '$xs',
         padding: '0 $1',
         left: '11px',
+        color: '$base200',
       },
       false: {
         top: '$6',

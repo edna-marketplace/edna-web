@@ -1,5 +1,3 @@
-'use client'
-
 import { Eye, EyeSlash } from 'phosphor-react';
 import { ComponentProps, ElementRef, forwardRef, useEffect, useState } from 'react';
 import {
@@ -11,11 +9,12 @@ import {
 
 export interface LabeledTextInput extends Omit<ComponentProps<typeof Input>, 'placeholder'> {
   label: string;
+  hasError?: boolean;
   isPassword?: boolean;
 }
 
 export const LabeledTextInput = forwardRef<ElementRef<typeof Input>, LabeledTextInput>(
-  ({ label, isPassword, css, value, ...props }, ref) => {
+  ({ label, isPassword, hasError, css, value, ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [inputValue, setInputValue] = useState(value || '');
@@ -32,7 +31,7 @@ export const LabeledTextInput = forwardRef<ElementRef<typeof Input>, LabeledText
     }
 
     return (
-      <FloatingLabelContainer css={css}>
+      <FloatingLabelContainer css={css} hasError={hasError}>
         <FloatingLabel isFloating={isFloating}>
           {label}
         </FloatingLabel>

@@ -1,6 +1,4 @@
-'use client'
-
-import { ComponentProps, forwardRef, ElementRef, useState } from 'react'
+import { ComponentProps, forwardRef, ElementRef, useState, ChangeEvent, KeyboardEvent } from 'react'
 import {
   Input,
   Prefix,
@@ -14,10 +12,11 @@ export interface TextInputProps extends ComponentProps<typeof Input> {
   prefix?: string
   suffix?: string
   isPassword?: boolean
+  hasError?: boolean
 }
 
 export const TextInput = forwardRef<ElementRef<typeof Input>, TextInputProps>(
-  ({ prefix, suffix, isPassword, css, ...props }: TextInputProps, ref) => {
+  ({ prefix, suffix, isPassword, hasError, css, ...props }: TextInputProps, ref) => {
     const [showPassword, setShowPassword] = useState(false)
 
     function handleTogglePassword() {
@@ -25,7 +24,7 @@ export const TextInput = forwardRef<ElementRef<typeof Input>, TextInputProps>(
     }
 
     return (
-      <TextInputContainer css={css}>
+      <TextInputContainer css={css} hasError={hasError}>
         {!!prefix && <Prefix>{prefix}</Prefix>}
         <Input
           ref={ref}
