@@ -7,7 +7,8 @@ export const ClotheFormSchema = z.object({
     .min(5, { message: "O nome deve conter no mínimo 5 caracteres." }),
   price: z
     .number({ message: 'O valor é obrigatório.' })
-    .min(10, { message: 'O valor mínimo é R$ 10,00.' }),
+    .min(10, { message: 'O valor mínimo é R$ 10,00.' })
+    .transform((val) => Math.round(val * 100)),
   category: z.enum([
     'T_SHIRT',
     'SOCIAL_SHIRT',

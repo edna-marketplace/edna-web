@@ -51,13 +51,13 @@ export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
         height={170}
       />
       <Title size="sm">
-        {clothe.priceInCents.toLocaleString('pt-br', {
+        {(clothe.priceInCents / 100).toLocaleString('pt-br', {
           style: 'currency',
           currency: 'BRL'
         })}
       </Title>
 
-      {/* adicionar logica para trucar o nome caso seja maior que 22 caracteres */}
+      {/* adicionar logica para truncar o nome caso seja maior que 22 caracteres */}
       <Title size="xs" color="base200">{clothe.name}</Title>
 
       <InfoContainer>

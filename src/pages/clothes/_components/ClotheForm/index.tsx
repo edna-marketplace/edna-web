@@ -28,6 +28,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { updateClotheImages } from "@/api/update-clothe-images";
+import { deleteClothe } from "@/api/delete-clothe";
 
 type ClotheFormData = z.infer<typeof ClotheFormSchema>;
 
@@ -53,6 +54,7 @@ export function ClotheForm() {
 
   const brandField = watch("brand");
   const sizeField = watch("size");
+  const priceField = watch("price")
 
   const watchedImages = watch("images");
   const imagesField: File[] = Array.isArray(watchedImages) ? watchedImages : [];
@@ -94,6 +96,8 @@ export function ClotheForm() {
       })
 
       toast.success('Peça cadastrada com sucesso!')
+
+      router.push('/clothes')
     } catch (error) {
       console.error(error)
     }
@@ -106,7 +110,7 @@ export function ClotheForm() {
 
     if (data) {
       setValue("name", data.name);
-      setValue("price", data.priceInCents);
+      setValue("price", data.priceInCents / 100);
       setValue("category", data.category);
       setValue("gender", data.gender);
       setValue("brand", data.brand);
@@ -148,6 +152,12 @@ export function ClotheForm() {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  async function handleDeleteClothe() {
+    await deleteClothe(clotheId)
+
+    router.push('/clothes')
   }
 
   useEffect(() => {
@@ -204,7 +214,13 @@ export function ClotheForm() {
 
         <Section>
           <Text size="sm">
-            A PLATAFORMA COBRA UMA <strong>TAXA DE 14%</strong> POR VENDA, VOCÊ RECEBERÁ <strong>R$ 00,00</strong> POR ESSA PEÇA
+            A PLATAFORMA COBRA UMA <strong>TAXA DE 14%</strong> {" "}
+            POR VENDA, VOCÊ RECEBERÁ <strong>{priceField ?
+              (priceField * 0.86)
+                .toLocaleString('pt-br',
+                  { style: 'currency', currency: 'BRL' })
+              : "R$ 00,00"
+            }</strong> POR ESSA PEÇA
           </Text>
         </Section>
 
@@ -453,7 +469,7 @@ export function ClotheForm() {
       <div></div>
       <ButtonContainer>
         {clothe && (
-          <Button type="button" variant="destructive">
+          <Button type="button" variant="destructive" onClick={handleDeleteClothe}>
             <Trash weight="bold" />
             Excluir
           </Button>

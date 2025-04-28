@@ -1,12 +1,11 @@
-import { SelectItem } from "@/components/@ui/SelectItem"
-import { Container } from "./styles"
-import { SelectInput } from "@/components/@ui/SelectInput"
-import { LabeledTextInput } from "@/components/@ui/LabeledTextInput"
 import { Button } from "@/components/@ui/Button"
-import { Plus, SlidersHorizontal } from "@phosphor-icons/react"
-import { Brands, Categories, Sizes } from "@/utils/select-data"
-import { useRouter } from "next/router"
+import { SelectInput } from "@/components/@ui/SelectInput"
+import { SelectItem } from "@/components/@ui/SelectItem"
 import { TextInput } from "@/components/@ui/TextInput"
+import { Brands, Categories, Sizes } from "@/utils/select-data"
+import { Plus, SlidersHorizontal } from "@phosphor-icons/react"
+import { useRouter } from "next/router"
+import { Container } from "./styles"
 
 export function FilterForm() {
   const router = useRouter()
@@ -46,10 +45,10 @@ export function FilterForm() {
       <div style={{ width: '30%', minWidth: '200px', flex: 'unset' }}>
         <TextInput placeholder="Nome da peça" />
       </div>
-      <Button variant="secondary">
+      {/* <Button variant="secondary">
         <SlidersHorizontal size={17} />
         Filtros
-      </Button>
+      </Button> */}
       <Button onClick={handleNewClothe}>
         <Plus size={17} />
         Nova peça
