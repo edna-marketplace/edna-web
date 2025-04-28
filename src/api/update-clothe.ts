@@ -1,7 +1,7 @@
 import { api } from "@/lib/axios";
 import { Clothe } from "./create-clothe";
 
-export async function UpdateClothe({
+export async function updateClothe({
   id,
   name,
   priceInCents,

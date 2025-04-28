@@ -1,38 +1,41 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { Brands, Categories, Genders, Sizes } from "@/utils/select-data";
 
 import { ButtonContainer, ErrorContainer, ErrorMessage, ErrorPlaceholder, FormCard, FormContainer, InputContainer, Section, Separator } from "./styles";
 
-import { ImagePreviewItem } from "../ImagePreviewItem";
 import { ClotheFormSchema } from "../../_schemas/form-schema";
+import { ImagePreviewItem } from "../ImagePreviewItem";
 
 import { Button } from "@/components/@ui/Button";
+import { FileInput } from "@/components/@ui/FileInput";
+import { LabeledTextInput } from "@/components/@ui/LabeledTextInput";
 import { SelectInput } from "@/components/@ui/SelectInput";
 import { SelectItem } from "@/components/@ui/SelectItem";
 import { Text } from "@/components/@ui/Text";
-import { LabeledTextInput } from "@/components/@ui/LabeledTextInput";
 import { TextInput } from "@/components/@ui/TextInput";
-import { LabeledTextArea } from "@/components/@ui/LabeledTextArea/index";
-import { FileInput } from "@/components/@ui/FileInput";
 
 import { ArrowsClockwise, Check, Trash } from "@phosphor-icons/react";
 
 import { z } from "zod";
 
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Clothe, createClothe } from "@/api/create-clothe";
-import { toast } from "sonner";
 import { getClotheById } from "@/api/get-clothe-by-id";
+import { updateClothe } from "@/api/update-clothe";
 import { TextArea } from "@/components/@ui/TextArea";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { updateClotheImages } from "@/api/update-clothe-images";
 
 type ClotheFormData = z.infer<typeof ClotheFormSchema>;
 
 export function ClotheForm() {
   const [clothe, setClothe] = useState<Clothe>()
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [existingImages, setExistingImages] = useState<{ id: string, url: string }[]>([]);
+  const [removedImagesIds, setRemovedImagesIds] = useState<string[]>([])
 
   const router = useRouter();
   const clotheId = router.query.id as string
@@ -57,6 +60,11 @@ export function ClotheForm() {
   function handleRemoveImage(name: string) {
     const filtered = imagesField.filter((f) => f.name !== name);
     setValue("images", filtered, { shouldDirty: true, shouldValidate: true });
+  }
+
+  function handleRemoveExistingImage(id: string) {
+    setRemovedImagesIds(state => [...state, id])
+    setExistingImages(prev => prev.filter(img => img.id !== id));
   }
 
   function handleGoBack() {
@@ -106,7 +114,39 @@ export function ClotheForm() {
       setValue("fabric", data.fabric);
       setValue("color", data.color);
       setValue("description", data.description);
-      // setValue("images", data.images);
+      setExistingImages(data.images || []);
+    }
+  }
+
+  async function handleUpdateClothe(data: ClotheFormData) {
+    try {
+      updateClothe({
+        id: clothe?.id,
+        name: data.name,
+        priceInCents: data.price,
+        description: data.description,
+        fabric: data.fabric,
+        color: data.color,
+        store: {},
+        deleted: false,
+        categoryOther: null,
+        brandOther: data.brandOther,
+        sizeOther: data.sizeOther,
+        category: data.category,
+        size: data.size,
+        brand: data.brand,
+        gender: data.gender
+      })
+
+      updateClotheImages(
+        data.images,
+        removedImagesIds,
+        clotheId
+      )
+
+      toast.success('Peça atualizada com sucesso!')
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -114,19 +154,17 @@ export function ClotheForm() {
     const urls = imagesField.map((file) => URL.createObjectURL(file));
     setImagePreviews(urls);
 
-    if (clotheId) {
+    if (clotheId && !clothe) {
       handleGetClotheById()
     }
 
     return () => {
       urls.forEach((url) => URL.revokeObjectURL(url));
     };
-  }, [imagesField]);
-
-  console.log(clothe)
+  }, [imagesField, clotheId, clothe]);
 
   return (
-    <FormContainer onSubmit={handleSubmit(handleCreateClothe)}>
+    <FormContainer onSubmit={handleSubmit(clothe ? handleUpdateClothe : handleCreateClothe)}>
       <FormCard>
         <div>
           <InputContainer css={{ flex: 1, minWidth: '200px' }}>
@@ -292,21 +330,19 @@ export function ClotheForm() {
 
         <div>
           {brandField === "OTHER" && (
-            <InputContainer>
+            <InputContainer css={{ width: '49%', marginBottom: '$4' }}>
               <Text type="label">Marca (Outro)</Text>
-              <LabeledTextInput
-                css={{ width: '49%' }}
-                label="Marca (Outra)"
+              <TextInput
+                placeholder="Marca (Outra)"
                 {...register("brandOther")}
               />
             </InputContainer>
           )}
           {sizeField === "OTHER" && (
-            <InputContainer>
+            <InputContainer css={{ width: '49%', marginLeft: 'auto', marginBottom: '$4' }}>
               <Text type="label">Tamanho (Outro)</Text>
-              <LabeledTextInput
-                css={{ width: '49%', marginLeft: 'auto' }}
-                label="Tamanho (Outro)"
+              <TextInput
+                placeholder="Tamanho (Outro)"
                 {...register("sizeOther")}
               />
             </InputContainer>
@@ -390,15 +426,25 @@ export function ClotheForm() {
         </div>
 
         <Section css={{ minHeight: '140px' }}>
-          {imagePreviews.length > 0 ? (
-            imagesField.map((file, i) => (
-              <ImagePreviewItem
-                key={file.name}
-                name={file.name}            // ← pass the file’s name
-                src={imagePreviews[i]}
-                onRemove={handleRemoveImage}
-              />
-            ))
+          {imagePreviews.length > 0 || existingImages.length > 0 ? (
+            <>
+              {existingImages.map((image) => (
+                <ImagePreviewItem
+                  key={image.id}
+                  name={image.id}
+                  src={image.url}
+                  onRemove={() => handleRemoveExistingImage(image.id)}
+                />
+              ))}
+              {imagesField.map((file, i) => (
+                <ImagePreviewItem
+                  key={file.name}
+                  name={file.name}
+                  src={imagePreviews[i]}
+                  onRemove={handleRemoveImage}
+                />
+              ))}
+            </>
           ) : (
             <Text css={{ flex: 1, opacity: .6 }} size="md">Nenhuma foto selecionada</Text>
           )}
