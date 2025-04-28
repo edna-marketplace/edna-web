@@ -22,6 +22,7 @@ export default function Clothes() {
 
   useEffect(() => {
     handleFetchClothesWithFilter()
+    console.log(clothes)
   }, [])
 
   return (

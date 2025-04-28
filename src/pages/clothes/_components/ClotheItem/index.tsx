@@ -25,7 +25,7 @@ export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
     S: "P",
     M: "M",
     L: "G",
-    XL_LARGER: "GG ou maior",
+    XL_LARGER: "GG+",
     N_34: "34",
     N_36: "36",
     N_38: "38",
@@ -37,7 +37,7 @@ export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
     N_50: "50",
     N_52: "52",
     N_54: "54",
-    N_56_LARGER: "56 ou maior",
+    N_56_LARGER: "56+",
     OTHER: "Outro"
   };
 
@@ -57,14 +57,34 @@ export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
         })}
       </Title>
 
-      {/* adicionar logica para truncar o nome caso seja maior que 22 caracteres */}
-      <Title size="xs" color="base200">{clothe.name}</Title>
+      <Title size="xs" color="base200">
+        {clothe.name.length > 22 ? `${clothe.name.slice(0, 17)}...` : clothe.name}
+      </Title>
 
       <InfoContainer>
-        {/* adicionar logica para truncar marca caso seja maior que 15 caracteres */}
-        <Title size="xs" color="base400">{brandMapper[clothe.brand]}</Title>
+        <Title size="xs" color="base400">
+          {clothe.brand === "OTHER" && clothe.brandOther ? (
+            clothe.brandOther.length > 10
+              ? `${clothe.brandOther.slice(0, 7)}...`
+              : clothe.brandOther === "OTHER" ? brandMapper["OTHER"] : clothe.brandOther
+          ) : (
+            brandMapper[clothe.brand].length > 10
+              ? `${brandMapper[clothe.brand].slice(0, 7)}`
+              : brandMapper[clothe.brand]
+          )}
+        </Title>
         <Dot />
-        <Title size="xs" color="base400">{sizeMapper[clothe.size]}</Title>
+        <Title size="xs" color="base400">
+          {clothe.size === "OTHER" && clothe.sizeOther ? (
+            clothe.sizeOther.length > 7
+              ? `${clothe.sizeOther.slice(0, 5)}...`
+              : clothe.sizeOther === "OTHER" ? sizeMapper["OTHER"] : clothe.sizeOther
+          ) : (
+            sizeMapper[clothe.size].length > 5
+              ? `${sizeMapper[clothe.size].slice(0, 5)}`
+              : sizeMapper[clothe.size]
+          )}
+        </Title>
       </InfoContainer>
     </Container>
   )

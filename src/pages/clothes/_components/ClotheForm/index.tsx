@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { Brands, Categories, Genders, Sizes } from "@/utils/select-data";
 
-import { ButtonContainer, ErrorContainer, ErrorMessage, ErrorPlaceholder, FormCard, FormContainer, InputContainer, Section, Separator } from "./styles";
+import { ButtonContainer, ErrorContainer, ErrorMessage, ErrorPlaceholder, FormCard, FormContainer, InputContainer, Section, Separator, TipContainer } from "./styles";
 
 import { ClotheFormSchema } from "../../_schemas/form-schema";
 import { ImagePreviewItem } from "../ImagePreviewItem";
@@ -16,7 +16,7 @@ import { SelectItem } from "@/components/@ui/SelectItem";
 import { Text } from "@/components/@ui/Text";
 import { TextInput } from "@/components/@ui/TextInput";
 
-import { ArrowsClockwise, Check, Trash } from "@phosphor-icons/react";
+import { ArrowsClockwise, Check, Lightbulb, Trash } from "@phosphor-icons/react";
 
 import { z } from "zod";
 
@@ -45,6 +45,7 @@ export function ClotheForm() {
     register,
     handleSubmit,
     control,
+    setError,
     watch,
     setValue,
     formState: { errors }
@@ -75,7 +76,15 @@ export function ClotheForm() {
 
   async function handleCreateClothe(data: ClotheFormData) {
     try {
-      createClothe({
+      if (imagesField.length === 0 && existingImages.length === 0) {
+        setError("images", {
+          type: "custom",
+          message: "Selecione pelo menos 1 foto."
+        });
+        return;
+      }
+
+      await createClothe({
         clothe: {
           name: data.name,
           priceInCents: data.price,
@@ -92,7 +101,7 @@ export function ClotheForm() {
           brand: data.brand,
           gender: data.gender
         },
-        files: data.images
+        files: data.images ? data.images : []
       })
 
       toast.success('Peça cadastrada com sucesso!')
@@ -114,7 +123,9 @@ export function ClotheForm() {
       setValue("category", data.category);
       setValue("gender", data.gender);
       setValue("brand", data.brand);
+      setValue("brandOther", data.brandOther)
       setValue("size", data.size);
+      setValue("sizeOther", data.sizeOther)
       setValue("fabric", data.fabric);
       setValue("color", data.color);
       setValue("description", data.description);
@@ -124,7 +135,19 @@ export function ClotheForm() {
 
   async function handleUpdateClothe(data: ClotheFormData) {
     try {
-      updateClothe({
+      if (imagesField.length === 0 && existingImages.length === 0) {
+        setError("images", {
+          type: "custom",
+          message: "Selecione pelo menos 1 foto."
+        });
+        return;
+      }
+      if ((imagesField.length + existingImages.length) > 5) {
+        toast.error(`Você pode adicionar no máximo 5 imagens.`);
+        return;
+      }
+
+      await updateClothe({
         id: clothe?.id,
         name: data.name,
         priceInCents: data.price,
@@ -133,7 +156,7 @@ export function ClotheForm() {
         color: data.color,
         store: {},
         deleted: false,
-        categoryOther: null,
+        categoryOther: data.brandOther,
         brandOther: data.brandOther,
         sizeOther: data.sizeOther,
         category: data.category,
@@ -143,12 +166,13 @@ export function ClotheForm() {
       })
 
       updateClotheImages(
-        data.images,
+        data.images ? data.images : [],
         removedImagesIds,
         clotheId
       )
 
       toast.success('Peça atualizada com sucesso!')
+      router.push('/clothes')
     } catch (error) {
       console.error(error)
     }
@@ -352,6 +376,13 @@ export function ClotheForm() {
                 placeholder="Marca (Outra)"
                 {...register("brandOther")}
               />
+              <ErrorContainer>
+                {errors.brandOther ? (
+                  <ErrorMessage>{errors.brandOther.message}</ErrorMessage>
+                ) : (
+                  <ErrorPlaceholder />
+                )}
+              </ErrorContainer>
             </InputContainer>
           )}
           {sizeField === "OTHER" && (
@@ -361,6 +392,13 @@ export function ClotheForm() {
                 placeholder="Tamanho (Outro)"
                 {...register("sizeOther")}
               />
+              <ErrorContainer>
+                {errors.sizeOther ? (
+                  <ErrorMessage>{errors.sizeOther.message}</ErrorMessage>
+                ) : (
+                  <ErrorPlaceholder />
+                )}
+              </ErrorContainer>
             </InputContainer>
           )}
         </div>
@@ -436,7 +474,7 @@ export function ClotheForm() {
             </ErrorContainer>
           </InputContainer>
 
-          <Text css={{ maxWidth: '400px', minWidth: '190px', marginBottom: '1.5rem' }} size="xs">
+          <Text css={{ maxWidth: '400px', minWidth: '190px', marginBottom: '1.5rem' }} size="sm">
             No máximo 5 imagens nos formatos JPEG, JPG ou PNG com até 5MB (Recomendado: 1080x1920).
           </Text>
         </div>
@@ -465,6 +503,12 @@ export function ClotheForm() {
             <Text css={{ flex: 1, opacity: .6 }} size="md">Nenhuma foto selecionada</Text>
           )}
         </Section>
+        <TipContainer>
+          <Lightbulb weight="bold" />
+          <Text size="xs">
+            Recomendamos que a primeira foto da peça seja no corpo
+          </Text>
+        </TipContainer>
       </FormCard>
       <div></div>
       <ButtonContainer>

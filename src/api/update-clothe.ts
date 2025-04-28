@@ -9,7 +9,9 @@ export async function updateClothe({
   category,
   gender,
   brand,
+  brandOther,
   size,
+  sizeOther,
   fabric,
   color,
 }: Clothe) {
@@ -21,7 +23,9 @@ export async function updateClothe({
     category,
     gender,
     brand,
+    brandOther,
     size,
+    sizeOther,
     fabric,
     color,
   })

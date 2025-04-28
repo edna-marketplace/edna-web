@@ -33,7 +33,7 @@ export const ClotheFormSchema = z.object({
     'RENNER',
     'OTHER'
   ], { message: "Selecione uma marca." }),
-  brandOther: z.string().optional(),
+  brandOther: z.string().optional().nullable(),
   size: z.enum([
     'XS',
     'S',
@@ -54,12 +54,12 @@ export const ClotheFormSchema = z.object({
     'N_56_LARGER',
     'OTHER'
   ], { message: "Selecione um tamanho." }),
-  sizeOther: z.string().optional(),
+  sizeOther: z.string().optional().nullable(),
   fabric: z.string().min(1, { message: "O tecido é obrigatório." }),
   color: z.string().min(1, { message: "A cor é obrigatória." }),
   description: z.string().optional(),
   images: z
     .array(z.instanceof(File))
-    .min(1, { message: "Selecione pelo menos 1 foto." })
     .max(5, { message: "Selecione no máximo 5 foto." })
+    .optional()
 })

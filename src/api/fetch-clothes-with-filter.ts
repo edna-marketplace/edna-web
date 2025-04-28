@@ -3,9 +3,11 @@ import { api } from "@/lib/axios"
 export interface ClotheSummary {
   id: string
   name: string
-  priceInCents: number,
-  size: string
+  priceInCents: number
   brand: string
+  brandOther: string
+  size: string
+  sizeOther: string
   imageURL: string
   storeImageUrl: string | null
 }
