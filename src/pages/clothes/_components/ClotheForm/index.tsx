@@ -61,7 +61,7 @@ export function ClotheForm() {
     setError,
     watch,
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ClotheFormData>({
     resolver: zodResolver(ClotheFormSchema),
   })
@@ -260,9 +260,9 @@ export function ClotheForm() {
             <strong>
               {priceField
                 ? (priceField * 0.86).toLocaleString('pt-br', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  })
+                  style: 'currency',
+                  currency: 'BRL',
+                })
                 : 'R$ 00,00'}
             </strong>{' '}
             POR ESSA PEÇA
@@ -561,7 +561,7 @@ export function ClotheForm() {
           <Button type="button" variant="tertiary" onClick={handleGoBack}>
             Cancelar
           </Button>
-          <Button type="submit">
+          <Button type="submit" disabled={isSubmitting}>
             {clothe ? (
               <>
                 <ArrowsClockwise />
