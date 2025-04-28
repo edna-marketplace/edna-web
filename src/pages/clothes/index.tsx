@@ -1,13 +1,16 @@
-import { ClothesContainer, Container, EmptyListContainer, Main } from "./styles";
-import { Header } from "@/components/Header";
-import { FilterForm } from "./_components/FilterForm";
-import { ClotheItem } from "./_components/ClotheItem";
-import { useRouter } from "next/router";
-import { ClotheSummary, fetchClothesWithFilter } from "@/api/fetch-clothes-with-filter";
-import { useEffect, useState } from "react";
-import { Title } from "@/components/@ui/Title";
-import { CoatHanger } from "@phosphor-icons/react/dist/ssr";
-import { Text } from "@/components/@ui/Text";
+import { ClothesContainer, Container, EmptyListContainer, Main } from './styles'
+import { Header } from '@/components/Header'
+import { FilterForm } from './_components/FilterForm'
+import { ClotheItem } from './_components/ClotheItem'
+import { useRouter } from 'next/router'
+import {
+  ClotheSummary,
+  fetchClothesWithFilter,
+} from '@/api/fetch-clothes-with-filter'
+import { useEffect, useState } from 'react'
+import { Title } from '@/components/@ui/Title'
+import { CoatHanger } from '@phosphor-icons/react/dist/ssr'
+import { Text } from '@/components/@ui/Text'
 
 export default function Clothes() {
   const [clothes, setClothes] = useState<ClotheSummary[]>([])
@@ -40,20 +43,19 @@ export default function Clothes() {
         {clothes.length > 0 ? (
           <ClothesContainer>
             {clothes.map((clothe) => (
-              <ClotheItem clothe={clothe} onClick={() => handleClotheDetails(clothe.id)} />
+              <ClotheItem
+                clothe={clothe}
+                onClick={() => handleClotheDetails(clothe.id)}
+              />
             ))}
           </ClothesContainer>
         ) : (
           <EmptyListContainer>
-            <Title>
-              Nenhuma peça por aqui!
-            </Title>
-            <Text>
-              Adicione uma nova peça clicando no botão acima
-            </Text>
+            <Title>Nenhuma peça por aqui!</Title>
+            <Text>Adicione uma nova peça clicando no botão acima</Text>
           </EmptyListContainer>
         )}
       </Main>
-    </Container >
+    </Container>
   )
 }

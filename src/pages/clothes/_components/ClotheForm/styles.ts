@@ -1,5 +1,5 @@
-import { Card } from "@/components/@ui/Card"
-import { styled } from "@edna-ui/react"
+import { Card } from '@/components/@ui/Card'
+import { styled } from '@edna-ui/react'
 
 export const FormContainer = styled('form', {
   display: 'grid',
@@ -20,7 +20,7 @@ export const FormCard = styled(Card, {
     display: 'flex',
     alignItems: 'center',
     gap: '$4',
-  }
+  },
 })
 
 export const Section = styled('div', {
@@ -42,7 +42,7 @@ export const Separator = styled('div', {
   width: '100%',
   height: '1px',
   background: '$base500',
-  marginBottom: '$8'
+  marginBottom: '$8',
 })
 
 export const ButtonContainer = styled('div', {
@@ -71,11 +71,11 @@ export const InputContainer = styled('div', {
 
 export const ErrorContainer = styled('div', {
   height: '1.5rem',
-  margin: '0'
+  margin: '0',
 })
 
 export const ErrorPlaceholder = styled('div', {
-  height: '1.5rem'
+  height: '1.5rem',
 })
 
 export const ErrorMessage = styled('p', {
@@ -84,8 +84,8 @@ export const ErrorMessage = styled('p', {
   height: '1.5rem',
 })
 
-export const TipContainer = styled("div", {
-  display: "flex",
+export const TipContainer = styled('div', {
+  display: 'flex',
   justifyContent: 'center',
   alignSelf: 'center',
   gap: '-20px',
@@ -95,15 +95,15 @@ export const TipContainer = styled("div", {
   textAlign: 'center',
 
   marginTop: '-$10',
-  marginBottom: "$4",
+  marginBottom: '$4',
 
-  height: "fit-content",
-  width: "fit-content",
+  height: 'fit-content',
+  width: 'fit-content',
 
-  backgroundColor: "$base700",
+  backgroundColor: '$base700',
 
   border: '1px solid $base400',
   borderRadius: '$sm',
 
-  fontWeight: '$bold'
+  fontWeight: '$bold',
 })

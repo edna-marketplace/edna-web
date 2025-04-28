@@ -77,7 +77,7 @@ export const Button = styled('button', {
         '&:not(:disabled):hover': {
           borderColor: '$red500',
         },
-      }
+      },
     },
 
     size: {

@@ -1,4 +1,3 @@
-
 import { styled } from '@edna-ui/react'
 
 export const TextArea = styled('textarea', {
@@ -30,7 +29,7 @@ export const FloatingLabelContainer = styled('div', {
   boxSizing: 'border-box',
   border: '1px solid $base500',
   width: '100%',
-  padding: "$1 0 0 0",
+  padding: '$1 0 0 0',
 
   '&:has(textarea:focus)': {
     boxShadow: '0 0 0 2px $colors$black',
@@ -56,7 +55,8 @@ export const FloatingLabel = styled('label', {
   color: '$base400',
   userSelect: 'none',
 
-  transition: 'transform 0.2s ease-in-out, font-size 0.2s, top 0.2s ease-in-out',
+  transition:
+    'transform 0.2s ease-in-out, font-size 0.2s, top 0.2s ease-in-out',
 
   variants: {
     isFloating: {
@@ -75,7 +75,7 @@ export const FloatingLabel = styled('label', {
         top: '$6',
         transform: 'translateY(-50%)',
         fontSize: '14px',
-      }
-    }
-  }
+      },
+    },
+  },
 })

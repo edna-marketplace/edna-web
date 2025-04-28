@@ -1,156 +1,141 @@
 const Categories = [
-  {
-    value: 'T_SHIRT',
-    display: 'Camiseta'
-  },
-  {
-    value: 'SOCIAL_SHIRT',
-    display: 'Camisa social'
-  },
-  {
-    value: 'DRESS',
-    display: 'Vestido'
-  },
-  {
-    value: 'PANTS',
-    display: 'Calça'
-  },
-  {
-    value: 'SHORTS',
-    display: 'Shorts'
-  },
-  {
-    value: 'HOODIE',
-    display: 'Moletom'
-  },
-  {
-    value: 'OTHER',
-    display: 'Outro'
-  }
+  { value: 'T_SHIRT', display: 'Camiseta' },
+  { value: 'SOCIAL_SHIRT', display: 'Camisa social' },
+  { value: 'SUIT', display: 'Terno' },
+  { value: 'ACTIVEWEAR', display: 'Roupa esportiva' },
+  { value: 'DRESS', display: 'Vestido' },
+  { value: 'PANTS', display: 'Calça' },
+  { value: 'SHORTS', display: 'Shorts' },
+  { value: 'JACKET_HOODIE', display: 'Jaqueta & Casaco' },
+  { value: 'UNDERWEAR', display: 'Roupa íntima' },
+  { value: 'FOOTWEAR', display: 'Calçado' },
+  { value: 'ACCESSORIES', display: 'Acessórios' },
+  { value: 'SLEEPWEAR', display: 'Pijamas' },
+  { value: 'SWIMWEAR', display: 'Roupa de banho' },
 ]
 
 const Brands = [
   {
     value: 'NIKE',
-    display: 'Nike'
+    display: 'Nike',
   },
   {
     value: 'ADIDAS',
-    display: 'Adidas'
+    display: 'Adidas',
   },
   {
     value: 'HERING',
-    display: 'Hering'
+    display: 'Hering',
   },
   {
     value: 'ZARA',
-    display: 'Zara'
+    display: 'Zara',
   },
   {
     value: 'FARM',
-    display: 'Farm'
+    display: 'Farm',
   },
   {
     value: 'CEA',
-    display: 'C&A'
+    display: 'C&A',
   },
   {
     value: 'RENNER',
-    display: 'Renner'
+    display: 'Renner',
   },
   {
     value: 'OTHER',
-    display: 'Outro'
-  }
+    display: 'Outro',
+  },
 ]
 
 const Sizes = [
   {
     value: 'XS',
-    display: 'PP'
+    display: 'PP',
   },
   {
     value: 'S',
-    display: 'P'
+    display: 'P',
   },
   {
     value: 'M',
-    display: 'M'
+    display: 'M',
   },
   {
     value: 'L',
-    display: 'G'
+    display: 'G',
   },
   {
     value: 'XL_LARGER',
-    display: 'GG ou maior'
+    display: 'GG ou maior',
   },
   {
     value: 'N_34',
-    display: '34'
+    display: '34',
   },
   {
     value: 'N_36',
-    display: '36'
+    display: '36',
   },
   {
     value: 'N_38',
-    display: '38'
+    display: '38',
   },
   {
     value: 'N_40',
-    display: '40'
+    display: '40',
   },
   {
     value: 'N_42',
-    display: '42'
+    display: '42',
   },
   {
     value: 'N_44',
-    display: '44'
+    display: '44',
   },
   {
     value: 'N_46',
-    display: '46'
+    display: '46',
   },
   {
     value: 'N_48',
-    display: '48'
+    display: '48',
   },
   {
     value: 'N_50',
-    display: '50'
+    display: '50',
   },
   {
     value: 'N_52',
-    display: '52'
+    display: '52',
   },
   {
     value: 'N_54',
-    display: '54'
+    display: '54',
   },
   {
     value: 'N_56_LARGER',
-    display: '56 ou maior'
+    display: '56 ou maior',
   },
   {
     value: 'OTHER',
-    display: 'Outro'
-  }
-];
+    display: 'Outro',
+  },
+]
 
 const Genders = [
   {
     value: 'MALE',
-    display: 'Masculino'
+    display: 'Masculino',
   },
   {
     value: 'FEMALE',
-    display: 'Feminino'
+    display: 'Feminino',
   },
   {
     value: 'UNISEX',
-    display: 'Unissex'
+    display: 'Unissex',
   },
 ]
 

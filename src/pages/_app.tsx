@@ -10,7 +10,7 @@ globalStyles()
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <AppLayout>
-      <Toaster richColors position='top-right' />
+      <Toaster richColors position="top-right" />
       <Component {...pageProps} />
     </AppLayout>
   )

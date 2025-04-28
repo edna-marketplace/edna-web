@@ -20,7 +20,7 @@ export const Title = styled('h3', {
       base300: { color: '$base300' },
       base400: { color: '$base400' },
       base500: { color: '$base500' },
-    }
+    },
   },
 
   defaultVariants: {

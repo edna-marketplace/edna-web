@@ -1,4 +1,4 @@
-import { api } from "@/lib/axios"
+import { api } from '@/lib/axios'
 
 export interface ClotheSummary {
   id: string
@@ -16,7 +16,7 @@ export interface FetchClothesWithFilterResponse {
   clothes: ClotheSummary[]
   meta: {
     pageIndex: number
-    perPage: number,
+    perPage: number
     totalCount: number
   }
 }

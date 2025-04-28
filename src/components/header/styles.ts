@@ -1,4 +1,4 @@
-import { styled } from "@edna-ui/react";
+import { styled } from '@edna-ui/react'
 
 export const Container = styled('div', {
   display: 'flex',
@@ -18,7 +18,7 @@ export const Container = styled('div', {
   '@md': {
     padding: '$8 $16 $4',
     height: '$40',
-  }
+  },
 })
 
 export const Content = styled('div', {
@@ -28,7 +28,6 @@ export const Content = styled('div', {
   gap: '$2',
 
   height: '100%',
-
 })
 
 export const GoBackButton = styled('button', {
@@ -58,6 +57,5 @@ export const GoBackButton = styled('button', {
 
   '@md': {
     marginBottom: '-$2',
-  }
+  },
 })
-

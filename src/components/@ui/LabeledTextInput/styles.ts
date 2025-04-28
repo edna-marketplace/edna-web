@@ -1,4 +1,3 @@
-
 import { styled } from '@edna-ui/react'
 
 export const Input = styled('input', {
@@ -30,7 +29,7 @@ export const FloatingLabelContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   width: '100%',
-  padding: "$1 0 0 0",
+  padding: '$1 0 0 0',
 
   '&:has(input:focus)': {
     boxShadow: '0 0 0 2px $colors$black',
@@ -50,10 +49,10 @@ export const FloatingLabelContainer = styled('div', {
   variants: {
     hasError: {
       true: {
-        border: '1px solid red'
+        border: '1px solid red',
       },
-    }
-  }
+    },
+  },
 })
 
 export const FloatingLabel = styled('label', {
@@ -64,7 +63,8 @@ export const FloatingLabel = styled('label', {
   color: '$base400',
   userSelect: 'none',
 
-  transition: 'transform 0.2s ease-in-out, font-size 0.2s, top 0.2s ease-in-out',
+  transition:
+    'transform 0.2s ease-in-out, font-size 0.2s, top 0.2s ease-in-out',
 
   variants: {
     isFloating: {
@@ -83,9 +83,9 @@ export const FloatingLabel = styled('label', {
         top: '50%',
         transform: 'translateY(-50%)',
         fontSize: '14px',
-      }
+      },
     },
-  }
+  },
 })
 
 export const ShowPasswordButton = styled('button', {

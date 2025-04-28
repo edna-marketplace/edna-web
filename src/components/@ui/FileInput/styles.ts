@@ -1,4 +1,4 @@
-import { styled } from "@edna-ui/react"
+import { styled } from '@edna-ui/react'
 
 export const FileInputContainer = styled('div', {
   backgroundColor: '$base700',
@@ -33,10 +33,10 @@ export const FileInputContainer = styled('div', {
   variants: {
     hasError: {
       true: {
-        borderColor: 'red'
+        borderColor: 'red',
       },
-    }
-  }
+    },
+  },
 })
 
 export const Input = styled('input', {

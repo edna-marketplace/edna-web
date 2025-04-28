@@ -1,5 +1,5 @@
-import { api } from "@/lib/axios";
-import { Clothe } from "./create-clothe";
+import { api } from '@/lib/axios'
+import { Clothe } from './create-clothe'
 
 export async function updateClothe({
   id,

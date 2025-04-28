@@ -1,4 +1,4 @@
-import { styled } from "@edna-ui/react";
+import { styled } from '@edna-ui/react'
 
 export const Container = styled('div', {
   display: 'flex',
@@ -8,12 +8,12 @@ export const Container = styled('div', {
   width: '100%',
 
   '@xl': {
-    marginLeft: '200px'
+    marginLeft: '200px',
   },
 
   '@md': {
     marginLeft: '0',
-  }
+  },
 })
 
 export const Main = styled('main', {
@@ -28,7 +28,7 @@ export const Main = styled('main', {
   },
   '@md': {
     padding: '$8 $4 $8 $12',
-  }
+  },
 })
 
 export const ClothesContainer = styled('div', {
@@ -47,7 +47,7 @@ export const ClothesContainer = styled('div', {
   },
   '@sm': {
     gridTemplateColumns: 'repeat(2, 1fr)',
-  }
+  },
 })
 
 export const EmptyListContainer = styled('div', {
@@ -55,8 +55,8 @@ export const EmptyListContainer = styled('div', {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: "$1",
+  gap: '$1',
 
-  marginTop: "$20",
-  color: "$base400",
+  marginTop: '$20',
+  color: '$base400',
 })

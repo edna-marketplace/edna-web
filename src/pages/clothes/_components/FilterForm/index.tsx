@@ -1,17 +1,17 @@
-import { Button } from "@/components/@ui/Button"
-import { SelectInput } from "@/components/@ui/SelectInput"
-import { SelectItem } from "@/components/@ui/SelectItem"
-import { TextInput } from "@/components/@ui/TextInput"
-import { Brands, Categories, Sizes } from "@/utils/select-data"
-import { Plus, SlidersHorizontal } from "@phosphor-icons/react"
-import { useRouter } from "next/router"
-import { Container } from "./styles"
+import { Button } from '@/components/@ui/Button'
+import { SelectInput } from '@/components/@ui/SelectInput'
+import { SelectItem } from '@/components/@ui/SelectItem'
+import { TextInput } from '@/components/@ui/TextInput'
+import { Brands, Categories, Sizes } from '@/utils/select-data'
+import { Plus, SlidersHorizontal } from '@phosphor-icons/react'
+import { useRouter } from 'next/router'
+import { Container } from './styles'
 
 export function FilterForm() {
   const router = useRouter()
 
   function handleNewClothe() {
-    router.push("/clothes/new")
+    router.push('/clothes/new')
   }
   return (
     <Container>

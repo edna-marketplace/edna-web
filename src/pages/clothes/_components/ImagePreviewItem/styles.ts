@@ -1,5 +1,5 @@
-import { styled } from "@edna-ui/react";
-import Image from "next/image";
+import { styled } from '@edna-ui/react'
+import Image from 'next/image'
 
 export const Container = styled('div', {
   position: 'relative',

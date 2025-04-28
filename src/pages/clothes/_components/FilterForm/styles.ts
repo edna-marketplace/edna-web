@@ -1,5 +1,5 @@
-import { Card } from "@/components/@ui/Card";
-import { styled } from "@edna-ui/react";
+import { Card } from '@/components/@ui/Card'
+import { styled } from '@edna-ui/react'
 
 export const Container = styled(Card, {
   display: 'flex',

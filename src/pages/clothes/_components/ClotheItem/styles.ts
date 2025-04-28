@@ -1,5 +1,5 @@
-import { styled } from "@edna-ui/react";
-import Image from "next/image";
+import { styled } from '@edna-ui/react'
+import Image from 'next/image'
 
 export const Container = styled('button', {
   all: 'unset',
@@ -20,7 +20,7 @@ export const Container = styled('button', {
     cursor: 'pointer',
     backgroundColor: '$base600',
     borderColor: '$base500',
-  }
+  },
 })
 
 export const ClotheImage = styled(Image, {

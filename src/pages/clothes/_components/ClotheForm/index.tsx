@@ -1,44 +1,57 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
-import { Brands, Categories, Genders, Sizes } from "@/utils/select-data";
+import { Brands, Categories, Genders, Sizes } from '@/utils/select-data'
 
-import { ButtonContainer, ErrorContainer, ErrorMessage, ErrorPlaceholder, FormCard, FormContainer, InputContainer, Section, Separator, TipContainer } from "./styles";
+import {
+  ButtonContainer,
+  ErrorContainer,
+  ErrorMessage,
+  ErrorPlaceholder,
+  FormCard,
+  FormContainer,
+  InputContainer,
+  Section,
+  Separator,
+  TipContainer,
+} from './styles'
 
-import { ClotheFormSchema } from "../../_schemas/form-schema";
-import { ImagePreviewItem } from "../ImagePreviewItem";
+import { ClotheFormSchema } from '../../_schemas/form-schema'
+import { ImagePreviewItem } from '../ImagePreviewItem'
 
-import { Button } from "@/components/@ui/Button";
-import { FileInput } from "@/components/@ui/FileInput";
-import { LabeledTextInput } from "@/components/@ui/LabeledTextInput";
-import { SelectInput } from "@/components/@ui/SelectInput";
-import { SelectItem } from "@/components/@ui/SelectItem";
-import { Text } from "@/components/@ui/Text";
-import { TextInput } from "@/components/@ui/TextInput";
+import { Button } from '@/components/@ui/Button'
+import { FileInput } from '@/components/@ui/FileInput'
+import { LabeledTextInput } from '@/components/@ui/LabeledTextInput'
+import { SelectInput } from '@/components/@ui/SelectInput'
+import { SelectItem } from '@/components/@ui/SelectItem'
+import { Text } from '@/components/@ui/Text'
+import { TextInput } from '@/components/@ui/TextInput'
 
-import { ArrowsClockwise, Check, Lightbulb, Trash } from "@phosphor-icons/react";
+import { ArrowsClockwise, Check, Lightbulb, Trash } from '@phosphor-icons/react'
 
-import { z } from "zod";
+import { z } from 'zod'
 
-import { Clothe, createClothe } from "@/api/create-clothe";
-import { getClotheById } from "@/api/get-clothe-by-id";
-import { updateClothe } from "@/api/update-clothe";
-import { TextArea } from "@/components/@ui/TextArea";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { updateClotheImages } from "@/api/update-clothe-images";
-import { deleteClothe } from "@/api/delete-clothe";
+import { Clothe, createClothe } from '@/api/create-clothe'
+import { getClotheById } from '@/api/get-clothe-by-id'
+import { updateClothe } from '@/api/update-clothe'
+import { TextArea } from '@/components/@ui/TextArea'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { updateClotheImages } from '@/api/update-clothe-images'
+import { deleteClothe } from '@/api/delete-clothe'
 
-type ClotheFormData = z.infer<typeof ClotheFormSchema>;
+type ClotheFormData = z.infer<typeof ClotheFormSchema>
 
 export function ClotheForm() {
   const [clothe, setClothe] = useState<Clothe>()
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [existingImages, setExistingImages] = useState<{ id: string, url: string }[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([])
+  const [existingImages, setExistingImages] = useState<
+    { id: string; url: string }[]
+  >([])
   const [removedImagesIds, setRemovedImagesIds] = useState<string[]>([])
 
-  const router = useRouter();
+  const router = useRouter()
   const clotheId = router.query.id as string
 
   const {
@@ -48,40 +61,40 @@ export function ClotheForm() {
     setError,
     watch,
     setValue,
-    formState: { errors }
+    formState: { errors },
   } = useForm<ClotheFormData>({
-    resolver: zodResolver(ClotheFormSchema)
+    resolver: zodResolver(ClotheFormSchema),
   })
 
-  const brandField = watch("brand");
-  const sizeField = watch("size");
-  const priceField = watch("price")
+  const brandField = watch('brand')
+  const sizeField = watch('size')
+  const priceField = watch('price')
 
-  const watchedImages = watch("images");
-  const imagesField: File[] = Array.isArray(watchedImages) ? watchedImages : [];
+  const watchedImages = watch('images')
+  const imagesField: File[] = Array.isArray(watchedImages) ? watchedImages : []
 
   function handleRemoveImage(name: string) {
-    const filtered = imagesField.filter((f) => f.name !== name);
-    setValue("images", filtered, { shouldDirty: true, shouldValidate: true });
+    const filtered = imagesField.filter((f) => f.name !== name)
+    setValue('images', filtered, { shouldDirty: true, shouldValidate: true })
   }
 
   function handleRemoveExistingImage(id: string) {
-    setRemovedImagesIds(state => [...state, id])
-    setExistingImages(prev => prev.filter(img => img.id !== id));
+    setRemovedImagesIds((state) => [...state, id])
+    setExistingImages((prev) => prev.filter((img) => img.id !== id))
   }
 
   function handleGoBack() {
-    router.push("/clothes");
+    router.push('/clothes')
   }
 
   async function handleCreateClothe(data: ClotheFormData) {
     try {
       if (imagesField.length === 0 && existingImages.length === 0) {
-        setError("images", {
-          type: "custom",
-          message: "Selecione pelo menos 1 foto."
-        });
-        return;
+        setError('images', {
+          type: 'custom',
+          message: 'Selecione pelo menos 1 foto.',
+        })
+        return
       }
 
       await createClothe({
@@ -99,9 +112,9 @@ export function ClotheForm() {
           category: data.category,
           size: data.size,
           brand: data.brand,
-          gender: data.gender
+          gender: data.gender,
         },
-        files: data.images ? data.images : []
+        files: data.images ? data.images : [],
       })
 
       toast.success('Peça cadastrada com sucesso!')
@@ -113,38 +126,38 @@ export function ClotheForm() {
   }
 
   async function handleGetClotheById() {
-    const data = await getClotheById(clotheId);
+    const data = await getClotheById(clotheId)
 
-    setClothe(data);
+    setClothe(data)
 
     if (data) {
-      setValue("name", data.name);
-      setValue("price", data.priceInCents / 100);
-      setValue("category", data.category);
-      setValue("gender", data.gender);
-      setValue("brand", data.brand);
-      setValue("brandOther", data.brandOther)
-      setValue("size", data.size);
-      setValue("sizeOther", data.sizeOther)
-      setValue("fabric", data.fabric);
-      setValue("color", data.color);
-      setValue("description", data.description);
-      setExistingImages(data.images || []);
+      setValue('name', data.name)
+      setValue('price', data.priceInCents / 100)
+      setValue('category', data.category)
+      setValue('gender', data.gender)
+      setValue('brand', data.brand)
+      setValue('brandOther', data.brandOther)
+      setValue('size', data.size)
+      setValue('sizeOther', data.sizeOther)
+      setValue('fabric', data.fabric)
+      setValue('color', data.color)
+      setValue('description', data.description)
+      setExistingImages(data.images || [])
     }
   }
 
   async function handleUpdateClothe(data: ClotheFormData) {
     try {
       if (imagesField.length === 0 && existingImages.length === 0) {
-        setError("images", {
-          type: "custom",
-          message: "Selecione pelo menos 1 foto."
-        });
-        return;
+        setError('images', {
+          type: 'custom',
+          message: 'Selecione pelo menos 1 foto.',
+        })
+        return
       }
-      if ((imagesField.length + existingImages.length) > 5) {
-        toast.error(`Você pode adicionar no máximo 5 imagens.`);
-        return;
+      if (imagesField.length + existingImages.length > 5) {
+        toast.error(`Você pode adicionar no máximo 5 imagens.`)
+        return
       }
 
       await updateClothe({
@@ -162,13 +175,13 @@ export function ClotheForm() {
         category: data.category,
         size: data.size,
         brand: data.brand,
-        gender: data.gender
+        gender: data.gender,
       })
 
       updateClotheImages(
         data.images ? data.images : [],
         removedImagesIds,
-        clotheId
+        clotheId,
       )
 
       toast.success('Peça atualizada com sucesso!')
@@ -185,20 +198,22 @@ export function ClotheForm() {
   }
 
   useEffect(() => {
-    const urls = imagesField.map((file) => URL.createObjectURL(file));
-    setImagePreviews(urls);
+    const urls = imagesField.map((file) => URL.createObjectURL(file))
+    setImagePreviews(urls)
 
     if (clotheId && !clothe) {
       handleGetClotheById()
     }
 
     return () => {
-      urls.forEach((url) => URL.revokeObjectURL(url));
-    };
-  }, [imagesField, clotheId, clothe]);
+      urls.forEach((url) => URL.revokeObjectURL(url))
+    }
+  }, [imagesField, clotheId, clothe])
 
   return (
-    <FormContainer onSubmit={handleSubmit(clothe ? handleUpdateClothe : handleCreateClothe)}>
+    <FormContainer
+      onSubmit={handleSubmit(clothe ? handleUpdateClothe : handleCreateClothe)}
+    >
       <FormCard>
         <div>
           <InputContainer css={{ flex: 1, minWidth: '200px' }}>
@@ -206,7 +221,7 @@ export function ClotheForm() {
             <TextInput
               placeholder="Nome da peça"
               hasError={!!errors.name}
-              {...register("name")}
+              {...register('name')}
             />
             <ErrorContainer>
               {errors.name ? (
@@ -217,14 +232,16 @@ export function ClotheForm() {
             </ErrorContainer>
           </InputContainer>
 
-          <InputContainer css={{ flex: 1, minWidth: '130px', maxWidth: '200px' }}>
+          <InputContainer
+            css={{ flex: 1, minWidth: '130px', maxWidth: '200px' }}
+          >
             <Text type="label">Preço</Text>
             <TextInput
               prefix="R$"
               placeholder="00,00"
               type="number"
               hasError={!!errors.price}
-              {...register("price", { valueAsNumber: true })}
+              {...register('price', { valueAsNumber: true })}
             />
             <ErrorContainer>
               {errors.price ? (
@@ -238,13 +255,17 @@ export function ClotheForm() {
 
         <Section>
           <Text size="sm">
-            A PLATAFORMA COBRA UMA <strong>TAXA DE 14%</strong> {" "}
-            POR VENDA, VOCÊ RECEBERÁ <strong>{priceField ?
-              (priceField * 0.86)
-                .toLocaleString('pt-br',
-                  { style: 'currency', currency: 'BRL' })
-              : "R$ 00,00"
-            }</strong> POR ESSA PEÇA
+            A PLATAFORMA COBRA UMA <strong>TAXA DE 14%</strong> POR VENDA, VOCÊ
+            RECEBERÁ{' '}
+            <strong>
+              {priceField
+                ? (priceField * 0.86).toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })
+                : 'R$ 00,00'}
+            </strong>{' '}
+            POR ESSA PEÇA
           </Text>
         </Section>
 
@@ -257,7 +278,7 @@ export function ClotheForm() {
               render={({ field }) => (
                 <SelectInput
                   onValueChange={field.onChange}
-                  placeholder={"Categoria"}
+                  placeholder={'Categoria'}
                   hasError={!!errors.category}
                   {...field}
                 >
@@ -369,12 +390,12 @@ export function ClotheForm() {
         </div>
 
         <div>
-          {brandField === "OTHER" && (
+          {brandField === 'OTHER' && (
             <InputContainer css={{ width: '49%', marginBottom: '$4' }}>
               <Text type="label">Marca (Outro)</Text>
               <TextInput
                 placeholder="Marca (Outra)"
-                {...register("brandOther")}
+                {...register('brandOther')}
               />
               <ErrorContainer>
                 {errors.brandOther ? (
@@ -385,12 +406,14 @@ export function ClotheForm() {
               </ErrorContainer>
             </InputContainer>
           )}
-          {sizeField === "OTHER" && (
-            <InputContainer css={{ width: '49%', marginLeft: 'auto', marginBottom: '$4' }}>
+          {sizeField === 'OTHER' && (
+            <InputContainer
+              css={{ width: '49%', marginLeft: 'auto', marginBottom: '$4' }}
+            >
               <Text type="label">Tamanho (Outro)</Text>
               <TextInput
                 placeholder="Tamanho (Outro)"
-                {...register("sizeOther")}
+                {...register('sizeOther')}
               />
               <ErrorContainer>
                 {errors.sizeOther ? (
@@ -411,7 +434,7 @@ export function ClotheForm() {
             <TextInput
               placeholder="Tecido"
               hasError={!!errors.fabric}
-              {...register("fabric")}
+              {...register('fabric')}
             />
             <ErrorContainer>
               {errors.fabric ? (
@@ -427,7 +450,7 @@ export function ClotheForm() {
             <TextInput
               placeholder="Cor"
               hasError={!!errors.color}
-              {...register("color")}
+              {...register('color')}
             />
             <ErrorContainer>
               {errors.color ? (
@@ -445,10 +468,10 @@ export function ClotheForm() {
         <TextArea
           css={{ flex: 1 }}
           placeholder="Descrição (opcional)"
-          {...register("description")}
+          {...register('description')}
         />
 
-        <div style={{ marginTop: "32px" }}>
+        <div style={{ marginTop: '32px' }}>
           <InputContainer css={{ maxWidth: '200px' }}>
             <Controller
               name="images"
@@ -459,8 +482,10 @@ export function ClotheForm() {
                   placeholder="Escolher fotos"
                   hasError={!!errors.images}
                   onChange={(event) => {
-                    const files = event.target.files ? Array.from(event.target.files) : [];
-                    field.onChange(files);
+                    const files = event.target.files
+                      ? Array.from(event.target.files)
+                      : []
+                    field.onChange(files)
                   }}
                 />
               )}
@@ -474,8 +499,16 @@ export function ClotheForm() {
             </ErrorContainer>
           </InputContainer>
 
-          <Text css={{ maxWidth: '400px', minWidth: '190px', marginBottom: '1.5rem' }} size="sm">
-            No máximo 5 imagens nos formatos JPEG, JPG ou PNG com até 5MB (Recomendado: 1080x1920).
+          <Text
+            css={{
+              maxWidth: '400px',
+              minWidth: '190px',
+              marginBottom: '1.5rem',
+            }}
+            size="sm"
+          >
+            No máximo 5 imagens nos formatos JPEG, JPG ou PNG com até 5MB
+            (Recomendado: 1080x1920).
           </Text>
         </div>
 
@@ -500,7 +533,9 @@ export function ClotheForm() {
               ))}
             </>
           ) : (
-            <Text css={{ flex: 1, opacity: .6 }} size="md">Nenhuma foto selecionada</Text>
+            <Text css={{ flex: 1, opacity: 0.6 }} size="md">
+              Nenhuma foto selecionada
+            </Text>
           )}
         </Section>
         <TipContainer>
@@ -513,13 +548,19 @@ export function ClotheForm() {
       <div></div>
       <ButtonContainer>
         {clothe && (
-          <Button type="button" variant="destructive" onClick={handleDeleteClothe}>
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={handleDeleteClothe}
+          >
             <Trash weight="bold" />
             Excluir
           </Button>
         )}
         <div>
-          <Button type="button" variant="tertiary" onClick={handleGoBack}>Cancelar</Button>
+          <Button type="button" variant="tertiary" onClick={handleGoBack}>
+            Cancelar
+          </Button>
           <Button type="submit">
             {clothe ? (
               <>
@@ -535,6 +576,6 @@ export function ClotheForm() {
           </Button>
         </div>
       </ButtonContainer>
-    </FormContainer >
+    </FormContainer>
   )
 }

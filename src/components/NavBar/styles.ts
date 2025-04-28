@@ -1,4 +1,4 @@
-import { styled } from "@edna-ui/react";
+import { styled } from '@edna-ui/react'
 
 export const Container = styled('div', {
   position: 'fixed',
@@ -15,7 +15,7 @@ export const Container = styled('div', {
   },
 
   background: '$base100',
-  padding: '$8'
+  padding: '$8',
 })
 
 export const Link = styled('button', {
@@ -34,7 +34,7 @@ export const Link = styled('button', {
 
   '&:not(:active):hover': {
     cursor: 'pointer',
-    background: '$base200'
+    background: '$base200',
   },
 
   variants: {
@@ -45,9 +45,9 @@ export const Link = styled('button', {
       },
       false: {
         color: '$base500',
-      }
-    }
-  }
+      },
+    },
+  },
 })
 
 export const DrawerToggle = styled('button', {
@@ -58,7 +58,7 @@ export const DrawerToggle = styled('button', {
   border: 'none',
   cursor: 'pointer',
   zIndex: 1000,
-});
+})
 
 export const DrawerOverlay = styled('div', {
   position: 'fixed',
@@ -68,7 +68,7 @@ export const DrawerOverlay = styled('div', {
   height: '100vh',
   backgroundColor: 'rgba(0,0,0,0.5)',
   zIndex: 999,
-});
+})
 
 export const DrawerContent = styled('div', {
   position: 'fixed',
@@ -83,4 +83,4 @@ export const DrawerContent = styled('div', {
   gap: '$4',
   zIndex: 1000,
   transition: 'transform 0.3s ease-in-out',
-});
+})

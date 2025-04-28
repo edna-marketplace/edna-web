@@ -18,25 +18,30 @@ export interface SelectInputProps extends ComponentProps<typeof Select.Root> {
 export const SelectInput = forwardRef<
   ElementRef<typeof Select.Root>,
   SelectInputProps
->(({ children, placeholder, hasError, css, ...props }: SelectInputProps, ref) => {
-  return (
-    <Select.Root {...props}>
-      <SelectInputTrigger ref={ref} css={css} hasError={hasError}>
-        <SelectInputValue placeholder={placeholder} />
-        <SelectInputIcon>
-          <CaretDown size={15} />
-        </SelectInputIcon>
-      </SelectInputTrigger>
+>(
+  (
+    { children, placeholder, hasError, css, ...props }: SelectInputProps,
+    ref,
+  ) => {
+    return (
+      <Select.Root {...props}>
+        <SelectInputTrigger ref={ref} css={css} hasError={hasError}>
+          <SelectInputValue placeholder={placeholder} />
+          <SelectInputIcon>
+            <CaretDown size={15} />
+          </SelectInputIcon>
+        </SelectInputTrigger>
 
-      <Select.Portal>
-        <SelectInputContent position="popper" side="bottom" sideOffset={4}>
-          <SelectInputViewport>
-            <Select.Group>{children}</Select.Group>
-          </SelectInputViewport>
-        </SelectInputContent>
-      </Select.Portal>
-    </Select.Root>
-  )
-})
+        <Select.Portal>
+          <SelectInputContent position="popper" side="bottom" sideOffset={4}>
+            <SelectInputViewport>
+              <Select.Group>{children}</Select.Group>
+            </SelectInputViewport>
+          </SelectInputContent>
+        </Select.Portal>
+      </Select.Root>
+    )
+  },
+)
 
 SelectInput.displayName = 'Select Input'

@@ -1,6 +1,6 @@
-import { SpecialTitle } from "@/components/@ui/SpecialTitle";
-import { Container, Main } from "./styles";
-import { Header } from "@/components/Header";
+import { SpecialTitle } from '@/components/@ui/SpecialTitle'
+import { Container, Main } from './styles'
+import { Header } from '@/components/Header'
 
 export default function Store() {
   return (

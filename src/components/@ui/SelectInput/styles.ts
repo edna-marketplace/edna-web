@@ -38,10 +38,10 @@ export const SelectInputTrigger = styled(SelectPrimitive.Trigger, {
   variants: {
     hasError: {
       true: {
-        borderColor: 'red'
+        borderColor: 'red',
       },
-    }
-  }
+    },
+  },
 })
 
 export const SelectInputValue = styled(SelectPrimitive.Value, {

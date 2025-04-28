@@ -1,19 +1,19 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
 
-import { Container, Main } from "./styles";
+import { Container, Main } from './styles'
 
-import { Header } from "@/components/Header";
-import { ClotheForm } from "../_components/ClotheForm";
-import { useEffect, useState } from "react";
-import { Clothe } from "@/api/create-clothe";
-import { getClotheById } from "@/api/get-clothe-by-id";
+import { Header } from '@/components/Header'
+import { ClotheForm } from '../_components/ClotheForm'
+import { useEffect, useState } from 'react'
+import { Clothe } from '@/api/create-clothe'
+import { getClotheById } from '@/api/get-clothe-by-id'
 
 export default function ClotheDetails() {
   const [clothe, setClothe] = useState<Clothe>()
-  const router = useRouter();
+  const router = useRouter()
 
   function handleGoBack() {
-    router.push("/clothes");
+    router.push('/clothes')
   }
 
   async function handleGetClotheById() {
@@ -28,7 +28,6 @@ export default function ClotheDetails() {
     handleGetClotheById()
   }, [])
 
-
   return (
     <Container>
       <Header
@@ -40,7 +39,6 @@ export default function ClotheDetails() {
       <Main>
         <ClotheForm />
       </Main>
-
     </Container>
-  );
+  )
 }

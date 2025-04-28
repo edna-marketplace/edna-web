@@ -16,7 +16,12 @@ export const Text = styled('p', {
     },
     type: {
       default: {},
-      label: { color: '$base300', marginBottom: '$1', fontWeight: '$bold', fontSize: '$sm' },
+      label: {
+        color: '$base300',
+        marginBottom: '$1',
+        fontWeight: '$bold',
+        fontSize: '$sm',
+      },
     },
   },
 
