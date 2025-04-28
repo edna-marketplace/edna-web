@@ -49,3 +49,14 @@ export const ClothesContainer = styled('div', {
     gridTemplateColumns: 'repeat(2, 1fr)',
   }
 })
+
+export const EmptyListContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: "$1",
+
+  marginTop: "$20",
+  color: "$base400",
+})

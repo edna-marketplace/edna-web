@@ -6,7 +6,6 @@ export const Title = styled('h3', {
   fontWeight: '$bold',
   lineHeight: '$base',
   margin: 0,
-  color: '$base100',
 
   variants: {
     size: {
