@@ -40,6 +40,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { updateClotheImages } from '@/api/update-clothe-images'
 import { deleteClothe } from '@/api/delete-clothe'
+import Swal from 'sweetalert2'
 
 type ClotheFormData = z.infer<typeof ClotheFormSchema>
 
@@ -191,10 +192,25 @@ export function ClotheForm() {
     }
   }
 
-  async function handleDeleteClothe() {
-    await deleteClothe(clotheId)
+  function handleDeleteClothe() {
+    Swal.fire({
+      title: "Excluir peça!",
+      icon: "warning",
+      text: "Você realmente deseja excluir essa peça?",
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Sim, desejo excluir.",
+      confirmButtonColor: "#4F4C42",
+      cancelButtonText: "Não",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteClothe(clotheId)
 
-    router.push('/clothes')
+        toast.success("Peça excluída com sucesso!")
+
+        router.push('/clothes')
+      }
+    })
   }
 
   useEffect(() => {
