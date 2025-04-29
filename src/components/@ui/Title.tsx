@@ -9,6 +9,7 @@ export const Title = styled('h3', {
 
   variants: {
     size: {
+      xxs: { fontSize: '$xs' },
       xs: { fontSize: '$sm' },
       sm: { fontSize: '$lg' },
       md: { fontSize: '$2xl' },

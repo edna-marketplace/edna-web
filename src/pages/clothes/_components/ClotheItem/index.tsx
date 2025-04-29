@@ -43,7 +43,7 @@ export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
   return (
     <Container {...props}>
       <ClotheImage src={clothe.imageURL} alt="" width={170} height={170} />
-      <Title size="sm">
+      <Title className='price' size="sm">
         {(clothe.priceInCents / 100).toLocaleString('pt-br', {
           style: 'currency',
           currency: 'BRL',
@@ -62,11 +62,11 @@ export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
             ? clothe.brandOther.length > 10
               ? `${clothe.brandOther.slice(0, 7)}...`
               : clothe.brandOther === 'OTHER'
-              ? brandMapper.OTHER
-              : clothe.brandOther
+                ? brandMapper.OTHER
+                : clothe.brandOther
             : brandMapper[clothe.brand].length > 10
-            ? `${brandMapper[clothe.brand].slice(0, 7)}`
-            : brandMapper[clothe.brand]}
+              ? `${brandMapper[clothe.brand].slice(0, 7)}`
+              : brandMapper[clothe.brand]}
         </Title>
         <Dot />
         <Title size="xs" color="base400">
@@ -74,11 +74,11 @@ export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
             ? clothe.sizeOther.length > 7
               ? `${clothe.sizeOther.slice(0, 5)}...`
               : clothe.sizeOther === 'OTHER'
-              ? sizeMapper.OTHER
-              : clothe.sizeOther
+                ? sizeMapper.OTHER
+                : clothe.sizeOther
             : sizeMapper[clothe.size].length > 5
-            ? `${sizeMapper[clothe.size].slice(0, 5)}`
-            : sizeMapper[clothe.size]}
+              ? `${sizeMapper[clothe.size].slice(0, 5)}`
+              : sizeMapper[clothe.size]}
         </Title>
       </InfoContainer>
     </Container>

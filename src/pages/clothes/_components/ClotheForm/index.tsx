@@ -505,7 +505,7 @@ export function ClotheForm() {
               minWidth: '190px',
               marginBottom: '1.5rem',
             }}
-            size="sm"
+            size="xs"
           >
             No máximo 5 imagens nos formatos JPEG, JPG ou PNG com até 5MB
             (Recomendado: 1080x1920).

@@ -80,7 +80,7 @@ export const ErrorPlaceholder = styled('div', {
 
 export const ErrorMessage = styled('p', {
   color: 'red',
-  fontSize: '$sm',
+  fontSize: '$xs',
   height: '1.5rem',
 })
 

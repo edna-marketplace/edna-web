@@ -21,6 +21,12 @@ export const Container = styled('button', {
     backgroundColor: '$base600',
     borderColor: '$base500',
   },
+
+  '@sm': {
+    '.price': {
+      fontSize: "$md"
+    }
+  }
 })
 
 export const ClotheImage = styled(Image, {
@@ -30,12 +36,21 @@ export const ClotheImage = styled(Image, {
   borderRadius: '$sm',
 
   objectFit: 'cover',
+
+  '@media(max-width: 450px)': {
+    width: "120px",
+    height: "120px"
+  }
 })
 
 export const InfoContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '$2',
+
+  '@sm': {
+    fontSize: "$xs"
+  }
 })
 
 export const Dot = styled('div', {

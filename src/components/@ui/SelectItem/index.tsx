@@ -3,14 +3,16 @@ import * as Select from '@radix-ui/react-select'
 
 import { Item } from './styles'
 
-export type SelectItemProps = ComponentProps<typeof Select.Item>
+export type SelectItemProps = ComponentProps<typeof Select.Item> & {
+  value: string | null
+}
 
 export const SelectItem = forwardRef<
   ElementRef<typeof Select.Item>,
   SelectItemProps
->(({ children, ...props }: SelectItemProps, ref) => {
+>(({ value, children, ...props }: SelectItemProps, ref) => {
   return (
-    <Item {...props} ref={ref}>
+    <Item value={value} {...props} ref={ref}>
       <Select.ItemText>{children}</Select.ItemText>
     </Item>
   )

@@ -10,7 +10,7 @@ export const Container = styled('div', {
   width: '230px',
   minHeight: '100vh',
 
-  '@media (max-width: 1500px)': {
+  '@xl': {
     width: '200px',
   },
 

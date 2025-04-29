@@ -1,3 +1,4 @@
+import { Card } from '@/components/@ui/Card'
 import { styled } from '@edna-ui/react'
 
 export const Container = styled('div', {
@@ -14,6 +15,41 @@ export const Container = styled('div', {
   '@md': {
     marginLeft: '0',
   },
+})
+
+export const FilterContainer = styled(Card, {
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr 1fr 2fr 1fr',
+  alignItems: 'center',
+  gap: '$2',
+
+  '@lg': {
+    gridTemplateColumns: '1fr 1fr 1fr',
+    gridTemplateRows: "auto auto"
+  },
+  '@md': {
+    gridTemplateColumns: '1fr',
+    gridTemplateRows: "auto auto"
+  }
+})
+
+export const ActionsContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  marginTop: 'auto'
+})
+
+export const NewClotheContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'flex-end',
+  marginTop: '$4',
+  width: '100%'
+})
+
+export const FilterField = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
 })
 
 export const Main = styled('main', {
@@ -57,6 +93,5 @@ export const EmptyListContainer = styled('div', {
   justifyContent: 'center',
   gap: '$1',
 
-  marginTop: '$20',
   color: '$base400',
 })
