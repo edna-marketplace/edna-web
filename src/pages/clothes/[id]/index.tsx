@@ -7,6 +7,7 @@ import { ClotheForm } from '../_components/ClotheForm'
 import { useEffect, useState } from 'react'
 import { Clothe } from '@/api/create-clothe'
 import { getClotheById } from '@/api/get-clothe-by-id'
+import { Form } from 'react-hook-form'
 
 export default function ClotheDetails() {
   const [clothe, setClothe] = useState<Clothe>()
