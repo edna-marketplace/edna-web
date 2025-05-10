@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { Brands, Categories, Genders, Sizes } from '@/utils/select-data'
-
 import {
   ButtonContainer,
   ErrorContainer,
@@ -21,7 +19,6 @@ import { ImagePreviewItem } from '../ImagePreviewItem'
 
 import { Button } from '@/components/@ui/Button'
 import { FileInput } from '@/components/@ui/FileInput'
-import { LabeledTextInput } from '@/components/@ui/LabeledTextInput'
 import { SelectInput } from '@/components/@ui/SelectInput'
 import { SelectItem } from '@/components/@ui/SelectItem'
 import { Text } from '@/components/@ui/Text'
@@ -32,14 +29,15 @@ import { ArrowsClockwise, Check, Lightbulb, Trash } from '@phosphor-icons/react'
 import { z } from 'zod'
 
 import { Clothe, createClothe } from '@/api/create-clothe'
+import { deleteClothe } from '@/api/delete-clothe'
 import { getClotheById } from '@/api/get-clothe-by-id'
 import { updateClothe } from '@/api/update-clothe'
+import { updateClotheImages } from '@/api/update-clothe-images'
 import { TextArea } from '@/components/@ui/TextArea'
+import { brands, categories, genders, sizes } from '@/utils/enums'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { updateClotheImages } from '@/api/update-clothe-images'
-import { deleteClothe } from '@/api/delete-clothe'
 import Swal from 'sweetalert2'
 
 type ClotheFormData = z.infer<typeof ClotheFormSchema>
@@ -298,9 +296,9 @@ export function ClotheForm() {
                   hasError={!!errors.category}
                   {...field}
                 >
-                  {Categories.map((category) => (
-                    <SelectItem key={category.value} value={category.value}>
-                      {category.display}
+                  {categories.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
                     </SelectItem>
                   ))}
                 </SelectInput>
@@ -327,9 +325,9 @@ export function ClotheForm() {
                   placeholder="Gênero"
                   hasError={!!errors.gender}
                 >
-                  {Genders.map((gender) => (
-                    <SelectItem key={gender.value} value={gender.value}>
-                      {gender.display}
+                  {genders.map((gender) => (
+                    <SelectItem key={gender} value={gender}>
+                      {gender}
                     </SelectItem>
                   ))}
                 </SelectInput>
@@ -358,9 +356,9 @@ export function ClotheForm() {
                   placeholder="Marca"
                   hasError={!!errors.brand}
                 >
-                  {Brands.map((brand) => (
-                    <SelectItem key={brand.value} value={brand.value}>
-                      {brand.display}
+                  {brands.map((brand) => (
+                    <SelectItem key={brand} value={brand}>
+                      {brand}
                     </SelectItem>
                   ))}
                 </SelectInput>
@@ -387,9 +385,9 @@ export function ClotheForm() {
                   placeholder="Tamanho"
                   hasError={!!errors.size}
                 >
-                  {Sizes.map((size) => (
-                    <SelectItem key={size.value} value={size.value}>
-                      {size.display}
+                  {sizes.map((size) => (
+                    <SelectItem key={size} value={size}>
+                      {size}
                     </SelectItem>
                   ))}
                 </SelectInput>

@@ -1,4 +1,5 @@
 import { api } from '@/lib/axios'
+import { brands, categories, genders, sizes } from '@/utils/enums'
 
 export interface ClotheSummary {
   id: string
@@ -28,58 +29,10 @@ export interface FetchClothesWithFilterRequest {
   fabric?: string
   color?: string
   storeId?: string
-  gender?:
-  | "MALE"
-  | "FEMALE"
-  | "UNISEX"
-  category?:
-  | 'ALL'
-  | 'T_SHIRT'
-  | 'SOCIAL_SHIRT'
-  | 'SUIT'
-  | 'ACTIVEWEAR'
-  | 'DRESS'
-  | 'PANTS'
-  | 'SHORTS'
-  | 'JACKET_HOODIE'
-  | 'UNDERWEAR'
-  | 'FOOTWEAR'
-  | 'ACCESSORIES'
-  | 'SLEEPWEAR'
-  | 'SWIMWEAR'
-  | null
-  size?:
-  | 'ALL'
-  | 'XS'
-  | 'S'
-  | 'M'
-  | 'L'
-  | 'XL_LARGER'
-  | 'N_34'
-  | 'N_36'
-  | 'N_38'
-  | 'N_40'
-  | 'N_42'
-  | 'N_44'
-  | 'N_46'
-  | 'N_48'
-  | 'N_50'
-  | 'N_52'
-  | 'N_54'
-  | 'N_56_LARGER'
-  | 'OTHER'
-  | null
-  brand?:
-  | 'ALL'
-  | 'NIKE'
-  | 'ADIDAS'
-  | 'HERING'
-  | 'ZARA'
-  | 'FARM'
-  | 'CEA'
-  | 'RENNER'
-  | 'OTHER'
-  | null
+  category?: typeof categories[number]
+  size?: typeof sizes[number]
+  brand?: typeof brands[number]
+  gender?: typeof genders[number]
 }
 
 export async function fetchClothesWithFilter({

@@ -9,7 +9,7 @@ import { Text } from '@/components/@ui/Text'
 import { TextInput } from '@/components/@ui/TextInput'
 import { Title } from '@/components/@ui/Title'
 import { Header } from '@/components/Header'
-import { Brands, Categories, Sizes } from '@/utils/select-data'
+import { brands, categories, sizes } from '@/utils/enums'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus, SlidersHorizontal, X } from '@phosphor-icons/react'
 import { useRouter } from 'next/router'
@@ -21,48 +21,9 @@ import { ActionsContainer, ClothesContainer, Container, EmptyListContainer, Filt
 
 export const FilterFormSchema = z.object({
   name: z.string().optional(),
-  category: z.enum(
-    [
-      'ALL',
-      'T_SHIRT',
-      'SOCIAL_SHIRT',
-      'SUIT',
-      'ACTIVEWEAR',
-      'DRESS',
-      'PANTS',
-      'SHORTS',
-      'JACKET_HOODIE',
-      'UNDERWEAR',
-      'FOOTWEAR',
-      'ACCESSORIES',
-      'SLEEPWEAR',
-      'SWIMWEAR',
-    ]).optional().nullable(),
-  brand: z.enum(
-    ['ALL', 'NIKE', 'ADIDAS', 'HERING', 'ZARA', 'FARM', 'CEA', 'RENNER', 'OTHER'],
-  ).optional().nullable(),
-  size: z.enum(
-    [
-      'ALL',
-      'XS',
-      'S',
-      'M',
-      'L',
-      'XL_LARGER',
-      'N_34',
-      'N_36',
-      'N_38',
-      'N_40',
-      'N_42',
-      'N_44',
-      'N_46',
-      'N_48',
-      'N_50',
-      'N_52',
-      'N_54',
-      'N_56_LARGER',
-      'OTHER',
-    ]).optional().nullable(),
+  brand: z.enum(brands).optional(),
+  category: z.enum(categories).optional(),
+  size: z.enum(sizes).optional(),
 })
 
 export type FilterFormData = z.infer<typeof FilterFormSchema>
@@ -129,10 +90,9 @@ export default function Clothes() {
                     onValueChange={onChange}
                     value={value?.toString()}
                   >
-                    <SelectItem value='ALL'>Todas</SelectItem>
-                    {Categories.map((category) => (
-                      <SelectItem key={category.value} value={category.value}>
-                        {category.display}
+                    {categories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
                       </SelectItem>
                     ))}
                   </SelectInput>
@@ -151,10 +111,9 @@ export default function Clothes() {
                     onValueChange={onChange}
                     value={value?.toString()}
                   >
-                    <SelectItem value='ALL'>Todas</SelectItem>
-                    {Brands.map((brand) => (
-                      <SelectItem key={brand.value} value={brand.value}>
-                        {brand.display}
+                    {brands.map((brand) => (
+                      <SelectItem key={brand} value={brand}>
+                        {brand}
                       </SelectItem>
                     ))}
                   </SelectInput>
@@ -173,10 +132,9 @@ export default function Clothes() {
                     onValueChange={onChange}
                     value={value?.toString()}
                   >
-                    <SelectItem value='ALL'>Todos</SelectItem>
-                    {Sizes.map((size) => (
-                      <SelectItem key={size.value} value={size.value}>
-                        {size.display}
+                    {sizes.map((size) => (
+                      <SelectItem key={size} value={size}>
+                        {size}
                       </SelectItem>
                     ))}
                   </SelectInput>
