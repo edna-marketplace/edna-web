@@ -5,9 +5,9 @@ export interface ClotheSummary {
   id: string
   name: string
   priceInCents: number
-  brand: string
+  brand: typeof brands[number]
   brandOther: string
-  size: string
+  size: typeof sizes[number]
   sizeOther: string
   imageURL: string
   storeImageUrl: string | null
