@@ -9,29 +9,29 @@ export interface Clothe {
   description?: string | number | readonly string[] | undefined
   fabric: string
   color: string
-  store: object
   deleted: boolean
-  categoryOther?: string | null
-  brandOther?: string | null
-  sizeOther?: string | null
   category: typeof categories[number]
-  size: typeof sizes[number]
-  brand: typeof brands[number]
   gender: typeof genders[number]
+  brand: typeof brands[number]
+  brandOther?: string | null
+  size: typeof sizes[number]
+  sizeOther?: string | null
 }
 
 export interface CreateClotheBody {
   clothe: Clothe
-  files: File[]
+  images: File[]
 }
 
-export async function createClothe({ clothe, files }: CreateClotheBody) {
+export async function createClothe({ clothe, images }: CreateClotheBody) {
+  console.log(images)
+
   const formData = new FormData()
 
   formData.append('clothe', JSON.stringify(clothe))
 
-  files.forEach((file) => {
-    formData.append('files', file)
+  images.forEach((image) => {
+    formData.append('images', image)
   })
 
   return await api.post('/clothes', formData, {

@@ -1,32 +1,20 @@
+import Swal from 'sweetalert2'
+import { toast } from 'sonner'
 import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 
 import {
-  ButtonContainer,
-  ErrorContainer,
-  ErrorMessage,
-  ErrorPlaceholder,
   FormCard,
   FormContainer,
   InputContainer,
-  Section,
-  Separator,
-  TipContainer,
+  Section
 } from './styles'
 
-import { ClotheFormSchema } from '../../_schemas/form-schema'
-import { ImagePreviewItem } from '../ImagePreviewItem'
-
-import { Button } from '@/components/@ui/Button'
-import { FileInput } from '@/components/@ui/FileInput'
-import { SelectInput } from '@/components/@ui/SelectInput'
-import { SelectItem } from '@/components/@ui/SelectItem'
 import { Text } from '@/components/@ui/Text'
 import { TextInput } from '@/components/@ui/TextInput'
 
-import { ArrowsClockwise, Check, Lightbulb, Trash } from '@phosphor-icons/react'
-
-import { z } from 'zod'
+import { brands, categories, sizes } from '@/utils/enums'
 
 import { Clothe, createClothe } from '@/api/create-clothe'
 import { deleteClothe } from '@/api/delete-clothe'
@@ -34,20 +22,44 @@ import { getClotheById } from '@/api/get-clothe-by-id'
 import { updateClothe } from '@/api/update-clothe'
 import { updateClotheImages } from '@/api/update-clothe-images'
 import { TextArea } from '@/components/@ui/TextArea'
-import { brands, categories, genders, sizes } from '@/utils/enums'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Controller, useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-import Swal from 'sweetalert2'
 
-type ClotheFormData = z.infer<typeof ClotheFormSchema>
+import { ProductDetails } from './ClotheDetails'
+import { ClotheImages } from './ClotheImages'
+import { FormActions } from './FormActions'
+
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+export const ClotheFormSchema = z.object({
+  name: z
+    .string()
+    .nonempty({ message: 'O nome é obrigatório.' })
+    .min(5, { message: 'No mínimo 5 caracteres.' }),
+  priceInCents: z
+    .number({ message: 'O valor é obrigatório.' })
+    .min(10, { message: 'O valor mínimo é R$ 10,00.' })
+    .transform((val) => Math.round(val * 100)),
+  category: z.enum(categories, { message: 'Selecione uma categoria.' }),
+  gender: z.enum(['MALE', 'FEMALE', 'UNISEX'], { message: 'Selecione um gênero.' }),
+  brand: z.enum(brands, { message: 'Selecione uma marca.' }),
+  brandOther: z.string().optional().nullable(),
+  size: z.enum(sizes, { message: 'Selecione um tamanho.' }),
+  sizeOther: z.string().optional().nullable(),
+  fabric: z.string().min(1, { message: 'O tecido é obrigatório.' }),
+  color: z.string().min(1, { message: 'A cor é obrigatória.' }),
+  description: z.string().optional(),
+  images: z
+    .array(z.instanceof(File))
+    .max(5, { message: 'Selecione no máximo 5 foto.' })
+    .optional(),
+})
+
+export type ClotheFormData = z.infer<typeof ClotheFormSchema>
 
 export function ClotheForm() {
   const [clothe, setClothe] = useState<Clothe>()
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
-  const [existingImages, setExistingImages] = useState<
-    { id: string; url: string }[]
-  >([])
+  const [existingImages, setExistingImages] = useState<{ id: string; url: string }[]>([])
   const [removedImagesIds, setRemovedImagesIds] = useState<string[]>([])
 
   const router = useRouter()
@@ -65,9 +77,7 @@ export function ClotheForm() {
     resolver: zodResolver(ClotheFormSchema),
   })
 
-  const brandField = watch('brand')
-  const sizeField = watch('size')
-  const priceField = watch('price')
+  const priceField = watch('priceInCents')
 
   const watchedImages = watch('images')
   const imagesField: File[] = Array.isArray(watchedImages) ? watchedImages : []
@@ -98,22 +108,10 @@ export function ClotheForm() {
 
       await createClothe({
         clothe: {
-          name: data.name,
-          priceInCents: data.price,
-          description: data.description,
-          fabric: data.fabric,
-          color: data.color,
-          store: {},
-          deleted: false,
-          categoryOther: null,
-          brandOther: data.brandOther,
-          sizeOther: data.sizeOther,
-          category: data.category,
-          size: data.size,
-          brand: data.brand,
-          gender: data.gender,
+          ...data,
+          deleted: false
         },
-        files: data.images ? data.images : [],
+        images: data.images ? data.images : [],
       })
 
       toast.success('Peça cadastrada com sucesso!')
@@ -131,7 +129,7 @@ export function ClotheForm() {
 
     if (data) {
       setValue('name', data.name)
-      setValue('price', data.priceInCents / 100)
+      setValue('priceInCents', data.priceInCents / 100)
       setValue('category', data.category)
       setValue('gender', data.gender)
       setValue('brand', data.brand)
@@ -161,20 +159,8 @@ export function ClotheForm() {
 
       await updateClothe({
         id: clothe?.id,
-        name: data.name,
-        priceInCents: data.price,
-        description: data.description,
-        fabric: data.fabric,
-        color: data.color,
-        store: {},
-        deleted: false,
-        categoryOther: data.brandOther,
-        brandOther: data.brandOther,
-        sizeOther: data.sizeOther,
-        category: data.category,
-        size: data.size,
-        brand: data.brand,
-        gender: data.gender,
+        ...data,
+        deleted: false
       })
 
       updateClotheImages(
@@ -248,9 +234,9 @@ export function ClotheForm() {
               prefix="R$"
               placeholder="00,00"
               type="number"
-              errorMessage={errors.price?.message}
+              errorMessage={errors.priceInCents?.message}
               hasErrorPlaceholder
-              {...register('price', { valueAsNumber: true })}
+              {...register('priceInCents', { valueAsNumber: true })}
             />
           </InputContainer>
         </div>
@@ -271,148 +257,13 @@ export function ClotheForm() {
           </Text>
         </Section>
 
-        <div>
-          <InputContainer>
-            <Text type="label">Categoria</Text>
-            <Controller
-              name="category"
-              control={control}
-              render={({ field }) => (
-                <SelectInput
-                  onValueChange={field.onChange}
-                  placeholder={'Categoria'}
-                  errorMessage={errors.category?.message}
-                  hasErrorPlaceholder
-                  {...field}
-                >
-                  {categories.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectInput>
-              )}
-            />
-          </InputContainer>
+        <ProductDetails
+          register={register}
+          control={control}
+          errors={errors}
+          watch={watch}
+        />
 
-          <InputContainer>
-            <Text type="label">Gênero</Text>
-            <Controller
-              name="gender"
-              control={control}
-              render={({ field }) => (
-                <SelectInput
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  placeholder="Gênero"
-                  errorMessage={errors.gender?.message}
-                  hasErrorPlaceholder
-                >
-                  {genders.map((gender) => (
-                    <SelectItem key={gender} value={gender}>
-                      {gender}
-                    </SelectItem>
-                  ))}
-                </SelectInput>
-              )}
-            />
-          </InputContainer>
-        </div>
-
-        <div>
-          <InputContainer>
-            <Text type="label">Marca</Text>
-            <Controller
-              name="brand"
-              control={control}
-              render={({ field }) => (
-                <SelectInput
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  placeholder="Marca"
-                  errorMessage={errors.category?.message}
-                  hasErrorPlaceholder
-                >
-                  {brands.map((brand) => (
-                    <SelectItem key={brand} value={brand}>
-                      {brand}
-                    </SelectItem>
-                  ))}
-                </SelectInput>
-              )}
-            />
-          </InputContainer>
-
-          <InputContainer>
-            <Text type="label">Tamanho</Text>
-            <Controller
-              name="size"
-              control={control}
-              render={({ field }) => (
-                <SelectInput
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  placeholder="Tamanho"
-                  errorMessage={errors.category?.message}
-                  hasErrorPlaceholder
-                >
-                  {sizes.map((size) => (
-                    <SelectItem key={size} value={size}>
-                      {size}
-                    </SelectItem>
-                  ))}
-                </SelectInput>
-              )}
-            />
-          </InputContainer>
-        </div>
-
-        <div>
-          {brandField === 'OTHER' && (
-            <InputContainer css={{ width: '49%', marginBottom: '$4' }}>
-              <Text type="label">Marca (Outro)</Text>
-              <TextInput
-                placeholder="Marca (Outra)"
-                {...register('brandOther')}
-              />
-            </InputContainer>
-          )}
-          {sizeField === 'OTHER' && (
-            <InputContainer
-              css={{ width: '49%', marginLeft: 'auto', marginBottom: '$4' }}
-            >
-              <Text type="label">Tamanho (Outro)</Text>
-              <TextInput
-                placeholder="Tamanho (Outro)"
-                {...register('sizeOther')}
-              />
-            </InputContainer>
-          )}
-        </div>
-
-        <Separator />
-
-        <div>
-          <InputContainer>
-            <Text type="label">Tecido</Text>
-            <TextInput
-              placeholder="Tecido"
-              errorMessage={errors.fabric?.message}
-              hasErrorPlaceholder
-              {...register('fabric')}
-            />
-          </InputContainer>
-
-          <InputContainer>
-            <Text type="label">Cor</Text>
-            <TextInput
-              placeholder="Cor"
-              errorMessage={errors.color?.message}
-              hasErrorPlaceholder
-              {...register('color')}
-            />
-          </InputContainer>
-        </div>
       </FormCard>
 
       <FormCard>
@@ -423,105 +274,24 @@ export function ClotheForm() {
           {...register('description')}
         />
 
-        <div style={{ marginTop: '32px' }}>
-          <InputContainer css={{ maxWidth: '200px' }}>
-            <Controller
-              name="images"
-              control={control}
-              defaultValue={[]}
-              render={({ field }) => (
-                <FileInput
-                  placeholder="Escolher fotos"
-                  errorMessage={errors.images?.message}
-                  hasErrorPlaceholder
-                  onChange={(event) => {
-                    const files = event.target.files
-                      ? Array.from(event.target.files)
-                      : []
-                    field.onChange(files)
-                  }}
-                />
-              )}
-            />
-          </InputContainer>
+        <ClotheImages
+          imagePreviews={imagePreviews}
+          existingImages={existingImages}
+          imagesField={imagesField}
+          handleRemoveImage={handleRemoveImage}
+          handleRemoveExistingImage={handleRemoveExistingImage}
+          control={control}
+          errors={errors}
+        />
 
-          <Text
-            css={{
-              maxWidth: '400px',
-              minWidth: '190px',
-              marginBottom: '1.5rem',
-            }}
-            size="xs"
-          >
-            No máximo 5 imagens nos formatos JPEG, JPG ou PNG com até 5MB
-            (Recomendado: 1080x1920).
-          </Text>
-        </div>
-
-        <Section css={{ minHeight: '140px' }}>
-          {imagePreviews.length > 0 || existingImages.length > 0 ? (
-            <>
-              {existingImages.map((image) => (
-                <ImagePreviewItem
-                  key={image.id}
-                  name={image.id}
-                  src={image.url}
-                  onRemove={() => handleRemoveExistingImage(image.id)}
-                />
-              ))}
-              {imagesField.map((file, i) => (
-                <ImagePreviewItem
-                  key={file.name}
-                  name={file.name}
-                  src={imagePreviews[i]}
-                  onRemove={handleRemoveImage}
-                />
-              ))}
-            </>
-          ) : (
-            <Text css={{ flex: 1, opacity: 0.6 }} size="md">
-              Nenhuma foto selecionada
-            </Text>
-          )}
-        </Section>
-        <TipContainer>
-          <Lightbulb weight="bold" />
-          <Text size="xs">
-            Recomendamos que a primeira foto da peça seja no corpo
-          </Text>
-        </TipContainer>
       </FormCard>
       <div></div>
-      <ButtonContainer>
-        {clothe && (
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={handleDeleteClothe}
-          >
-            <Trash weight="bold" />
-            Excluir
-          </Button>
-        )}
-        <div>
-          <Button type="button" variant="tertiary" onClick={handleGoBack}>
-            Cancelar
-          </Button>
-          <Button type="submit" disabled={isSubmitting}>
-            {clothe ? (
-              <>
-                <ArrowsClockwise />
-                Atualizar peça
-              </>
-            ) : (
-              <>
-                <Check />
-                Cadastrar peça
-              </>
-            )}
-          </Button>
-        </div>
-      </ButtonContainer>
+      <FormActions
+        clothe={clothe}
+        isSubmitting={isSubmitting}
+        handleGoBack={handleGoBack}
+        handleDeleteClothe={handleDeleteClothe}
+      />
     </FormContainer>
   )
 }

@@ -45,67 +45,10 @@ export const Separator = styled('div', {
   marginBottom: '$8',
 })
 
-export const ButtonContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  width: '100%',
-
-  '&>div': {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '$4',
-
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-})
-
 export const InputContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '$1',
 
   width: '100%',
-})
-
-
-
-export const TipContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignSelf: 'center',
-  gap: '-20px',
-
-  padding: '$2',
-
-  textAlign: 'center',
-
-  marginTop: '-$10',
-  marginBottom: '$4',
-
-  height: 'fit-content',
-  width: 'fit-content',
-
-  backgroundColor: '$base700',
-
-  border: '1px solid $base400',
-  borderRadius: '$sm',
-
-  fontWeight: '$bold',
-})
-
-export const ErrorContainer = styled('div', {
-  height: '1.5rem',
-  margin: '0',
-})
-
-export const ErrorPlaceholder = styled('div', {
-  height: '1.5rem',
-})
-
-export const ErrorMessage = styled('p', {
-  color: 'red',
-  fontSize: '$xs',
-  height: '1.5rem',
 })
