@@ -69,20 +69,7 @@ export const InputContainer = styled('div', {
   width: '100%',
 })
 
-export const ErrorContainer = styled('div', {
-  height: '1.5rem',
-  margin: '0',
-})
 
-export const ErrorPlaceholder = styled('div', {
-  height: '1.5rem',
-})
-
-export const ErrorMessage = styled('p', {
-  color: 'red',
-  fontSize: '$xs',
-  height: '1.5rem',
-})
 
 export const TipContainer = styled('div', {
   display: 'flex',
@@ -106,4 +93,19 @@ export const TipContainer = styled('div', {
   borderRadius: '$sm',
 
   fontWeight: '$bold',
+})
+
+export const ErrorContainer = styled('div', {
+  height: '1.5rem',
+  margin: '0',
+})
+
+export const ErrorPlaceholder = styled('div', {
+  height: '1.5rem',
+})
+
+export const ErrorMessage = styled('p', {
+  color: 'red',
+  fontSize: '$xs',
+  height: '1.5rem',
 })

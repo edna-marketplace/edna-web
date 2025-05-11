@@ -234,16 +234,10 @@ export function ClotheForm() {
             <Text type="label">Nome da peça</Text>
             <TextInput
               placeholder="Nome da peça"
-              hasError={!!errors.name}
+              errorMessage={errors.name?.message}
+              hasErrorPlaceholder
               {...register('name')}
             />
-            <ErrorContainer>
-              {errors.name ? (
-                <ErrorMessage>{errors.name.message}</ErrorMessage>
-              ) : (
-                <ErrorPlaceholder />
-              )}
-            </ErrorContainer>
           </InputContainer>
 
           <InputContainer
@@ -254,16 +248,10 @@ export function ClotheForm() {
               prefix="R$"
               placeholder="00,00"
               type="number"
-              hasError={!!errors.price}
+              errorMessage={errors.price?.message}
+              hasErrorPlaceholder
               {...register('price', { valueAsNumber: true })}
             />
-            <ErrorContainer>
-              {errors.price ? (
-                <ErrorMessage>{errors.price.message}</ErrorMessage>
-              ) : (
-                <ErrorPlaceholder />
-              )}
-            </ErrorContainer>
           </InputContainer>
         </div>
 
@@ -293,7 +281,8 @@ export function ClotheForm() {
                 <SelectInput
                   onValueChange={field.onChange}
                   placeholder={'Categoria'}
-                  hasError={!!errors.category}
+                  errorMessage={errors.category?.message}
+                  hasErrorPlaceholder
                   {...field}
                 >
                   {categories.map((category) => (
@@ -304,13 +293,6 @@ export function ClotheForm() {
                 </SelectInput>
               )}
             />
-            <ErrorContainer>
-              {errors.category ? (
-                <ErrorMessage>{errors.category.message}</ErrorMessage>
-              ) : (
-                <ErrorPlaceholder />
-              )}
-            </ErrorContainer>
           </InputContainer>
 
           <InputContainer>
@@ -323,7 +305,8 @@ export function ClotheForm() {
                   value={field.value}
                   onValueChange={field.onChange}
                   placeholder="Gênero"
-                  hasError={!!errors.gender}
+                  errorMessage={errors.gender?.message}
+                  hasErrorPlaceholder
                 >
                   {genders.map((gender) => (
                     <SelectItem key={gender} value={gender}>
@@ -333,13 +316,6 @@ export function ClotheForm() {
                 </SelectInput>
               )}
             />
-            <ErrorContainer>
-              {errors.gender ? (
-                <ErrorMessage>{errors.gender.message}</ErrorMessage>
-              ) : (
-                <ErrorPlaceholder />
-              )}
-            </ErrorContainer>
           </InputContainer>
         </div>
 
@@ -354,7 +330,8 @@ export function ClotheForm() {
                   value={field.value}
                   onValueChange={field.onChange}
                   placeholder="Marca"
-                  hasError={!!errors.brand}
+                  errorMessage={errors.category?.message}
+                  hasErrorPlaceholder
                 >
                   {brands.map((brand) => (
                     <SelectItem key={brand} value={brand}>
@@ -364,13 +341,6 @@ export function ClotheForm() {
                 </SelectInput>
               )}
             />
-            <ErrorContainer>
-              {errors.brand ? (
-                <ErrorMessage>{errors.brand.message}</ErrorMessage>
-              ) : (
-                <ErrorPlaceholder />
-              )}
-            </ErrorContainer>
           </InputContainer>
 
           <InputContainer>
@@ -383,7 +353,8 @@ export function ClotheForm() {
                   value={field.value}
                   onValueChange={field.onChange}
                   placeholder="Tamanho"
-                  hasError={!!errors.size}
+                  errorMessage={errors.category?.message}
+                  hasErrorPlaceholder
                 >
                   {sizes.map((size) => (
                     <SelectItem key={size} value={size}>
@@ -393,13 +364,6 @@ export function ClotheForm() {
                 </SelectInput>
               )}
             />
-            <ErrorContainer>
-              {errors.size ? (
-                <ErrorMessage>{errors.size.message}</ErrorMessage>
-              ) : (
-                <ErrorPlaceholder />
-              )}
-            </ErrorContainer>
           </InputContainer>
         </div>
 
@@ -411,13 +375,6 @@ export function ClotheForm() {
                 placeholder="Marca (Outra)"
                 {...register('brandOther')}
               />
-              <ErrorContainer>
-                {errors.brandOther ? (
-                  <ErrorMessage>{errors.brandOther.message}</ErrorMessage>
-                ) : (
-                  <ErrorPlaceholder />
-                )}
-              </ErrorContainer>
             </InputContainer>
           )}
           {sizeField === 'OTHER' && (
@@ -429,13 +386,6 @@ export function ClotheForm() {
                 placeholder="Tamanho (Outro)"
                 {...register('sizeOther')}
               />
-              <ErrorContainer>
-                {errors.sizeOther ? (
-                  <ErrorMessage>{errors.sizeOther.message}</ErrorMessage>
-                ) : (
-                  <ErrorPlaceholder />
-                )}
-              </ErrorContainer>
             </InputContainer>
           )}
         </div>
@@ -447,32 +397,20 @@ export function ClotheForm() {
             <Text type="label">Tecido</Text>
             <TextInput
               placeholder="Tecido"
-              hasError={!!errors.fabric}
+              errorMessage={errors.fabric?.message}
+              hasErrorPlaceholder
               {...register('fabric')}
             />
-            <ErrorContainer>
-              {errors.fabric ? (
-                <ErrorMessage>{errors.fabric.message}</ErrorMessage>
-              ) : (
-                <ErrorPlaceholder />
-              )}
-            </ErrorContainer>
           </InputContainer>
 
           <InputContainer>
             <Text type="label">Cor</Text>
             <TextInput
               placeholder="Cor"
-              hasError={!!errors.color}
+              errorMessage={errors.color?.message}
+              hasErrorPlaceholder
               {...register('color')}
             />
-            <ErrorContainer>
-              {errors.color ? (
-                <ErrorMessage>{errors.color.message}</ErrorMessage>
-              ) : (
-                <ErrorPlaceholder />
-              )}
-            </ErrorContainer>
           </InputContainer>
         </div>
       </FormCard>
@@ -494,7 +432,8 @@ export function ClotheForm() {
               render={({ field }) => (
                 <FileInput
                   placeholder="Escolher fotos"
-                  hasError={!!errors.images}
+                  errorMessage={errors.images?.message}
+                  hasErrorPlaceholder
                   onChange={(event) => {
                     const files = event.target.files
                       ? Array.from(event.target.files)
@@ -504,13 +443,6 @@ export function ClotheForm() {
                 />
               )}
             />
-            <ErrorContainer>
-              {errors.images ? (
-                <ErrorMessage>{errors.images.message}</ErrorMessage>
-              ) : (
-                <ErrorPlaceholder />
-              )}
-            </ErrorContainer>
           </InputContainer>
 
           <Text

@@ -2,7 +2,6 @@ import { Button } from '@/components/@ui/Button'
 import { SelectInput } from '@/components/@ui/SelectInput'
 import { SelectItem } from '@/components/@ui/SelectItem'
 import { TextInput } from '@/components/@ui/TextInput'
-import { Brands, Categories, Sizes } from '@/utils/select-data'
 import { Plus, SlidersHorizontal } from '@phosphor-icons/react'
 import { useRouter } from 'next/router'
 import { Container } from './styles'
@@ -10,49 +9,13 @@ import { FetchClothesWithFilterRequest } from '@/api/fetch-clothes-with-filter'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { brands, categories, sizes } from '@/utils/enums'
 
 export const FilterFormSchema = z.object({
   name: z.string().optional(),
-  category: z.enum(
-    [
-      'T_SHIRT',
-      'SOCIAL_SHIRT',
-      'SUIT',
-      'ACTIVEWEAR',
-      'DRESS',
-      'PANTS',
-      'SHORTS',
-      'JACKET_HOODIE',
-      'UNDERWEAR',
-      'FOOTWEAR',
-      'ACCESSORIES',
-      'SLEEPWEAR',
-      'SWIMWEAR',
-    ]).optional(),
-  brand: z.enum(
-    ['NIKE', 'ADIDAS', 'HERING', 'ZARA', 'FARM', 'CEA', 'RENNER', 'OTHER'],
-  ).optional(),
-  size: z.enum(
-    [
-      'XS',
-      'S',
-      'M',
-      'L',
-      'XL_LARGER',
-      'N_34',
-      'N_36',
-      'N_38',
-      'N_40',
-      'N_42',
-      'N_44',
-      'N_46',
-      'N_48',
-      'N_50',
-      'N_52',
-      'N_54',
-      'N_56_LARGER',
-      'OTHER',
-    ]).optional()
+  category: z.enum(categories).optional(),
+  brand: z.enum(brands).optional(),
+  size: z.enum(sizes).optional()
 })
 
 export type FilterFormData = z.infer<typeof FilterFormSchema>
@@ -76,27 +39,27 @@ export function FilterForm({ handleFetchClothesWithFilter }: FilterFormProps) {
       <Container>
         <div>
           <SelectInput placeholder="Categoria">
-            {Categories.map((category) => (
-              <SelectItem key={category.value} value={category.value}>
-                {category.display}
+            {categories.map((category) => (
+              <SelectItem key={category} value={category}>
+                {category}
               </SelectItem>
             ))}
           </SelectInput>
         </div>
         <div>
           <SelectInput placeholder="Marca">
-            {Brands.map((brand) => (
-              <SelectItem key={brand.value} value={brand.value}>
-                {brand.display}
+            {brands.map((brand) => (
+              <SelectItem key={brand} value={brand}>
+                {brand}
               </SelectItem>
             ))}
           </SelectInput>
         </div>
         <div>
           <SelectInput placeholder="Tamanho">
-            {Sizes.map((size) => (
-              <SelectItem key={size.value} value={size.value}>
-                {size.display}
+            {sizes.map((size) => (
+              <SelectItem key={size} value={size}>
+                {size}
               </SelectItem>
             ))}
           </SelectInput>

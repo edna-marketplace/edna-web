@@ -69,3 +69,18 @@ export const SelectInputViewport = styled(SelectPrimitive.Viewport, {
   maxHeight: '360px',
   overflowY: 'auto',
 })
+
+export const ErrorContainer = styled('div', {
+  height: '1.5rem',
+  margin: '0',
+})
+
+export const ErrorPlaceholder = styled('div', {
+  height: '1.5rem',
+})
+
+export const ErrorMessage = styled('p', {
+  color: 'red',
+  fontSize: '$xs',
+  height: '1.5rem',
+})

@@ -1,12 +1,13 @@
 import { ComponentProps, ElementRef, forwardRef } from 'react'
 import { toast } from 'sonner'
-import { FileInputContainer, Input, Label } from './styles'
+import { ErrorContainer, ErrorMessage, ErrorPlaceholder, FileInputContainer, Input, Label } from './styles'
 import { UploadSimple } from '@phosphor-icons/react/dist/ssr'
 
 export interface FileInputProps extends ComponentProps<typeof Input> {
   maxFiles?: number
   maxSizeInMB?: number
-  hasError?: boolean
+  errorMessage?: string
+  hasErrorPlaceholder?: boolean
 }
 
 export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
@@ -17,7 +18,8 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
       maxSizeInMB = 5,
       onChange,
       value: _value,
-      hasError,
+      errorMessage,
+      hasErrorPlaceholder,
       ...props
     }: FileInputProps,
     ref,
@@ -53,22 +55,33 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
     }
 
     return (
-      <FileInputContainer css={css} hasError={hasError}>
-        <Label htmlFor="file-input">
-          <UploadSimple size={17} />
-          Escolher fotos
-        </Label>
-        <Input
-          id="file-input"
-          ref={ref}
-          type="file"
-          multiple
-          accept=".jpeg,.jpg,.png"
-          onChange={handleFileChange}
-          style={{ display: 'none' }}
-          {...props}
-        />
-      </FileInputContainer>
+      <>
+        <FileInputContainer css={css} hasError={!!errorMessage}>
+          <Label htmlFor="file-input">
+            <UploadSimple size={17} />
+            Escolher fotos
+          </Label>
+          <Input
+            id="file-input"
+            ref={ref}
+            type="file"
+            multiple
+            accept=".jpeg,.jpg,.png"
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+            {...props}
+          />
+        </FileInputContainer>
+        {hasErrorPlaceholder && (
+          errorMessage ? (
+            <ErrorContainer>
+              <ErrorMessage>{errorMessage}</ErrorMessage>
+            </ErrorContainer>
+          ) : (
+            <ErrorPlaceholder />
+          )
+        )}
+      </>
     )
   },
 )

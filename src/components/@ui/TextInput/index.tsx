@@ -1,30 +1,32 @@
+import { Eye, EyeSlash } from 'phosphor-react'
 import {
   ComponentProps,
-  forwardRef,
   ElementRef,
-  useState,
-  ChangeEvent,
-  KeyboardEvent,
+  forwardRef,
+  useState
 } from 'react'
 import {
+  ErrorContainer,
+  ErrorMessage,
+  ErrorPlaceholder,
   Input,
   Prefix,
   ShowPasswordButton,
   Suffix,
   TextInputContainer,
 } from './styles'
-import { Eye, EyeSlash } from 'phosphor-react'
 
 export interface TextInputProps extends ComponentProps<typeof Input> {
   prefix?: string
   suffix?: string
   isPassword?: boolean
-  hasError?: boolean
+  errorMessage?: string
+  hasErrorPlaceholder?: boolean
 }
 
 export const TextInput = forwardRef<ElementRef<typeof Input>, TextInputProps>(
   (
-    { prefix, suffix, isPassword, hasError, css, ...props }: TextInputProps,
+    { prefix, suffix, isPassword, errorMessage, hasErrorPlaceholder, css, ...props }: TextInputProps,
     ref,
   ) => {
     const [showPassword, setShowPassword] = useState(false)
@@ -34,21 +36,32 @@ export const TextInput = forwardRef<ElementRef<typeof Input>, TextInputProps>(
     }
 
     return (
-      <TextInputContainer css={css} hasError={hasError}>
-        {!!prefix && <Prefix>{prefix}</Prefix>}
-        <Input
-          ref={ref}
-          type={isPassword ? (showPassword ? 'text' : 'password') : props.type}
-          step={0.01}
-          {...props}
-        />
-        {isPassword && (
-          <ShowPasswordButton onClick={() => handleTogglePassword()}>
-            {showPassword ? <EyeSlash size={21} /> : <Eye size={21} />}
-          </ShowPasswordButton>
+      <>
+        <TextInputContainer css={css} hasError={!!errorMessage}>
+          {!!prefix && <Prefix>{prefix}</Prefix>}
+          <Input
+            ref={ref}
+            type={isPassword ? (showPassword ? 'text' : 'password') : props.type}
+            step={0.01}
+            {...props}
+          />
+          {isPassword && (
+            <ShowPasswordButton onClick={() => handleTogglePassword()}>
+              {showPassword ? <EyeSlash size={21} /> : <Eye size={21} />}
+            </ShowPasswordButton>
+          )}
+          {!!suffix && <Suffix>{suffix}</Suffix>}
+        </TextInputContainer>
+        {hasErrorPlaceholder && (
+          errorMessage ? (
+            <ErrorContainer>
+              <ErrorMessage>{errorMessage}</ErrorMessage>
+            </ErrorContainer>
+          ) : (
+            <ErrorPlaceholder />
+          )
         )}
-        {!!suffix && <Suffix>{suffix}</Suffix>}
-      </TextInputContainer>
+      </>
     )
   },
 )
