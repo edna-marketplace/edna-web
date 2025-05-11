@@ -3,21 +3,19 @@ import {
   fetchClothesWithFilter,
 } from '@/api/fetch-clothes-with-filter'
 import { Button } from '@/components/@ui/Button'
-import { SelectInput } from '@/components/@ui/SelectInput'
-import { SelectItem } from '@/components/@ui/SelectItem'
 import { Text } from '@/components/@ui/Text'
-import { TextInput } from '@/components/@ui/TextInput'
 import { Title } from '@/components/@ui/Title'
 import { Header } from '@/components/Header'
 import { brands, categories, sizes } from '@/utils/enums'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Plus, SlidersHorizontal, X } from '@phosphor-icons/react'
+import { Plus } from '@phosphor-icons/react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ClotheItem } from './_components/ClotheItem'
-import { ActionsContainer, ClothesContainer, Container, EmptyListContainer, FilterContainer, FilterField, Main, NewClotheContainer } from './styles'
+import { ClothesContainer, Container, EmptyListContainer, Main, NewClotheContainer } from './styles'
+import { FilterForm } from './_components/FilterForm'
 
 export const FilterFormSchema = z.object({
   name: z.string().optional(),
@@ -33,7 +31,7 @@ export default function Clothes() {
 
   const router = useRouter()
 
-  const { register, handleSubmit, control, setValue, reset } = useForm<FilterFormData>({
+  const { register, handleSubmit, control, reset } = useForm<FilterFormData>({
     resolver: zodResolver(FilterFormSchema)
   })
 
@@ -78,86 +76,11 @@ export default function Clothes() {
 
       <Main>
         <form onSubmit={handleSubmit(handleFetchClothesWithFilter)}>
-          <FilterContainer>
-            <FilterField>
-              <Text type="label" size="sm">Categoria</Text>
-              <Controller
-                name='category'
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <SelectInput
-                    placeholder="Selecionar"
-                    onValueChange={onChange}
-                    value={value?.toString()}
-                  >
-                    {categories.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectInput>
-                )}
-              />
-            </FilterField>
-
-            <FilterField>
-              <Text type="label" size="sm">Marca</Text>
-              <Controller
-                name='brand'
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <SelectInput
-                    placeholder="Selecionar"
-                    onValueChange={onChange}
-                    value={value?.toString()}
-                  >
-                    {brands.map((brand) => (
-                      <SelectItem key={brand} value={brand}>
-                        {brand}
-                      </SelectItem>
-                    ))}
-                  </SelectInput>
-                )}
-              />
-            </FilterField>
-
-            <FilterField>
-              <Text type="label" size="sm">Tamanho</Text>
-              <Controller
-                name='size'
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <SelectInput
-                    placeholder="Selecionar"
-                    onValueChange={onChange}
-                    value={value?.toString()}
-                  >
-                    {sizes.map((size) => (
-                      <SelectItem key={size} value={size}>
-                        {size}
-                      </SelectItem>
-                    ))}
-                  </SelectInput>
-                )}
-              />
-            </FilterField>
-
-            <FilterField css={{ minWidth: "200px" }}>
-              <Text type="label" size="sm">Nome da peça</Text>
-              <TextInput placeholder="Pesquisar" {...register("name")} />
-            </FilterField>
-
-            <ActionsContainer>
-              <Button type='submit' variant="secondary">
-                <SlidersHorizontal size={16} />
-                Filtrar
-              </Button>
-              <Button type='button' variant="tertiary" onClick={handleClearFilters}>
-                <X size={16} />
-                Limpar
-              </Button>
-            </ActionsContainer>
-          </FilterContainer>
+          <FilterForm
+            register={register}
+            control={control}
+            handleClearFilters={handleClearFilters}
+          />
           <NewClotheContainer>
             <Button type='button' size="sm" onClick={handleNewClothe} variant="primary">
               <Plus size={16} />

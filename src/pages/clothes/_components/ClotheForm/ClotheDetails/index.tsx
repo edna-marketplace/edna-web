@@ -40,11 +40,15 @@ export function ProductDetails({
                 hasErrorPlaceholder
                 {...field}
               >
-                {categories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {categoryDisplayNames[category]}
-                  </SelectItem>
-                ))}
+                {categories.map((category) => {
+                  if (category !== 'ALL') {
+                    return (
+                      <SelectItem key={category} value={category}>
+                        {categoryDisplayNames[category]}
+                      </SelectItem>
+                    )
+                  }
+                })}
               </SelectInput>
             )}
           />
@@ -88,11 +92,15 @@ export function ProductDetails({
                 errorMessage={errors.category?.message}
                 hasErrorPlaceholder
               >
-                {brands.map((brand) => (
-                  <SelectItem key={brand} value={brand}>
-                    {brandDisplayNames[brand]}
-                  </SelectItem>
-                ))}
+                {brands.map((brand) => {
+                  if (brand !== 'ALL') {
+                    return (
+                      <SelectItem key={brand} value={brand}>
+                        {brandDisplayNames[brand]}
+                      </SelectItem>
+                    )
+                  }
+                })}
               </SelectInput>
             )}
           />
@@ -111,11 +119,15 @@ export function ProductDetails({
                 errorMessage={errors.category?.message}
                 hasErrorPlaceholder
               >
-                {sizes.map((size) => (
-                  <SelectItem key={size} value={size}>
-                    {sizeDisplayNames[size]}
-                  </SelectItem>
-                ))}
+                {sizes.map((size) => {
+                  if (size !== 'ALL') {
+                    return (
+                      <SelectItem key={size} value={size}>
+                        {sizeDisplayNames[size]}
+                      </SelectItem>
+                    )
+                  }
+                })}
               </SelectInput>
             )}
           />
