@@ -13,7 +13,7 @@ const brandDisplayNames = {
   'FARM': 'Farm',
   'CEA': 'C&A',
   'RENNER': 'Renner',
-  'OTHER': 'Outras',
+  'OTHER': 'Outra',
 };
 
 const categoryDisplayNames = {
