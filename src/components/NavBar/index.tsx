@@ -24,9 +24,9 @@ export function NavBar() {
 
   const links = [
     { path: '/', label: 'Início', icon: House },
-    { path: '/clothes', label: 'Peças', icon: TShirt },
-    { path: '/orders', label: 'Pedidos', icon: ClipboardText },
-    { path: '/store', label: 'Brechó', icon: Storefront },
+    { path: '/app/clothes', label: 'Peças', icon: TShirt },
+    { path: '/app/orders', label: 'Pedidos', icon: ClipboardText },
+    { path: '/app/store', label: 'Brechó', icon: Storefront },
   ]
 
   const renderLinks = () =>

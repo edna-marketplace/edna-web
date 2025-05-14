@@ -36,11 +36,11 @@ export default function Clothes() {
   })
 
   function handleClotheDetails(clotheId: string) {
-    router.push(`/clothes/${clotheId}`)
+    router.push(`/app/clothes/${clotheId}`)
   }
 
   function handleNewClothe() {
-    router.push('/clothes/new')
+    router.push('/app/clothes/new')
   }
 
   async function handleFetchClothesWithFilter(data: FilterFormData) {
