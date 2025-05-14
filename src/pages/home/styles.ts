@@ -30,3 +30,10 @@ export const Main = styled('main', {
     padding: '$8 $4 $8 $12',
   },
 })
+
+export const InfoCardContainer = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+
+  
+})
