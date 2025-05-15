@@ -48,7 +48,7 @@ export const Separator = styled('div', {
 export const InputContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  gap: '$1',
+  gap: '2px',
 
   width: '100%',
 })

@@ -23,14 +23,11 @@ export const FormContainer = styled(Card, {
     left: 5,
     zIndex: 1,
 
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-
     width: '50%',
     minWidth: '300px',
     height: '98%',
 
+    padding: 0,
 
     '@sm': {
         width: '70%'

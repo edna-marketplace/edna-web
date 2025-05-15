@@ -14,6 +14,10 @@ export const Text = styled('p', {
       md: { fontSize: '$md' },
       lg: { fontSize: '$xl' },
     },
+    weight: {
+      regular: { fontWeight: '$regular' },
+      bold: { fontWeight: '$bold' }
+    },
     type: {
       default: {},
       label: {

@@ -1,7 +1,6 @@
 import { BackgroundImageContainer, Container, FormContainer } from "./styles";
 
 import backgroundImage from '@/assets/background-image.svg'
-import logoImage from '@/assets/logo.png'
 
 export interface AuthLayoutProps {
     children: React.ReactNode
