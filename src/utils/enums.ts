@@ -2,6 +2,8 @@ const genders = ['MALE', 'FEMALE', 'UNISEX'] as const
 
 const brands = ['ALL', 'NIKE', 'ADIDAS', 'HERING', 'ZARA', 'FARM', 'CEA', 'RENNER', 'OTHER'] as const
 
+const orderStatus = ['PENDING', 'CANCELED', 'COMPLETED', 'AWAIT_WITHDRAWAL'] as const
+
 const categories = [
   'ALL',
   'T_SHIRT',
@@ -42,4 +44,4 @@ const sizes = [
   'OTHER',
 ] as const
 
-export { genders, brands, sizes, categories }
+export { genders, brands, sizes, categories, orderStatus }
