@@ -11,12 +11,6 @@ export const Container = styled('div', {
     height: '56px',
 
     padding: '$1',
-
-    [`${Button}`]: {
-        fontWeight: '$bold',
-        boxShadow: 'none',
-        zIndex: 2
-    }
 })
 
 export const SelectedContainer = styled('div', {
@@ -56,5 +50,11 @@ export const ButtonContainer = styled('div', {
     alignItems: 'center',
     justifyContent: 'space-around',
     width: '100%',
-    height: '100%'
+    height: '100%',
+
+    [`${Button}`]: {
+        fontWeight: '$bold',
+        boxShadow: 'none',
+        zIndex: 2
+    }
 })
