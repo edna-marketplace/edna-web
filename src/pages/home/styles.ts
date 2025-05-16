@@ -17,9 +17,12 @@ export const Container = styled('div', {
 })
 
 export const Main = styled('main', {
-  display: 'flex',
-  flexDirection: 'column',
+  display: 'grid',
+  gridTemplateColumns: '4fr 1fr',
+  gridTemplateRows: 'auto auto auto',
   gap: '$8',
+
+  width: '100%',
 
   padding: '$8 $40',
 
@@ -34,6 +37,7 @@ export const Main = styled('main', {
 export const InfoCardContainer = styled('div', {
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
-
-  
+  placeItems: 'center',
+  gap: '$2',
+  width: '100%'
 })

@@ -2,10 +2,29 @@ import { getCurrentPeriodMessage } from '@/utils/get-current-period-message'
 import { Container, InfoCardContainer, Main } from './styles'
 import { InfoCard } from './_components/InfoCard'
 import { Header } from '@/components/header'
+import { PendingOrderList } from './_components/PendingOrderList'
 
 
 export default function Home() {
   const currentPeriodMessage = getCurrentPeriodMessage()
+
+  const orders = [
+    {
+      id: "1",
+      name: "Order 1",
+      date: "16/05"
+    },
+    {
+      id: "2",
+      name: "Order 2",
+      date: "15/05"
+    },
+    {
+      id: "3",
+      name: "Order 3",
+      date: "14/05"
+    },
+  ]
 
   return (
     <Container>
@@ -35,6 +54,9 @@ export default function Home() {
             type='currency'
           />
         </InfoCardContainer>
+        <PendingOrderList orders={orders} />
+        <div>a</div>
+        {/* Grafico - rowspan 2 */}
       </Main>
     </Container>
   )

@@ -5,9 +5,11 @@ import { styled } from "@edna-ui/react";
 export const InfoContainer = styled(Card, {
     display: 'flex',
     flexDirection: 'column',
+    padding: '$4',
     gap: '$9',
 
-    width: '$80',
+    width: 'fit-content',
+    minWidth: '260px',
 
     [`& > ${Text}`]: {
         color: '$base300'

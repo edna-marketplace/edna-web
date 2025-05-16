@@ -21,7 +21,7 @@ export function InfoCard({
     return (
         <>
             <InfoContainer>
-                <Text size="lg">{title}</Text>
+                <Text size="md">{title}</Text>
                 <Title>
                     { type === 'currency' ? (
                         value.toLocaleString('pt-br', {
@@ -33,10 +33,10 @@ export function InfoCard({
                     )}
                 </Title>
                 <div>
-                    <Text size="sm">Desde semana passada</Text>
+                    <Text size="xs">Desde semana passada</Text>
                     <ComparisonPercentage isNegative={isNegative}>
-                        <Text>{percentage}%</Text>
-                        {percentage > 0 ? (<CaretUp/>) : (<CaretDown/>)}
+                        <Text size="xs" weight="bold">{percentage}%</Text>
+                        {percentage > 0 ? (<CaretUp size={14} weight='bold'/>) : (<CaretDown size={14} weight='bold'/>)}
                     </ComparisonPercentage>                
                 </div>
             </InfoContainer>
