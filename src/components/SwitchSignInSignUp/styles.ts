@@ -11,6 +11,8 @@ export const Container = styled('div', {
   height: '56px',
 
   padding: '$1',
+
+  marginBottom: '$4',
 })
 
 export const SelectedContainer = styled('div', {
@@ -21,7 +23,7 @@ export const SelectedContainer = styled('div', {
   height: '48px',
 
   position: 'absolute',
-  transition: 'transform 0.3s ease, width 0.3s ease',
+  transition: 'transform 0.1s ease, width 0.1s ease',
 
   variants: {
     position: {
@@ -30,7 +32,7 @@ export const SelectedContainer = styled('div', {
       },
       signup: {
         width: '52%',
-        transform: 'translateX(87%)'
+        transform: 'translateX(88%)'
       }
     }
   },
@@ -54,7 +56,10 @@ export const ButtonContainer = styled('div', {
 
   [`${Button}`]: {
     fontWeight: '$bold',
-    boxShadow: 'none',
-    zIndex: 2
+    zIndex: 2,
+
+    '&:focus': {
+      boxShadow: 'none',
+    }
   }
 })

@@ -52,7 +52,7 @@ export const TextInput = forwardRef<ElementRef<typeof Input>, TextInputProps>(
           )}
           {!!suffix && <Suffix>{suffix}</Suffix>}
         </TextInputContainer>
-        {!!errorMessage && (
+        {hasErrorPlaceholder && (
           errorMessage ? (
             <ErrorContainer>
               <ErrorMessage>{errorMessage}</ErrorMessage>

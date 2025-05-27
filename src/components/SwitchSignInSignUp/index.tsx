@@ -1,9 +1,18 @@
 import { useState } from "react";
 import { Button } from "../@ui/Button";
 import { ButtonContainer, Container, SelectedContainer } from "./styles";
+import { useRouter } from "next/router";
 
 export function SignInSignUpSwitch() {
-  const [activeTab, setActiveTab] = useState<'signin' | 'signup'>("signin");
+  const router = useRouter()
+
+  const [activeTab, setActiveTab] = useState<'signin' | 'signup'>(router.pathname === '/signup' ? 'signup' : 'signin');
+
+  function handleTabChange(tab: 'signin' | 'signup') {
+    setActiveTab(tab);
+
+    router.push(`/${tab}`);
+  }
 
   return (
     <Container>
@@ -12,14 +21,14 @@ export function SignInSignUpSwitch() {
         <Button
           type="button"
           variant="tertiary"
-          onClick={() => setActiveTab("signin")}
+          onClick={() => handleTabChange("signin")}
         >
           Login
         </Button>
         <Button
           type="button"
           variant="tertiary"
-          onClick={() => setActiveTab("signup")}
+          onClick={() => handleTabChange("signup")}
         >
           Cadastro
         </Button>

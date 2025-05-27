@@ -24,7 +24,6 @@ export const BackgroundImageContainer = styled(Image, {
 
 export const FormContainer = styled(Card, {
   position: 'relative',
-  zIndex: 1,
 
   width: '50%',
   minWidth: '270px',
