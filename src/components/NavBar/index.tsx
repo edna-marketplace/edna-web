@@ -5,6 +5,7 @@ import {
   Storefront,
   TShirt,
   List,
+  SignOut,
 } from '@phosphor-icons/react'
 import {
   Container,
@@ -12,15 +13,24 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerToggle,
+  LinksContainer,
+  SignOutContainer,
+  SignOutButton,
 } from './styles'
 import { useRouter } from 'next/router'
 import { useIsMobile } from '@/hooks/use-is-mobile'
+import { destroyCookie } from 'nookies'
 
 export function NavBar() {
   const router = useRouter()
   const currentPath = router.pathname
   const isMobile = useIsMobile()
   const [isOpen, setIsOpen] = useState(false)
+
+  function signOut() {
+    destroyCookie(null, '@edna:auth-token')
+    router.push('/signin')
+  }
 
   const links = [
     { path: '/', label: 'Início', icon: House },
@@ -61,5 +71,17 @@ export function NavBar() {
     )
   }
 
-  return <Container>{renderLinks()}</Container>
+  return (
+    <Container>
+      <LinksContainer>
+        {renderLinks()}
+      </LinksContainer>
+      <SignOutContainer>
+        <SignOutButton onClick={signOut}>
+          <SignOut size={30} style={{ transform: 'rotate(180deg)' }} />
+          Sair
+        </SignOutButton>
+      </SignOutContainer>
+    </Container>
+  )
 }
