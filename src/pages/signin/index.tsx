@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "@/api/sign-in";
 import { toast } from "sonner";
+import { useRouter } from "next/router";
 
 const signInSchema = z.object({
   email: z.string()
@@ -28,9 +29,13 @@ export default function SignIn() {
     resolver: zodResolver(signInSchema)
   })
 
+  const router = useRouter()
+
   async function handleSignIn(data: SignInForm) {
     try {
       await signIn(data)
+
+      router.push('/')
     } catch (error) {
       toast.error('E-mail e/ou senha inválidos.')
     }
