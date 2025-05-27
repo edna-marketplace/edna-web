@@ -5,22 +5,22 @@ import { styled } from "@edna-ui/react";
 export const InfoContainer = styled(Card, {
     display: 'flex',
     flexDirection: 'column',
-    padding: '$4',
-    gap: '$9',
-
-    width: 'fit-content',
-    minWidth: '260px',
-
+    padding: '$2 $3',
+    gap: '$3',
+    width: '100%',
+    minWidth: '200px',
+    alignSelf: 'start',
+  
     [`& > ${Text}`]: {
-        color: '$base300'
+      color: '$base300',
     },
-
+  
     '& > div': {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    }
-})
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+  })  
 
 export const ComparisonPercentage = styled('div', {
     display: 'flex',

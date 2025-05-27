@@ -18,19 +18,20 @@ export const Container = styled('div', {
 
 export const Main = styled('main', {
   display: 'grid',
-  gridTemplateColumns: '4fr 1fr',
+  gridTemplateColumns: '3fr 1fr',
   gridTemplateRows: 'auto auto auto',
-  gap: '$8',
+  rowGap: '$2',
+  columnGap: '$2',
 
   width: '100%',
 
-  padding: '$8 $40',
+  padding: '$6 $40',
 
   '@xl': {
-    padding: '$8 $12',
+    padding: '$6 $8',
   },
   '@md': {
-    padding: '$8 $4 $8 $12',
+    padding: '$4 $4',
   },
 })
 
@@ -39,5 +40,5 @@ export const InfoCardContainer = styled('div', {
   gridTemplateColumns: 'repeat(3, 1fr)',
   placeItems: 'center',
   gap: '$2',
-  width: '100%'
+  width: '100%',
 })
