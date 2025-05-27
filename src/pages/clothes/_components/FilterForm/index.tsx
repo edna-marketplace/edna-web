@@ -1,7 +1,6 @@
 import { Button } from '@/components/@ui/Button'
 import { SelectInput } from '@/components/@ui/SelectInput'
 import { SelectItem } from '@/components/@ui/SelectItem'
-import { Text } from '@/components/@ui/Text'
 import { TextInput } from '@/components/@ui/TextInput'
 import { brands, categories, sizes } from '@/utils/enums'
 import { SlidersHorizontal, X } from '@phosphor-icons/react'
@@ -9,6 +8,8 @@ import { Control, Controller, UseFormRegister } from 'react-hook-form'
 import { z } from 'zod'
 import { ActionsContainer, FilterContainer, FilterField } from './styles'
 import { brandDisplayNames, categoryDisplayNames, sizeDisplayNames } from '@/utils/select-input-mapper'
+import { Text } from '@/components/@ui/Text'
+
 
 export const FilterFormSchema = z.object({
   name: z.string().optional(),
