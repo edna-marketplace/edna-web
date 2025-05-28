@@ -5,11 +5,10 @@ import Image from "next/image";
 export const Container = styled('div', {
   position: 'relative',
   width: '100%',
-  height: '100vh',
+  minHeight: '100vh',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  padding: '$5'
 })
 
 export const BackgroundImageContainer = styled(Image, {
@@ -27,9 +26,10 @@ export const FormContainer = styled(Card, {
 
   width: '50%',
   minWidth: '270px',
-  height: '100%',
+  height: 'fit-content',
 
   padding: 0,
+  margin: '$5',
 
   '@md': {
     width: '70%'

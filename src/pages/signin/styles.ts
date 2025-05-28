@@ -7,8 +7,8 @@ export const Container = styled('div', {
   flexDirection: 'column',
   alignItems: 'center',
 
-  paddingTop: '$8',
-  gap: '$8',
+  padding: '$6',
+  gap: '$6',
 })
 
 export const LogoImage = styled(Image, {
