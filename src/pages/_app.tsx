@@ -6,6 +6,7 @@ import { AppLayout } from '../layouts/App'
 import { Toaster } from 'sonner'
 import { AuthLayout } from '@/layouts/Auth'
 import { parseCookies } from 'nookies'
+import { SignUpContext, SignUpContextProvider } from '@/contexts/SignUpContext'
 
 globalStyles()
 
@@ -16,8 +17,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Layout>
-      <Toaster richColors position="top-right" />
-      <Component {...pageProps} />
+      <SignUpContextProvider>
+        <Toaster richColors position="top-right" />
+        <Component {...pageProps} />
+      </SignUpContextProvider>
     </Layout>
   )
 }

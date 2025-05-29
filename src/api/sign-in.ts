@@ -20,8 +20,6 @@ export async function signIn({ email, password }: SignInBody) {
       path: '/',
       sameSite: 'lax',
     })
-
-    console.log(response.data)
   } catch (error) {
     throw error
   }

@@ -25,11 +25,15 @@ const signInSchema = z.object({
 type SignInForm = z.infer<typeof signInSchema>
 
 export default function SignIn() {
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignInForm>({
-    resolver: zodResolver(signInSchema)
-  })
-
   const router = useRouter()
+  const { email } = router.query
+
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignInForm>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: email ? email.toString() : undefined,
+    }
+  })
 
   async function handleSignIn(data: SignInForm) {
     try {

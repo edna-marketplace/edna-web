@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { getViaCep } from "@/api/get-via-cep";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useSignUp } from "@/hooks/use-signup";
 
 const cepRegex = /^\d{5}-?\d{3}$/;
 
@@ -24,7 +25,7 @@ const RegisterAddressSchema = z.object({
     .min(1, "CEP é obrigatório")
     .regex(cepRegex, "CEP inválido")
     .transform(value => value.replace('-', '')),
-  number: z.string().min(1, "Número é obrigatório"),
+  number: z.number().min(1, "Número é obrigatório"),
   street: z.string().min(1, "Rua é obrigatório"),
   neighborhood: z.string().min(1, "Bairro é obrigatório"),
   city: z.string().min(1, "Cidade é obrigatório"),
@@ -36,6 +37,8 @@ export default function RegisterAddress() {
   const { register, handleSubmit, watch, setValue, formState: { errors, isSubmitting } } = useForm<RegisterAddressFormData>({
     resolver: zodResolver(RegisterAddressSchema)
   })
+
+  const { registerAddress } = useSignUp()
 
   const router = useRouter()
 
@@ -55,7 +58,8 @@ export default function RegisterAddress() {
 
   async function handleContinue(data: RegisterAddressFormData) {
     try {
-      console.log(data)
+      registerAddress(data);
+
       router.push('/signup/register-schedule')
     } catch (error: any) {
       toast.error(JSON.stringify(error.response.data));
@@ -88,10 +92,11 @@ export default function RegisterAddress() {
           <Text type="label" size="xs">Número</Text>
           <TextInput
             maxLength={5}
+            type="number"
             placeholder='Ex: 1234'
             errorMessage={errors.number?.message}
             hasErrorPlaceholder
-            {...register('number')}
+            {...register('number', { valueAsNumber: true })}
           />
         </InputContainer>
 

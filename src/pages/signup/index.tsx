@@ -15,6 +15,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { verifyDuplicateSignUp } from "@/api/verify-duplicate-sign-up";
 import { toast } from "sonner";
 import { useRouter } from "next/router";
+import { use } from "react";
+import { useSignUp } from "@/hooks/use-signup";
 
 const cnpjRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/;
 const phoneRegex = /^(\(\d{2}\)\s?9\s?\d{4}-\d{4}|\d{2}9\d{8})$/;
@@ -45,6 +47,8 @@ export default function SignUp() {
     resolver: zodResolver(SignUpSchema),
   });
 
+  const { registerStore } = useSignUp()
+
   const router = useRouter()
 
   const isMobile = useIsMobile()
@@ -52,6 +56,9 @@ export default function SignUp() {
   async function handleContinue(data: SignUpFormData) {
     try {
       await verifyDuplicateSignUp(data)
+
+      registerStore(data);
+
       router.push('/signup/register-address')
     } catch (error: any) {
       toast.error(JSON.stringify(error.response.data));

@@ -11,6 +11,7 @@ import { z } from "zod";
 
 import { useRouter } from "next/router";
 import { toast } from "sonner";
+import { useSignUp } from "@/hooks/use-signup";
 
 const RegisterPasswordSchema = z.object({
   password: z
@@ -32,11 +33,15 @@ export default function RegisterPassword() {
     resolver: zodResolver(RegisterPasswordSchema)
   })
 
+  const { submitSignUp, email } = useSignUp()
+
   const router = useRouter()
 
   async function handleContinue(data: RegisterPasswordFormData) {
     try {
-      console.log(data.password)
+      await submitSignUp(data.password)
+
+      router.push(`/signin?email=${email}`)
     } catch (error: any) {
       toast.error(JSON.stringify(error.response.data));
     }

@@ -15,6 +15,7 @@ import { getWeekDays } from "@/utils/get-week-days";
 import { Checkbox } from "@/components/@ui/Checkbox";
 import { TextInput } from "@/components/@ui/TextInput";
 import { useIsMobile } from "@/hooks/use-is-mobile";
+import { useSignUp } from "@/hooks/use-signup";
 
 const registerScheduleFormSchema = z.object({
   intervals: z
@@ -78,6 +79,8 @@ export default function RegisterSchedule() {
     },
   })
 
+  const { registerSchedule } = useSignUp()
+
   const { fields } = useFieldArray({
     control,
     name: 'intervals',
@@ -90,7 +93,8 @@ export default function RegisterSchedule() {
   async function handleContinue(data: any) {
     try {
       const { intervals } = data as RegisterScheduleFormOutput;
-      console.log(intervals)
+
+      registerSchedule(intervals);
 
       router.push('/signup/register-password')
     } catch (error: any) {
