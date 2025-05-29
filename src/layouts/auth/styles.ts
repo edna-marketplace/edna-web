@@ -26,10 +26,14 @@ export const FormContainer = styled(Card, {
 
   width: '50%',
   minWidth: '270px',
-  height: 'fit-content',
+  height: '95vh',
 
-  padding: 0,
+  padding: 'auto',
   margin: '$5',
+
+  '@media(max-height: 850px)': {
+    height: 'fit-content',
+  },
 
   '@md': {
     width: '70%'

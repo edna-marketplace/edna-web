@@ -90,14 +90,16 @@ export default function RegisterPassword() {
       </RegisterPasswordForm>
 
       <AlreadyHaveAccountContainer>
-        <Text size="sm">
-          Já possui uma conta?
-        </Text>
-        <Button type="button" variant="tertiary" onClick={() => router.push('/signin')} disabled={isSubmitting}>
-          <Text size="sm" weight="bold">
-            Entrar
+        <div>
+          <Text size="sm">
+            Já possui uma conta?
           </Text>
-        </Button>
+          <Button type="button" variant="tertiary" onClick={() => router.push('/signin')} disabled={isSubmitting}>
+            <Text size="sm" weight="bold">
+              Entrar
+            </Text>
+          </Button>
+        </div>
       </AlreadyHaveAccountContainer>
     </Container>
   );

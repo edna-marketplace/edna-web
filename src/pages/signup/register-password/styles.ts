@@ -7,6 +7,8 @@ export const Container = styled('div', {
   flexDirection: 'column',
   alignItems: 'center',
 
+  height: "100%",
+
   padding: '$10 0 $2',
   gap: '$6'
 })
@@ -52,8 +54,13 @@ export const ButtonContainer = styled('div', {
 })
 
 export const AlreadyHaveAccountContainer = styled('div', {
+  flex: 1,
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'end',
-  marginTop: '200px',
+  alignContent: 'end',
+  alignItems: 'flex-end',
+
+  '& > div': {
+    display: 'flex',
+    alignItems: 'center'
+  }
 })
