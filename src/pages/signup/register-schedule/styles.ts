@@ -21,15 +21,19 @@ export const Heading = styled('div', {
   }
 })
 
-export const RegisterAddressForm = styled('form', {
+export const RegisterScheduleForm = styled('form', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
 
-  width: '350px',
+  width: '450px',
+
+  '@md': {
+    width: '375px',
+  },
 
   '@sm': {
-    width: '300px',
+    width: '330px',
   }
 })
 
@@ -38,17 +42,44 @@ export const FormTitle = styled(Title, {
   marginBottom: '$4'
 })
 
-export const InputContainer = styled('div', {
+export const IntervalItem = styled('div', {
   display: 'flex',
-  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '$3 $4',
 
-  width: '100%',
+  '& + &': {
+    borderTop: '1px solid $base500',
+  },
+})
+
+export const IntervalDay = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$3',
+})
+
+export const IntervalInputs = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$2',
+
+  'input::-webkit-calendar-picker-indicator': {
+    filter: 'invert(100%) brightness(40%)',
+  },
 })
 
 export const ButtonContainer = styled('div', {
   display: 'flex',
   width: '100%',
   justifyContent: 'space-between',
+})
+
+export const FormError = styled(Text, {
+  color: 'red',
+  alignSelf: 'flex-start',
+  marginLeft: '$3',
+  marginBottom: '$4',
 })
 
 export const AlreadyHaveAccountContainer = styled('div', {

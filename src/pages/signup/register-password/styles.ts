@@ -21,7 +21,7 @@ export const Heading = styled('div', {
   }
 })
 
-export const RegisterAddressForm = styled('form', {
+export const RegisterPasswordForm = styled('form', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

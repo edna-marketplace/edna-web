@@ -56,6 +56,7 @@ export default function RegisterAddress() {
   async function handleContinue(data: RegisterAddressFormData) {
     try {
       console.log(data)
+      router.push('/signup/register-schedule')
     } catch (error: any) {
       toast.error(JSON.stringify(error.response.data));
     }
@@ -135,18 +136,18 @@ export default function RegisterAddress() {
             Continuar
           </Button>
         </ButtonContainer>
-
-        <AlreadyHaveAccountContainer>
-          <Text size="sm">
-            Já possui uma conta?
-          </Text>
-          <Button type="button" variant="tertiary" onClick={() => router.push('/signin')} disabled={isSubmitting}>
-            <Text size="sm" weight="bold">
-              Entrar
-            </Text>
-          </Button>
-        </AlreadyHaveAccountContainer>
       </RegisterAddressForm>
+
+      <AlreadyHaveAccountContainer>
+        <Text size="sm">
+          Já possui uma conta?
+        </Text>
+        <Button type="button" variant="tertiary" onClick={() => router.push('/signin')} disabled={isSubmitting}>
+          <Text size="sm" weight="bold">
+            Entrar
+          </Text>
+        </Button>
+      </AlreadyHaveAccountContainer>
     </Container>
   );
 }
