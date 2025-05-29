@@ -55,5 +55,5 @@ export const AlreadyHaveAccountContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'end',
-  marginTop: '$8',
+  marginTop: '200px',
 })
