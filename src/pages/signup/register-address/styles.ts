@@ -34,8 +34,8 @@ export const RegisterAddressForm = styled('form', {
 })
 
 export const FormTitle = styled(Title, {
-    alignSelf: 'flex-start',
-    marginBottom: '$4'
+  alignSelf: 'flex-start',
+  marginBottom: '$4'
 })
 
 export const InputContainer = styled('div', {
@@ -43,4 +43,17 @@ export const InputContainer = styled('div', {
   flexDirection: 'column',
 
   width: '100%',
+})
+
+export const ButtonContainer = styled('div', {
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'space-between',
+})
+
+export const AlreadyHaveAccountContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'end',
+  marginTop: '$10',
 })

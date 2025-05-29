@@ -1,4 +1,4 @@
-import { Container, FormTitle, Heading, InputContainer, RegisterAddressForm } from "./styles";
+import { AlreadyHaveAccountContainer, ButtonContainer, Container, FormTitle, Heading, InputContainer, RegisterAddressForm } from "./styles";
 
 import { Button } from "@/components/@ui/Button";
 import { SpecialTitle } from "@/components/@ui/SpecialTitle";
@@ -14,6 +14,7 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { getViaCep } from "@/api/get-via-cep";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const cepRegex = /^\d{5}-?\d{3}$/;
 
@@ -22,7 +23,7 @@ const RegisterAddressSchema = z.object({
     .string()
     .min(1, "CEP é obrigatório")
     .regex(cepRegex, "CEP inválido")
-    .transform(value => value.replace('/-/', '')),
+    .transform(value => value.replace('-', '')),
   number: z.string().min(1, "Número é obrigatório"),
   street: z.string().min(1, "Rua é obrigatório"),
   neighborhood: z.string().min(1, "Bairro é obrigatório"),
@@ -33,20 +34,22 @@ type RegisterAddressFormData = z.infer<typeof RegisterAddressSchema>;
 
 export default function RegisterAddress() {
   const { register, handleSubmit, watch, setValue, formState: { errors, isSubmitting } } = useForm<RegisterAddressFormData>({
-      resolver: zodResolver(RegisterAddressSchema)
+    resolver: zodResolver(RegisterAddressSchema)
   })
+
+  const router = useRouter()
 
   const cepValue = watch('cep')
 
   async function getCep() {
     const formattedCepValue = cepValue && cepValue.replace('-', '')
-    
-    if (formattedCepValue && formattedCepValue.length === 8) {
-        const data = await getViaCep(cepValue)
 
-        setValue('street', data.logradouro)
-        setValue('neighborhood', data.bairro)
-        setValue('city', data.localidade)
+    if (formattedCepValue && formattedCepValue.length === 8) {
+      const data = await getViaCep(cepValue)
+
+      setValue('street', data.logradouro, { shouldValidate: true })
+      setValue('neighborhood', data.bairro, { shouldValidate: true })
+      setValue('city', data.localidade, { shouldValidate: true })
     }
   }
 
@@ -66,7 +69,7 @@ export default function RegisterAddress() {
     <Container>
       <RegisterAddressForm onSubmit={handleSubmit(handleContinue)}>
         <FormTitle style={{ alignSelf: 'flex-start' }}>
-            Endereço
+          Endereço
         </FormTitle>
 
         <InputContainer>
@@ -124,9 +127,25 @@ export default function RegisterAddress() {
           />
         </InputContainer>
 
-        <Button disabled={isSubmitting} type='submit' style={{ width: '100%' }}>
-          Continuar
-        </Button>
+        <ButtonContainer>
+          <Button type="button" variant="tertiary" onClick={() => router.back()} disabled={isSubmitting}>
+            Voltar
+          </Button>
+          <Button disabled={isSubmitting} type='submit'>
+            Continuar
+          </Button>
+        </ButtonContainer>
+
+        <AlreadyHaveAccountContainer>
+          <Text size="sm">
+            Já possui uma conta?
+          </Text>
+          <Button type="button" variant="tertiary" onClick={() => router.push('/signin')} disabled={isSubmitting}>
+            <Text size="sm" weight="bold">
+              Entrar
+            </Text>
+          </Button>
+        </AlreadyHaveAccountContainer>
       </RegisterAddressForm>
     </Container>
   );
