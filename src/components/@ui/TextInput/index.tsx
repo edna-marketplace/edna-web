@@ -46,8 +46,8 @@ export const TextInput = forwardRef<ElementRef<typeof Input>, TextInputProps>(
             {...props}
           />
           {isPassword && (
-            <ShowPasswordButton onClick={() => handleTogglePassword()}>
-              {showPassword ? <EyeSlash size={21} /> : <Eye size={21} />}
+            <ShowPasswordButton type='button' onClick={() => handleTogglePassword()}>
+              {!showPassword ? <EyeSlash size={21} /> : <Eye size={21} />}
             </ShowPasswordButton>
           )}
           {!!suffix && <Suffix>{suffix}</Suffix>}

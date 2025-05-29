@@ -18,6 +18,14 @@ export const Container = styled('div', {
   padding: '$8',
 })
 
+export const LinksContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  gap: '$4',
+  flex: 1,
+})
+
 export const Link = styled('button', {
   all: 'unset',
 
@@ -83,4 +91,33 @@ export const DrawerContent = styled('div', {
   gap: '$4',
   zIndex: 1000,
   transition: 'transform 0.3s ease-in-out',
+})
+
+export const SignOutContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'start',
+  alignItems: 'flex-end',
+})
+
+export const SignOutButton = styled('button', {
+  all: 'unset',
+
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$3',
+
+  width: '100%',
+
+  padding: '$3 $4',
+  borderRadius: '$sm',
+
+  fontSize: '$md',
+  color: '$red400',
+
+  transition: 'background 0.2s',
+
+  '&:not(:active):hover': {
+    cursor: 'pointer',
+    background: '$base200',
+  },
 })
