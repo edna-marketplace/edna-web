@@ -16,6 +16,7 @@ import { getViaCep } from "@/api/get-via-cep";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSignUp } from "@/hooks/use-signup";
+import { verifyDuplicateAddress } from "@/api/verify-duplicate-address";
 
 const cepRegex = /^\d{5}-?\d{3}$/;
 
@@ -58,11 +59,21 @@ export default function RegisterAddress() {
 
   async function handleContinue(data: RegisterAddressFormData) {
     try {
+      await verifyDuplicateAddress(data)
+
       registerAddress(data);
 
       router.push('/signup/register-schedule')
     } catch (error: any) {
-      toast.error(JSON.stringify(error.response.data));
+      if (error.response.data.message) {
+        toast.error("Erro ao registrar endereço!", {
+          description: error.response.data.message
+        });
+        return
+      }
+      toast.error("Erro ao registrar endereço!", {
+        description: "Não foi possível registrar o endereço, tente novamente mais tarde."
+      });
     }
   }
 

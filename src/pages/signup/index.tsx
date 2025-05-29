@@ -61,7 +61,16 @@ export default function SignUp() {
 
       router.push('/signup/register-address')
     } catch (error: any) {
-      toast.error(JSON.stringify(error.response.data));
+      if (error.response.data.message) {
+        toast.error("Erro ao registrar brechó!", {
+          description: error.response.data.message + "."
+        });
+        return
+      }
+      toast.error("Erro ao registrar brechó!", {
+        description: "Não foi possível registrar o brechó, tente novamente mais tarde."
+      });
+
     }
   }
 
