@@ -19,9 +19,9 @@ export const Container = styled('div', {
 export const Main = styled('main', {
   display: 'grid',
   gridTemplateColumns: '3fr 1fr',
-  gridTemplateRows: 'auto auto auto',
-  rowGap: '$2',
-  columnGap: '$2',
+  gridTemplateRows: '132px auto auto',
+  rowGap: '$4',
+  columnGap: '$4',
 
   width: '100%',
 
@@ -30,6 +30,13 @@ export const Main = styled('main', {
   '@xl': {
     padding: '$6 $8',
   },
+
+  '@lg': {
+    gridTemplateColumns: '1fr',
+    gridTemplateRows: 'auto auto auto auto auto',
+    padding: '$6 $8',
+  },
+
   '@md': {
     padding: '$4 $4',
   },
@@ -41,4 +48,13 @@ export const InfoCardContainer = styled('div', {
   placeItems: 'center',
   gap: '$2',
   width: '100%',
+
+  '@lg': {
+    gridTemplateColumns: '1fr',
+    gridTemplateRows: 'auto auto auto',
+  },
+})
+
+export const PendingOrdersContainer = styled('div', {
+  gridRow: 'span 3'
 })

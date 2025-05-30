@@ -1,5 +1,5 @@
 import { getCurrentPeriodMessage } from '@/utils/get-current-period-message'
-import { Container, InfoCardContainer, Main } from './styles'
+import { Container, InfoCardContainer, Main, PendingOrdersContainer } from './styles'
 import { InfoCard } from './_components/InfoCard'
 import { Header } from '@/components/header'
 import { PendingOrderList } from './_components/PendingOrderList'
@@ -85,7 +85,9 @@ export default function Home() {
             type='currency'
           />
         </InfoCardContainer>
-        <PendingOrderList orders={orders} />
+        <PendingOrdersContainer>
+          <PendingOrderList orders={orders} />
+        </PendingOrdersContainer>
         <Chart />
       </Main>
     </Container>
