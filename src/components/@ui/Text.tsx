@@ -1,41 +1,42 @@
-import { styled } from '@edna-ui/react'
-import { ComponentProps, ElementType } from 'react'
+import { styled } from "@edna-ui/react";
+import { ComponentProps, ElementType } from "react";
 
-export const Text = styled('p', {
-  fontFamily: '$default',
-  lineHeight: '$base',
+export const Text = styled("p", {
+  fontFamily: "$default",
+  lineHeight: "$base",
   margin: 0,
 
   variants: {
     size: {
-      xxs: { fontSize: '$xxs' },
-      xs: { fontSize: '$xs' },
-      sm: { fontSize: '$sm' },
-      md: { fontSize: '$md' },
-      lg: { fontSize: '$xl' },
+      xxs: { fontSize: "$xxs", fontWeight: "$bold" },
+      xs: { fontSize: "$xs", fontWeight: "$bold" },
+      sm: { fontSize: "$sm" },
+      md: { fontSize: "$md" },
+      lg: { fontSize: "$xl" },
     },
     weight: {
-      bold: { fontWeight: '$bold' },
-      regular: { fontWeight: '$regular' },
+      bold: { fontWeight: "$bold" },
+      regular: { fontWeight: "$regular" },
     },
     type: {
       default: {},
       label: {
-        color: '$base300',
-        marginBottom: '$1',
-        fontWeight: '$bold',
-        fontSize: '$sm',
+        color: "$base300",
+        marginBottom: "$1",
+        fontWeight: "$bold",
+        fontSize: "$sm",
       },
     },
   },
 
   defaultVariants: {
-    size: 'md',
-    weight: 'regular',
-    type: 'default',
+    size: "md",
+    weight: "regular",
+    type: "default",
+    weight: "regular",
   },
-})
+});
 
 export interface TextProps extends ComponentProps<typeof Text> {
-  as?: ElementType
+  as?: ElementType;
 }

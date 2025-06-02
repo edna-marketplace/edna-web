@@ -1,61 +1,41 @@
-import { getCurrentPeriodMessage } from '@/utils/get-current-period-message'
-import { Container, InfoCardContainer, Main, PendingOrdersContainer } from './styles'
-import { InfoCard } from './_components/InfoCard'
-import { Header } from '@/components/header'
-import { PendingOrderList } from './_components/PendingOrderList'
-import { Chart } from './_components/Chart'
-
+import {
+  getWeekCustomersMetrics,
+  GetWeekCustomersMetricsResponse,
+} from "@/api/get-week-customers-metrics";
+import { Header } from "@/components/header";
+import { getCurrentPeriodMessage } from "@/utils/get-current-period-message";
+import { useEffect, useState } from "react";
+import { Chart } from "./_components/Chart";
+import { InfoCard } from "./_components/InfoCard";
+import {
+  Container,
+  InfoCardContainer,
+  Main,
+  PendingOrdersContainer,
+} from "./styles";
 
 export default function Home() {
-  const currentPeriodMessage = getCurrentPeriodMessage()
+  const [weekCustomers, setWeekCustomers] =
+    useState<GetWeekCustomersMetricsResponse>(
+      {} as GetWeekCustomersMetricsResponse
+    );
+  const currentPeriodMessage = getCurrentPeriodMessage();
 
-  const orders = [
-    {
-      id: "1",
-      name: "Jaqueta de couro",
-      date: "16/05"
-    },
-    {
-      id: "2",
-      name: "Camiseta da Nike",
-      date: "15/05"
-    },
-    {
-      id: "3",
-      name: "Order 4",
-      date: "14/05"
-    },
-    {
-      id: "4",
-      name: "Order 5",
-      date: "13/05"
-    },
-    {
-      id: "5",
-      name: "Order 6",
-      date: "12/05"
-    },
-    {
-      id: "6",
-      name: "Order 7",
-      date: "11/05"
-    },
-    {
-      id: "7",
-      name: "Order 8",
-      date: "10/05"
-    },
-    {
-      id: "8",
-      name: "Order 9",
-      date: "09/05"
-    },
-    {
-      id: "9",
-      name: "Order 10",
-      date: "08/05"
-    },
-  ]
+  const today = new Date();
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(today.getDate() - 7);
+
+  const year = today.getFullYear();
+
+  async function getWeekCustomers() {
+    const data = await getWeekCustomersMetrics();
+
+    setWeekCustomers(data);
+  }
+
+  useEffect(() => {
+    getWeekCustomers();
+  }, []);
 
   return (
     <Container>
@@ -67,29 +47,31 @@ export default function Home() {
       <Main>
         <InfoCardContainer>
           <InfoCard
-            title='Pedidos'
-            value={26}
+            title="Pedidos"
+            value={20}
             percentage={31.2}
-            type='default'
+            type="default"
           />
           <InfoCard
-            title='Novos clientes'
-            value={11}
-            percentage={110}
-            type='default'
+            title="Novos clientes"
+            value={weekCustomers.newCustomers}
+            percentage={weekCustomers.percentageChange}
+            type="default"
           />
           <InfoCard
-            title='Receita'
+            title="Receita"
             value={987.61}
             percentage={-2.3}
-            type='currency'
+            type="currency"
           />
         </InfoCardContainer>
+
         <PendingOrdersContainer>
-          <PendingOrderList orders={orders} />
+          {/* <PendingOrderList orders={orders} /> */}
         </PendingOrdersContainer>
+
         <Chart />
       </Main>
     </Container>
-  )
+  );
 }

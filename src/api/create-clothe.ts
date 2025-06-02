@@ -24,8 +24,6 @@ export interface CreateClotheBody {
 }
 
 export async function createClothe({ clothe, images }: CreateClotheBody) {
-  console.log(images)
-
   const formData = new FormData()
 
   formData.append('clothe', JSON.stringify(clothe))
