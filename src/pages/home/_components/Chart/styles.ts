@@ -14,6 +14,36 @@ export const Container = styled(Card, {
   gap: "$4",
 });
 
+export const ChartInfoRow = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
+})
+
+export const ChangeIndicator = styled('span', {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '$1', 
+  padding: '2px 6px', 
+  marginLeft: '$6',
+  borderRadius: '$xs',
+  fontSize: '$xs',
+
+  variants: {
+    isNegative: {
+      true: {
+        backgroundColor: '$red600',
+        color: '#A8493B',
+      },
+      false: {
+        backgroundColor: '$blue600',
+        color: '#487D79',
+      },
+    },
+  },
+})
+
 export const Header = styled("div", {
   display: "flex",
   justifyContent: "space-between",
@@ -32,26 +62,31 @@ export const PeriodSelector = styled("div", {
 });
 
 export const PeriodButton = styled("button", {
-  backgroundColor: "$muted",
-  borderRadius: "$md",
-  padding: "$1 $3",
-  fontSize: "$sm",
-  fontWeight: "$medium",
-  border: "none",
-  cursor: "pointer",
-  color: "$text",
-
-  "&:hover": {
-    backgroundColor: "$mutedHover",
-  },
+  borderRadius: '$md',
+  padding: '$1 $3',
+  fontSize: '$sm',
+  fontWeight: '$bold',
+  border: '1px solid $base400',
+  cursor: 'pointer',
+  backgroundColor: 'transparent',
 
   variants: {
     active: {
       true: {
-        backgroundColor: "$primary",
-        color: "$white",
+        backgroundColor: '$base100',
+        color: 'White',
+        borderColor: '$base400',
+      },
+      false: {
+        backgroundColor: '$base500',
+        color: '$base100',
+        borderColor: '$base400',
       },
     },
+  },
+
+  defaultVariants: {
+    active: false,
   },
 });
 
