@@ -12,18 +12,23 @@ export interface InfoCardProps {
 
 export function InfoCard({ title, value, percentage, type }: InfoCardProps) {
   const isNegative = percentage < 0;
-  const formattedPercentage = isNaN(percentage) ? 0 : +percentage.toFixed(1);
+
+  const safeValue = isNaN(value) ? 0 : value;
+  const safePercentage = isNaN(percentage) ? 0 : percentage;
+
+  // Corrige para 0% se o valor base for 0
+  const formattedPercentage = safeValue === 0 ? 0 : +safePercentage.toFixed(1);
 
   return (
     <InfoContainer>
       <Text size="md">{title}</Text>
       <Title>
         {type === "currency"
-          ? value.toLocaleString("pt-BR", {
+          ? safeValue.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",
             })
-          : value}
+          : safeValue}
       </Title>
       <div>
         <Text size="xs">Desde semana passada</Text>

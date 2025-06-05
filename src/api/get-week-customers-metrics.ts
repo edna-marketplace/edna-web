@@ -5,13 +5,17 @@ export interface GetWeekCustomersMetricsResponse {
   percentageChange: number;
 }
 
-const mockData = {
-  newCustomers: 12,
-  percentageChange: 10.2,
-};
-
 export async function getWeekCustomersMetrics(): Promise<GetWeekCustomersMetricsResponse> {
-  const response = mockData;
+  const token = localStorage.getItem("token");
 
-  return response;
+  const response = await api.get<GetWeekCustomersMetricsResponse>(
+    "/store/metrics/week-customers",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response.data;
 }

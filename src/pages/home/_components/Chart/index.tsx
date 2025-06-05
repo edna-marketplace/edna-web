@@ -27,6 +27,7 @@ import { useEffect, useState } from "react";
 
 import { getWeekOrdersMetrics } from "@/api/get-week-orders-metrics";
 import { getWeekCustomersMetrics } from "@/api/get-week-customers-metrics";
+import { fetchCustomerOrders } from "@/api/fetch-customer-orders-metrics";
 
 export function Chart() {
   const [isClient, setIsClient] = useState(false);
