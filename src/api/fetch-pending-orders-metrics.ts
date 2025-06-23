@@ -1,11 +1,8 @@
 import { api } from "@/lib/axios";
 
 export interface PendingOrder {
-  id: string;
-  customerName: string;
-  total: number;
+  clotheName: string;
   createdAt: string;
-  status: string;
 }
 
 export async function fetchPendingOrders(): Promise<PendingOrder[]> {

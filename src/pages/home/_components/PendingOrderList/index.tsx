@@ -1,22 +1,27 @@
+import { PendingOrder } from "@/api/fetch-pending-orders-metrics";
 import { Container, OrderItem } from "./styles";
 import { Text } from "@/components/@ui/Text";
 
 export interface PendingOrderListProps {
-  orders: { id: string; clotheName: string; createdAt: string }[];
+  orders: PendingOrder[];
 }
 
 export function PendingOrderList({ orders }: PendingOrderListProps) {
   const hasOrders = orders.length > 0;
 
   return (
-    <Container>
+    <Container
+      style={{
+        height: "100%",
+      }}
+    >
       <Text size="md" css={{ color: "$base300" }}>
         Pedidos pendentes
       </Text>
 
       {hasOrders ? (
         orders.map((order) => (
-          <OrderItem key={order.id}>
+          <OrderItem key={order.clotheName}>
             <div>
               <Text
                 size="sm"
