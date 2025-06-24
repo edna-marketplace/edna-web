@@ -1,35 +1,45 @@
-import { AddressInfo, DayScheduleInfo, signUp, SignUpBody, StoreInfo } from "@/api/sign-up"
-import { createContext, ReactNode, useState } from "react"
+import {
+  AddressInfo,
+  DayScheduleInfo,
+  signUp,
+  SignUpBody,
+  StoreInfo,
+} from "@/api/sign-up";
+import { createContext, ReactNode, useState } from "react";
 
 interface SignUpContextDataProps {
-  email?: string | null
-  registerStore: (data: StoreInfo) => void
-  registerAddress: (data: AddressInfo) => void
-  registerSchedule: (data: DayScheduleInfo[]) => void
-  submitSignUp: (password: string) => Promise<void>
+  email?: string | null;
+  registerStore: (data: StoreInfo) => void;
+  registerAddress: (data: AddressInfo) => void;
+  registerSchedule: (data: DayScheduleInfo[]) => void;
+  submitSignUp: (password: string) => Promise<void>;
 }
 
 export type SignUpContextProviderProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
-export const SignUpContext = createContext<SignUpContextDataProps>({} as SignUpContextDataProps)
+export const SignUpContext = createContext<SignUpContextDataProps>(
+  {} as SignUpContextDataProps
+);
 
-export function SignUpContextProvider({ children }: SignUpContextProviderProps) {
-  const [storeInfo, setStoreInfo] = useState<StoreInfo>({} as StoreInfo)
-  const [addressInfo, setAdressInfo] = useState<AddressInfo>({} as AddressInfo)
-  const [schedule, setScheduleInfo] = useState<DayScheduleInfo[]>([])
+export function SignUpContextProvider({
+  children,
+}: SignUpContextProviderProps) {
+  const [storeInfo, setStoreInfo] = useState<StoreInfo>({} as StoreInfo);
+  const [addressInfo, setAdressInfo] = useState<AddressInfo>({} as AddressInfo);
+  const [schedule, setScheduleInfo] = useState<DayScheduleInfo[]>([]);
 
   function registerStore(data: StoreInfo) {
-    setStoreInfo(data)
+    setStoreInfo(data);
   }
 
   function registerAddress(data: AddressInfo) {
-    setAdressInfo(data)
+    setAdressInfo(data);
   }
 
   function registerSchedule(data: DayScheduleInfo[]) {
-    setScheduleInfo(data)
+    setScheduleInfo(data);
   }
 
   async function submitSignUp(password: string) {
@@ -38,23 +48,27 @@ export function SignUpContextProvider({ children }: SignUpContextProviderProps) 
         store: { ...storeInfo, password },
         address: addressInfo,
         schedule: schedule,
-      }
+      };
 
-      await signUp(signUpBody)
+      const { onboardingUrl } = await signUp(signUpBody);
+
+      window.location.href = onboardingUrl;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
   return (
-    <SignUpContext.Provider value={{
-      email: storeInfo.email,
-      registerStore,
-      registerAddress,
-      registerSchedule,
-      submitSignUp
-    }}>
+    <SignUpContext.Provider
+      value={{
+        email: storeInfo.email,
+        registerStore,
+        registerAddress,
+        registerSchedule,
+        submitSignUp,
+      }}
+    >
       {children}
     </SignUpContext.Provider>
-  )
+  );
 }
