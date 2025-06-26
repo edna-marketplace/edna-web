@@ -6,15 +6,8 @@ export interface GetWeekCustomersMetricsResponse {
 }
 
 export async function getWeekCustomersMetrics(): Promise<GetWeekCustomersMetricsResponse> {
-  const token = localStorage.getItem("token");
-
   const response = await api.get<GetWeekCustomersMetricsResponse>(
-    "/store/metrics/week-customers",
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    "/store/metrics/week-customers"
   );
 
   return response.data;

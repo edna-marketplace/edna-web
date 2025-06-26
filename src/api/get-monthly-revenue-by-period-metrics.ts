@@ -6,14 +6,12 @@ export interface RevenuePeriod {
   revenuePeriod: number;
 }
 
-export async function fetchRevenueByPeriod(): Promise<RevenuePeriod[]> {
-  const token = localStorage.getItem("token");
-
-  const response = await api.get<RevenuePeriod[]>("/store/metrics/dashboard", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export async function fetchRevenueByPeriod(
+  periodInMonths: number
+): Promise<RevenuePeriod[]> {
+  const response = await api.get(
+    `/store/metrics/dashboard?period=${periodInMonths}`
+  );
 
   return response.data;
 }
