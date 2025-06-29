@@ -16,6 +16,8 @@ import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useEffect, useState } from "react";
+import { StoreInfo } from "@/api/sign-up";
 
 const cnpjRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/;
 const phoneRegex = /^(\(\d{2}\)\s?9\s?\d{4}-\d{4}|\d{2}9\d{8})$/;
@@ -44,16 +46,29 @@ const SignUpSchema = z.object({
 type SignUpFormData = z.infer<typeof SignUpSchema>;
 
 export default function SignUp() {
+  const { registerStore, getValue } = useSignUp();
+
+  function getInputValues() {
+    const data = getValue("storeInfo") as StoreInfo;
+
+    if (data && Object.keys(data).length > 0) {
+      setValue("name", data.name, { shouldValidate: true });
+      setValue("cnpj", data.cnpj, { shouldValidate: true });
+      setValue("email", data.email, { shouldValidate: true });
+      setValue("phone", data.phone, { shouldValidate: true });
+      setValue("targetCustomer", data.targetCustomer, { shouldValidate: true });
+    }
+  }
+
   const {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<SignUpFormData>({
     resolver: zodResolver(SignUpSchema),
   });
-
-  const { registerStore } = useSignUp();
 
   const router = useRouter();
 
@@ -79,6 +94,10 @@ export default function SignUp() {
       });
     }
   }
+
+  useEffect(() => {
+    getInputValues();
+  }, []);
 
   return (
     <Container>

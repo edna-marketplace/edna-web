@@ -70,7 +70,7 @@ export default function RegisterPassword() {
             Senha
           </Text>
           <TextInput
-            maxLength={9}
+            maxLength={15}
             placeholder="Digite sua senha"
             isPassword
             errorMessage={errors.password?.message}
@@ -84,7 +84,7 @@ export default function RegisterPassword() {
             Confirmar senha
           </Text>
           <TextInput
-            maxLength={9}
+            maxLength={15}
             placeholder="Digite novamente sua senha"
             isPassword
             errorMessage={errors.password_confirm?.message}

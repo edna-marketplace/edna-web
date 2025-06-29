@@ -1,118 +1,123 @@
-import { styled } from '@edna-ui/react'
+import { styled } from "@edna-ui/react";
 
-export const TextInputContainer = styled('div', {
-  backgroundColor: '$base700',
-  borderRadius: '$sm',
-  boxSizing: 'border-box',
-  border: '1px solid $base500',
-  display: 'flex',
-  alignItems: 'center',
+export const TextInputContainer = styled("div", {
+  backgroundColor: "$base700",
+  borderRadius: "$sm",
+  boxSizing: "border-box",
+  border: "1px solid $base500",
+  display: "flex",
+  alignItems: "center",
 
-  width: '100%',
+  width: "100%",
 
-  '&:has(span) input': {
-    textAlign: 'center',
+  "&:has(span) input": {
+    textAlign: "center",
   },
 
-  '&:has(input:focus)': {
-    boxShadow: '0 0 0 2px $colors$black',
+  "&:has(input:focus)": {
+    boxShadow: "0 0 0 2px $colors$black",
   },
 
-  '&:has(input:disabled)': {
+  "&:has(input:disabled)": {
     opacity: 0.5,
-    cursor: 'not-allowed',
+    cursor: "not-allowed",
   },
 
-  transition: 'border-color 0.2s',
+  transition: "border-color 0.2s",
 
-  '&:not(:disabled):hover': {
-    borderColor: '$base400',
+  "&:not(:disabled):hover": {
+    borderColor: "$base400",
   },
 
   variants: {
     hasError: {
       true: {
-        borderColor: 'red',
+        borderColor: "red",
+      },
+    },
+    isReadOnly: {
+      true: {
+        opacity: 0.6,
       },
     },
   },
-})
+});
 
-export const Prefix = styled('span', {
-  fontFamily: '$default',
-  fontSize: '$sm',
-  color: '$base400',
-  fontWeight: 'regular',
-  padding: '18px',
-  height: '57px',
-  borderRight: '1px solid $base500',
-})
+export const Prefix = styled("span", {
+  fontFamily: "$default",
+  fontSize: "$sm",
+  color: "$base400",
+  fontWeight: "regular",
+  padding: "18px",
+  height: "57px",
+  borderRight: "1px solid $base500",
+});
 
-export const Suffix = styled('span', {
-  fontFamily: '$default',
-  fontSize: '$sm',
-  color: '$base400',
-  fontWeight: 'regular',
-  padding: '18px',
-  height: '57px',
-  borderLeft: '1px solid $base500',
-})
+export const Suffix = styled("span", {
+  fontFamily: "$default",
+  fontSize: "$sm",
+  color: "$base400",
+  fontWeight: "regular",
+  padding: "18px",
+  height: "57px",
+  borderLeft: "1px solid $base500",
+});
 
-export const ShowPasswordButton = styled('button', {
-  all: 'unset',
-  display: 'flex',
-  flexDirection: 'center',
-  color: '$base400',
-  marginRight: '$4',
-  cursor: 'pointer',
-})
+export const ShowPasswordButton = styled("button", {
+  all: "unset",
+  display: "flex",
+  flexDirection: "center",
+  color: "$base400",
+  marginRight: "$4",
+  cursor: "pointer",
+});
 
-export const Input = styled('input', {
-  fontFamily: '$default',
-  fontSize: '$sm',
-  color: '$base100',
-  fontWeight: 'regular',
-  background: 'transparent',
+export const Input = styled("input", {
+  fontFamily: "$default",
+  fontSize: "$sm",
+  color: "$base100",
+  fontWeight: "regular",
+  background: "transparent",
   border: 0,
-  padding: '$3 $4',
+  padding: "$3 $4",
 
-  height: '57px',
-  width: '100%',
+  height: "57px",
+  width: "100%",
 
-  '&:focus': {
+  "&:focus": {
     outline: 0,
   },
 
-  '&:disabled': {
-    cursor: 'not-allowed',
+  "&:disabled": {
+    cursor: "not-allowed",
   },
 
-  '&::placeholder': {
-    color: '$base400',
-    userSelect: 'none',
+  "&::placeholder": {
+    color: "$base400",
+    userSelect: "none",
   },
 
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    '-webkit-appearance': 'none',
+  "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {
+    "-webkit-appearance": "none",
     margin: 0,
   },
 
   '[type="number"]': {
-    '-moz-appearance': 'textfield',
+    "-moz-appearance": "textfield",
   },
-})
+});
 
-export const ErrorContainer = styled('div', {
-  height: '1.5rem',
-  margin: '0',
-})
+export const ErrorContainer = styled("div", {
+  height: "1.5rem",
+  margin: "0",
+});
 
-export const ErrorPlaceholder = styled('div', {
-  height: '1.5rem',
-})
+export const ErrorPlaceholder = styled("div", {
+  height: "1.5rem",
+});
 
-export const ErrorMessage = styled('p', {
-  color: 'red',
-  fontSize: '$xs',
-  height: '1.5rem',
-})
+export const ErrorMessage = styled("p", {
+  color: "red",
+  fontSize: "$xs",
+  height: "1.5rem",
+});

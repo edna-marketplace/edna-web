@@ -13,6 +13,9 @@ interface SignUpContextDataProps {
   registerAddress: (data: AddressInfo) => void;
   registerSchedule: (data: DayScheduleInfo[]) => void;
   submitSignUp: (password: string) => Promise<void>;
+  getValue: (
+    value: string
+  ) => StoreInfo | AddressInfo | DayScheduleInfo[] | undefined;
 }
 
 export type SignUpContextProviderProps = {
@@ -29,6 +32,20 @@ export function SignUpContextProvider({
   const [storeInfo, setStoreInfo] = useState<StoreInfo>({} as StoreInfo);
   const [addressInfo, setAdressInfo] = useState<AddressInfo>({} as AddressInfo);
   const [schedule, setScheduleInfo] = useState<DayScheduleInfo[]>([]);
+
+  function getValue(value: string) {
+    if (value === "storeInfo") {
+      return storeInfo;
+    }
+
+    if (value === "addressInfo") {
+      return addressInfo;
+    }
+
+    if (value === "scheduleInfo") {
+      return schedule;
+    }
+  }
 
   function registerStore(data: StoreInfo) {
     setStoreInfo(data);
@@ -66,6 +83,7 @@ export function SignUpContextProvider({
         registerAddress,
         registerSchedule,
         submitSignUp,
+        getValue,
       }}
     >
       {children}
