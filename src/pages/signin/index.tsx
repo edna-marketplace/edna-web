@@ -1,6 +1,12 @@
-import { Container, Heading, InputContainer, LogoImage, SignInForm } from "./styles";
+import {
+  Container,
+  Heading,
+  InputContainer,
+  LogoImage,
+  SignInForm,
+} from "./styles";
 
-import logo from '@/assets/logoImg.png';
+import logo from "@/assets/logoImg.png";
 
 import { Text } from "@/components/@ui/Text";
 import { Button } from "@/components/@ui/Button";
@@ -15,33 +21,43 @@ import { toast } from "sonner";
 import { useRouter } from "next/router";
 
 const signInSchema = z.object({
-  email: z.string()
+  email: z
+    .string()
     .min(1, { message: "Preencha o email" })
     .email({ message: "O email deve ser válido" }),
-  password: z.string()
-    .min(1, { message: "Preencha a senha" })
-})
+  password: z.string().min(1, { message: "Preencha a senha" }),
+});
 
-type SignInForm = z.infer<typeof signInSchema>
+type SignInForm = z.infer<typeof signInSchema>;
 
 export default function SignIn() {
-  const router = useRouter()
-  const { email } = router.query
+  const router = useRouter();
+  const { email } = router.query;
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignInForm>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignInForm>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: email ? email.toString() : undefined,
-    }
-  })
+    },
+  });
 
   async function handleSignIn(data: SignInForm) {
     try {
-      await signIn(data)
+      // const { isStripeOnbardingCompleted } = await getOnboardingStoreInfo(data.email)
 
-      router.push('/')
+      // if (!isStripeOnbardingCompleted) {
+      //   router.push(`/refresh-stripe?email=${data.email}`)
+      // }
+
+      await signIn(data);
+
+      router.push("/");
     } catch (error) {
-      toast.error('E-mail e/ou senha inválidos.')
+      toast.error("E-mail e/ou senha inválidos.");
     }
   }
 
@@ -50,45 +66,46 @@ export default function SignIn() {
       <LogoImage src={logo} alt="" />
       <div>
         <Heading>
-          <SpecialTitle size="md">
-            Bem-vindo(a) novamente
-          </SpecialTitle>
-          <Text size="sm">
-            Por favor, insira as credenciais do seu brechó
-          </Text>
+          <SpecialTitle size="md">Bem-vindo(a) novamente</SpecialTitle>
+          <Text size="sm">Por favor, insira as credenciais do seu brechó</Text>
         </Heading>
 
         <SignInForm onSubmit={handleSubmit(handleSignIn)}>
           <SignInSignUpSwitch />
           <InputContainer>
-            <Text type="label" size="xs">E-mail</Text>
+            <Text type="label" size="xs">
+              E-mail
+            </Text>
             <TextInput
-              placeholder='Seu email'
+              placeholder="Seu email"
               errorMessage={errors.email?.message}
               {...register("email")}
             />
           </InputContainer>
 
           <InputContainer>
-            <Text type="label" size="xs">Senha</Text>
+            <Text type="label" size="xs">
+              Senha
+            </Text>
             <TextInput
-              placeholder='Sua senha'
+              placeholder="Sua senha"
               isPassword
               errorMessage={errors.password?.message}
               {...register("password")}
             />
           </InputContainer>
-          <Text
-            size="xs"
-            weight="bold"
-            style={{ alignSelf: 'end' }}
-          >
+          <Text size="xs" weight="bold" style={{ alignSelf: "end" }}>
             Esqueceu a senha?
           </Text>
-          <Button disabled={isSubmitting} type='submit' style={{ width: '100%' }}>Entrar</Button>
+          <Button
+            disabled={isSubmitting}
+            type="submit"
+            style={{ width: "100%" }}
+          >
+            Entrar
+          </Button>
         </SignInForm>
-
       </div>
     </Container>
-  )
+  );
 }

@@ -95,39 +95,39 @@ export default function Home() {
     setRevenueByPeriod(data);
   }
 
-  async function handleDownloadFinancialReport() {
-    if (
-      weekNewCustomers &&
-      weekOrders &&
-      weekRevenue &&
-      monthRevenue &&
-      revenueByPeriod
-    ) {
-      const { pdf } = await import("@react-pdf/renderer");
-      const FinancialReportModule = await import(
-        "@/components/FinancialReport"
-      );
-      const FinancialReport = FinancialReportModule.default;
+  // async function handleDownloadFinancialReport() {
+  //   if (
+  //     weekNewCustomers &&
+  //     weekOrders &&
+  //     weekRevenue &&
+  //     monthRevenue &&
+  //     revenueByPeriod
+  //   ) {
+  //     const { pdf } = await import("@react-pdf/renderer");
+  //     const FinancialReportModule = await import(
+  //       "@/components/FinancialReport"
+  //     );
+  //     const FinancialReport = FinancialReportModule.default;
 
-      const reportData = {
-        weekNewCustomers,
-        weekOrders,
-        weekRevenue,
-        monthRevenue,
-        revenueByPeriod,
-      };
+  //     const reportData = {
+  //       weekNewCustomers,
+  //       weekOrders,
+  //       weekRevenue,
+  //       monthRevenue,
+  //       revenueByPeriod,
+  //     };
 
-      const blob = await pdf(<FinancialReport {...reportData} />);
+  //     const blob = await pdf(<FinancialReport {...reportData} />);
 
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `relatorio-${new Date().toISOString().split("T")[0]}.pdf`;
-      link.click();
+  //     const url = URL.createObjectURL(blob);
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.download = `relatorio-${new Date().toISOString().split("T")[0]}.pdf`;
+  //     link.click();
 
-      URL.revokeObjectURL(url);
-    }
-  }
+  //     URL.revokeObjectURL(url);
+  //   }
+  // }
 
   useEffect(() => {
     getWeekCustomers();
@@ -185,9 +185,7 @@ export default function Home() {
 
         <Chart />
 
-        <Button onClick={handleDownloadFinancialReport}>
-          Baixar relatório
-        </Button>
+        <Button>Baixar relatório</Button>
       </Main>
     </Container>
   );

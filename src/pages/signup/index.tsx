@@ -69,7 +69,7 @@ export default function SignUp() {
     } catch (error: any) {
       if (error.response.data.message) {
         toast.error("Erro ao registrar brechó!", {
-          description: error.response.data.message + ".",
+          description: error.response.data.message,
         });
         return;
       }
