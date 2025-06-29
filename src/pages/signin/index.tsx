@@ -52,7 +52,7 @@ export default function SignIn() {
       const { type } = await VerifyUserType(data.email);
 
       if (type === "CUSTOMER") {
-        toast.error("Esse cadastro é exclusivo para brechós!", {
+        toast.error("Esse login é exclusivo para brechós!", {
           description:
             "Utilize o aplicativo para celular para realizar login como cliente, ou crie uma conta de brechó.",
         });
@@ -110,9 +110,15 @@ export default function SignIn() {
               {...register("password")}
             />
           </InputContainer>
-          <Text size="xs" weight="bold" style={{ alignSelf: "end" }}>
-            Esqueceu a senha?
-          </Text>
+          <Button
+            onClick={() => router.push("/signin/password-recovery")}
+            type="button"
+            size="sm"
+            variant="tertiary"
+            style={{ alignSelf: "end" }}
+          >
+            <strong>Esqueceu a senha?</strong>
+          </Button>
           <Button
             disabled={isSubmitting}
             type="submit"

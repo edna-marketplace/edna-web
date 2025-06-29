@@ -21,7 +21,7 @@ export const Heading = styled("div", {
   },
 });
 
-export const StripeRefreshForm = styled("form", {
+export const PasswordRecoveryForm = styled("form", {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",

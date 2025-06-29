@@ -1,4 +1,3 @@
-import { sendOnboardingLink } from "@/api/send-onboarding-link";
 import { Button } from "@/components/@ui/Button";
 import { SpecialTitle } from "@/components/@ui/SpecialTitle";
 import { Text } from "@/components/@ui/Text";
@@ -14,20 +13,21 @@ import {
   Container,
   Heading,
   InputContainer,
-  StripeRefreshForm,
+  PasswordRecoveryForm,
   WarningContainer,
 } from "./styles";
+import { sendNewPassword } from "@/api/send-new-password";
 
-const stripeRefreshSchema = z.object({
+const passwordRecoverySchema = z.object({
   email: z
     .string()
     .min(1, { message: "Preencha o email" })
     .email({ message: "O email deve ser válido" }),
 });
 
-type StripeRefreshForm = z.infer<typeof stripeRefreshSchema>;
+type PasswordRecoveryForm = z.infer<typeof passwordRecoverySchema>;
 
-export default function StripeReturn() {
+export default function PasswordRecovery() {
   const router = useRouter();
   const { email } = router.query;
 
@@ -35,20 +35,19 @@ export default function StripeReturn() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<StripeRefreshForm>({
-    resolver: zodResolver(stripeRefreshSchema),
+  } = useForm<PasswordRecoveryForm>({
+    resolver: zodResolver(passwordRecoverySchema),
     defaultValues: {
       email: email ? email.toString() : undefined,
     },
   });
 
-  async function handleSendOnboardingUrl(data: StripeRefreshForm) {
+  async function handleSendNewPasswordEmail(data: PasswordRecoveryForm) {
     try {
-      await sendOnboardingLink(data.email);
+      await sendNewPassword(data.email);
 
       toast.success("E-mail enviado!", {
-        description:
-          "Um e-mail foi enviado com o link para conexão com o Stripe.",
+        description: "Um e-mail foi enviado com sua nova senha.",
       });
     } catch (error: any) {
       toast.error(JSON.stringify(error.response.data));
@@ -58,18 +57,15 @@ export default function StripeReturn() {
   return (
     <Container>
       <Heading>
-        <SpecialTitle>Conecte sua conta Stripe!</SpecialTitle>
-        <Text>
-          Para finalizar seu cadastro você deve conectar sua conta Stripe.
-        </Text>
+        <SpecialTitle>Recuperação de senha</SpecialTitle>
+        <Text>Esqueceu sua senha? Não se preocupe, enviaremos uma nova!</Text>
       </Heading>
 
-      <StripeRefreshForm>
+      <PasswordRecoveryForm>
         <WarningContainer>
           <Text weight="regular">
-            Após você inserir seu e-mail e clicar no botão "Enviar link",
-            enviaremos um e-mail contendo o link para você conectar sua conta
-            Stripe.
+            Após você inserir seu e-mail e clicar no botão "Enviar senha",
+            enviaremos um e-mail contendo sua nova senha.
           </Text>
         </WarningContainer>
 
@@ -95,12 +91,12 @@ export default function StripeReturn() {
           </Button>
           <Button
             disabled={isSubmitting}
-            onClick={handleSubmit(handleSendOnboardingUrl)}
+            onClick={handleSubmit(handleSendNewPasswordEmail)}
           >
-            {!isSubmitting ? "Enviar link" : <Spinner color="#FFF6D8" />}
+            {!isSubmitting ? "Enviar senha" : <Spinner color="#FFF6D8" />}
           </Button>
         </ButtonContainer>
-      </StripeRefreshForm>
+      </PasswordRecoveryForm>
     </Container>
   );
 }
