@@ -18,6 +18,7 @@ import { z } from "zod";
 import { useRouter } from "next/router";
 import { toast } from "sonner";
 import { useSignUp } from "@/hooks/use-signup";
+import { Spinner } from "@/components/Spinner";
 
 const RegisterPasswordSchema = z
   .object({
@@ -46,7 +47,7 @@ export default function RegisterPassword() {
     resolver: zodResolver(RegisterPasswordSchema),
   });
 
-  const { submitSignUp, email } = useSignUp();
+  const { submitSignUp, clearValues } = useSignUp();
 
   const router = useRouter();
 
@@ -54,7 +55,9 @@ export default function RegisterPassword() {
     try {
       await submitSignUp(data.password);
 
-      router.push(`/signin?email=${email}`);
+      router.push(`/signup/stripe-connect`);
+
+      clearValues();
     } catch (error: any) {
       toast.error(JSON.stringify(error.response.data));
     }
@@ -103,7 +106,7 @@ export default function RegisterPassword() {
             Voltar
           </Button>
           <Button disabled={isSubmitting} type="submit">
-            Finalizar
+            {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
           </Button>
         </ButtonContainer>
       </RegisterPasswordForm>

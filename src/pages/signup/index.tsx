@@ -18,6 +18,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { useEffect, useState } from "react";
 import { StoreInfo } from "@/api/sign-up";
+import { Spinner } from "@/components/Spinner";
+import { CircleNotch } from "@phosphor-icons/react";
 
 const cnpjRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/;
 const phoneRegex = /^(\(\d{2}\)\s?9\s?\d{4}-\d{4}|\d{2}9\d{8})$/;
@@ -187,7 +189,7 @@ export default function SignUp() {
           />
         </InputContainer>
         <Button disabled={isSubmitting} type="submit" style={{ width: "100%" }}>
-          Continuar
+          {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
         </Button>
       </SignUpForm>
     </Container>

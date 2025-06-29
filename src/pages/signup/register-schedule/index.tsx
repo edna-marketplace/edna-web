@@ -28,6 +28,7 @@ import { useSignUp } from "@/hooks/use-signup";
 import { DayScheduleInfo } from "@/api/sign-up";
 import { useEffect } from "react";
 import { convertMinutesToTimeString } from "@/utils/convert-minutes-to-time-string";
+import { Spinner } from "@/components/Spinner";
 
 const registerScheduleFormSchema = z.object({
   intervals: z
@@ -209,7 +210,7 @@ export default function RegisterSchedule() {
             Voltar
           </Button>
           <Button disabled={isSubmitting} type="submit">
-            Continuar
+            {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
           </Button>
         </ButtonContainer>
       </RegisterScheduleForm>

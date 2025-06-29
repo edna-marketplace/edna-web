@@ -26,6 +26,7 @@ import { useRouter } from "next/router";
 import { useSignUp } from "@/hooks/use-signup";
 import { verifyDuplicateAddress } from "@/api/verify-duplicate-address";
 import { AddressInfo } from "@/api/sign-up";
+import { Spinner } from "@/components/Spinner";
 
 const cepRegex = /^\d{5}-?\d{3}$/;
 
@@ -197,7 +198,7 @@ export default function RegisterAddress() {
             Voltar
           </Button>
           <Button disabled={isSubmitting} type="submit">
-            Continuar
+            {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
           </Button>
         </ButtonContainer>
       </RegisterAddressForm>

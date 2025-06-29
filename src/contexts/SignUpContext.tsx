@@ -15,7 +15,8 @@ interface SignUpContextDataProps {
   submitSignUp: (password: string) => Promise<void>;
   getValue: (
     value: string
-  ) => StoreInfo | AddressInfo | DayScheduleInfo[] | undefined;
+  ) => StoreInfo | AddressInfo | DayScheduleInfo[] | string | undefined;
+  clearValues: () => void;
 }
 
 export type SignUpContextProviderProps = {
@@ -29,6 +30,7 @@ export const SignUpContext = createContext<SignUpContextDataProps>(
 export function SignUpContextProvider({
   children,
 }: SignUpContextProviderProps) {
+  const [stripeOnboardingUrl, setStripeOnboardingUrl] = useState("");
   const [storeInfo, setStoreInfo] = useState<StoreInfo>({} as StoreInfo);
   const [addressInfo, setAdressInfo] = useState<AddressInfo>({} as AddressInfo);
   const [schedule, setScheduleInfo] = useState<DayScheduleInfo[]>([]);
@@ -45,6 +47,16 @@ export function SignUpContextProvider({
     if (value === "scheduleInfo") {
       return schedule;
     }
+
+    if (value === "onboardingUrl") {
+      return stripeOnboardingUrl;
+    }
+  }
+
+  function clearValues() {
+    setStoreInfo({} as StoreInfo);
+    setAdressInfo({} as AddressInfo);
+    setScheduleInfo([]);
   }
 
   function registerStore(data: StoreInfo) {
@@ -69,7 +81,7 @@ export function SignUpContextProvider({
 
       const { onboardingUrl } = await signUp(signUpBody);
 
-      window.location.href = onboardingUrl;
+      setStripeOnboardingUrl(onboardingUrl);
     } catch (error) {
       throw error;
     }
@@ -84,6 +96,7 @@ export function SignUpContextProvider({
         registerSchedule,
         submitSignUp,
         getValue,
+        clearValues,
       }}
     >
       {children}
