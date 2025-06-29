@@ -5,6 +5,7 @@ import { destroyCookie } from "nookies";
 const publicRoutes = [
   { path: "/signin", whenAuthenticated: "redirect" },
   { path: "/signin/password-recovery", whenAuthenticated: "redirect" },
+  { path: "/signin/two-factor-otp", whenAuthenticated: "redirect" },
   { path: "/signup", whenAuthenticated: "redirect" },
   { path: "/signup/register-address", whenAuthenticated: "redirect" },
   { path: "/signup/register-schedule", whenAuthenticated: "redirect" },

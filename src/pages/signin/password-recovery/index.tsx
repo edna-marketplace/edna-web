@@ -50,7 +50,7 @@ export default function PasswordRecovery() {
         description: "Um e-mail foi enviado com sua nova senha.",
       });
     } catch (error: any) {
-      toast.error(JSON.stringify(error.response.data));
+      toast.error(error.response.data.message);
     }
   }
 
@@ -76,6 +76,7 @@ export default function PasswordRecovery() {
           <TextInput
             placeholder="Seu email"
             errorMessage={errors.email?.message}
+            hasErrorPlaceholder
             {...register("email")}
           />
         </InputContainer>
