@@ -7,6 +7,7 @@ import { parseCookies } from "nookies";
 import { Toaster } from "sonner";
 import { AppLayout } from "../layouts/App";
 import { globalStyles } from "../styles/global";
+import { SignInContextProvider } from "@/contexts/SignInContext";
 
 globalStyles();
 
@@ -18,8 +19,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Layout>
       <SignUpContextProvider>
-        <Toaster richColors position="top-right" />
-        <Component {...pageProps} />
+        <SignInContextProvider>
+          <Toaster richColors position="top-right" />
+          <Component {...pageProps} />
+        </SignInContextProvider>
       </SignUpContextProvider>
     </Layout>
   );

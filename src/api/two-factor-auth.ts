@@ -1,16 +1,22 @@
 import { api } from "@/lib/axios";
 import { setCookie } from "nookies";
 
-export interface SignInBody {
+export interface TwoFactorAuthBody {
   email: string;
   password: string;
+  otp: string;
 }
 
-export async function signIn({ email, password }: SignInBody) {
+export async function twoFactorAuth({
+  email,
+  password,
+  otp,
+}: TwoFactorAuthBody) {
   try {
-    const response = await api.post("/public/basic-auth", {
+    const response = await api.post("/auth", {
       email,
       password,
+      otp,
     });
 
     const token = response.data;

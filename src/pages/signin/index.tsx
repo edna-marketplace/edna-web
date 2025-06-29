@@ -8,19 +8,21 @@ import {
 
 import logo from "@/assets/logoImg.png";
 
-import { Text } from "@/components/@ui/Text";
-import { Button } from "@/components/@ui/Button";
-import { TextInput } from "@/components/@ui/TextInput";
-import { SpecialTitle } from "@/components/@ui/SpecialTitle";
-import { SignInSignUpSwitch } from "@/components/SwitchSignInSignUp";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "@/api/sign-in";
-import { toast } from "sonner";
-import { useRouter } from "next/router";
 import { getOnboardingStoreStatus } from "@/api/get-onboarding-store-info";
+import { sendTwoFactorOTP } from "@/api/send-two-factor-otp";
 import { VerifyUserType } from "@/api/verify-user-type";
+import { Button } from "@/components/@ui/Button";
+import { SpecialTitle } from "@/components/@ui/SpecialTitle";
+import { Text } from "@/components/@ui/Text";
+import { TextInput } from "@/components/@ui/TextInput";
+import { SignInSignUpSwitch } from "@/components/SwitchSignInSignUp";
+import { useSignIn } from "@/hooks/use-signin";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+import { Spinner } from "@/components/Spinner";
 
 const signInSchema = z.object({
   email: z
@@ -35,6 +37,8 @@ type SignInForm = z.infer<typeof signInSchema>;
 export default function SignIn() {
   const router = useRouter();
   const { email } = router.query;
+
+  const { setValue } = useSignIn();
 
   const {
     register,
@@ -52,7 +56,7 @@ export default function SignIn() {
       const { type } = await VerifyUserType(data.email);
 
       if (type === "CUSTOMER") {
-        toast.error("Esse cadastro é exclusivo para brechós!", {
+        toast.error("Esse login é exclusivo para brechós!", {
           description:
             "Utilize o aplicativo para celular para realizar login como cliente, ou crie uma conta de brechó.",
         });
@@ -68,9 +72,12 @@ export default function SignIn() {
         return;
       }
 
-      await signIn(data);
+      await sendTwoFactorOTP(data);
 
-      router.push("/");
+      setValue("email", data.email);
+      setValue("password", data.password);
+
+      router.push("/signin/two-factor-otp");
     } catch (error: any) {
       console.log(error);
       toast.error(error.response.data.message);
@@ -110,15 +117,21 @@ export default function SignIn() {
               {...register("password")}
             />
           </InputContainer>
-          <Text size="xs" weight="bold" style={{ alignSelf: "end" }}>
-            Esqueceu a senha?
-          </Text>
+          <Button
+            onClick={() => router.push("/signin/password-recovery")}
+            type="button"
+            size="sm"
+            variant="tertiary"
+            style={{ alignSelf: "end" }}
+          >
+            <strong>Esqueceu a senha?</strong>
+          </Button>
           <Button
             disabled={isSubmitting}
             type="submit"
             style={{ width: "100%" }}
           >
-            Entrar
+            {!isSubmitting ? "Entrar" : <Spinner color="#FFF6D8" />}
           </Button>
         </SignInForm>
       </div>
