@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import type { AppProps } from 'next/app'
-import { globalStyles } from '../styles/global'
-import { AppLayout } from '../layouts/App'
-import { Toaster } from 'sonner'
-import { AuthLayout } from '@/layouts/Auth'
-import { parseCookies } from 'nookies'
-import { SignUpContext, SignUpContextProvider } from '@/contexts/SignUpContext'
+import { SignUpContextProvider } from "@/contexts/SignUpContext";
+import { AuthLayout } from "@/layouts/Auth";
+import type { AppProps } from "next/app";
+import { parseCookies } from "nookies";
+import { Toaster } from "sonner";
+import { AppLayout } from "../layouts/App";
+import { globalStyles } from "../styles/global";
 
-globalStyles()
+globalStyles();
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { '@edna:auth-token': token } = parseCookies()
+  const { "@edna:auth-token": token } = parseCookies();
 
-  const Layout = token ? AppLayout : AuthLayout
+  const Layout = token ? AppLayout : AuthLayout;
 
   return (
     <Layout>
@@ -22,5 +22,5 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </SignUpContextProvider>
     </Layout>
-  )
+  );
 }
