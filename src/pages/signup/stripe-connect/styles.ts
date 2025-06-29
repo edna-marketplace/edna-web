@@ -75,3 +75,10 @@ export const ButtonContainer = styled(Card, {
     gap: "$4",
   },
 });
+
+export const AlreadyHaveAccountContainer = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "end",
+  marginTop: "$8",
+});

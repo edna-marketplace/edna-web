@@ -11,6 +11,7 @@ const publicRoutes = [
   { path: "/signup/stripe-connect", whenAuthenticated: "redirect" },
   { path: "/signup/stripe-return", whenAuthenticated: "redirect" },
   { path: "/signup/stripe-refresh", whenAuthenticated: "redirect" },
+  { path: "/signup/privacy-policy", whenAuthenticated: "redirect" },
 ] as const;
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED = "/signin";

@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import { toast } from "sonner";
 import { useSignUp } from "@/hooks/use-signup";
 import { Spinner } from "@/components/Spinner";
+import Link from "next/link";
 
 const RegisterPasswordSchema = z
   .object({
@@ -95,6 +96,17 @@ export default function RegisterPassword() {
             {...register("password_confirm")}
           />
         </InputContainer>
+
+        <Text size="sm" style={{ marginBottom: "20px" }}>
+          Ao clicar em Continuar, você concorda com a nossa{" "}
+          <Link
+            href="/signup/privacy-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Política de Privacidade
+          </Link>
+        </Text>
 
         <ButtonContainer>
           <Button

@@ -1,5 +1,6 @@
 import { SpecialTitle } from "@/components/@ui/SpecialTitle";
 import {
+  AlreadyHaveAccountContainer,
   ButtonContainer,
   Container,
   FormContainer,
@@ -14,23 +15,19 @@ import { useEffect } from "react";
 import { Title } from "@/components/@ui/Title";
 import { Button } from "@/components/@ui/Button";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { useRouter } from "next/router";
 
 export default function StripeConnect() {
   const { getValue } = useSignUp();
-
   const isMobile = useIsMobile();
+
+  const router = useRouter();
 
   function handleConnectStripe() {
     const url = getValue("onboardingUrl") as string;
 
-    window.location.href = url;
+    window.open(url, "_blank");
   }
-
-  useEffect(() => {
-    const url = getValue("onboardingUrl");
-
-    console.log(url);
-  }, []);
 
   return (
     <Container>
@@ -60,6 +57,19 @@ export default function StripeConnect() {
           </Button>
         </ButtonContainer>
       </FormContainer>
+
+      <AlreadyHaveAccountContainer>
+        <Text size="sm">Já possui uma conta?</Text>
+        <Button
+          type="button"
+          variant="tertiary"
+          onClick={() => router.push("/signin")}
+        >
+          <Text size="sm" weight="bold">
+            Entrar
+          </Text>
+        </Button>
+      </AlreadyHaveAccountContainer>
     </Container>
   );
 }

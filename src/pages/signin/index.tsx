@@ -19,6 +19,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "@/api/sign-in";
 import { toast } from "sonner";
 import { useRouter } from "next/router";
+import { getOnboardingStoreStatus } from "@/api/get-onboarding-store-info";
+import { VerifyUserType } from "@/api/verify-user-type";
 
 const signInSchema = z.object({
   email: z
@@ -47,17 +49,31 @@ export default function SignIn() {
 
   async function handleSignIn(data: SignInForm) {
     try {
-      // const { isStripeOnbardingCompleted } = await getOnboardingStoreInfo(data.email)
+      const { type } = await VerifyUserType(data.email);
 
-      // if (!isStripeOnbardingCompleted) {
-      //   router.push(`/refresh-stripe?email=${data.email}`)
-      // }
+      if (type === "CUSTOMER") {
+        toast.error("Esse cadastro é exclusivo para brechós!", {
+          description:
+            "Utilize o aplicativo para celular para realizar login como cliente, ou crie uma conta de brechó.",
+        });
+        return;
+      }
+
+      const { isStripeOnbardingCompleted } = await getOnboardingStoreStatus(
+        data.email
+      );
+
+      if (!isStripeOnbardingCompleted) {
+        router.push(`/signup/stripe-refresh?email=${data.email}`);
+        return;
+      }
 
       await signIn(data);
 
       router.push("/");
-    } catch (error) {
-      toast.error("E-mail e/ou senha inválidos.");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.message);
     }
   }
 
