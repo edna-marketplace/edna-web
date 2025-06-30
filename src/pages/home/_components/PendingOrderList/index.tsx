@@ -1,12 +1,17 @@
 import { PendingOrder } from "@/api/fetch-pending-orders-metrics";
 import { Container, OrderItem } from "./styles";
 import { Text } from "@/components/@ui/Text";
+import { useRouter } from "next/router";
+import { Spinner } from "@/components/Spinner";
 
 export interface PendingOrderListProps {
   orders: PendingOrder[];
+  isLoading: boolean;
 }
 
-export function PendingOrderList({ orders }: PendingOrderListProps) {
+export function PendingOrderList({ orders, isLoading }: PendingOrderListProps) {
+  const router = useRouter();
+
   const hasOrders = orders.length > 0;
 
   return (
@@ -19,14 +24,29 @@ export function PendingOrderList({ orders }: PendingOrderListProps) {
         Pedidos pendentes
       </Text>
 
-      {hasOrders ? (
+      {isLoading ? (
+        <div
+          style={{
+            flex: "1",
+            display: "flex", // Add this line
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <Spinner />
+        </div>
+      ) : hasOrders ? (
         orders.map((order) => (
-          <OrderItem key={order.clotheName}>
+          <OrderItem
+            onClick={() => router.push("/orders")}
+            key={order.clotheName}
+          >
             <div>
               <Text
                 size="sm"
                 css={{
-                  maxWidth: "170px",
+                  maxWidth: "130px",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
@@ -53,12 +73,11 @@ export function PendingOrderList({ orders }: PendingOrderListProps) {
         <div
           style={{
             width: "100%",
-            height: 220,
             display: "flex",
+            flex: "1",
             alignItems: "center",
             justifyContent: "center",
             color: "var(--colors-base400)",
-            fontWeight: 500,
           }}
         >
           <Text size="sm">Sem pedidos pendentes</Text>
