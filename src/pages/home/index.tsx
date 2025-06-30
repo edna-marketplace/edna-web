@@ -42,14 +42,19 @@ import {
 } from "@/api/get-month-revenue-metrics";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false);
   const [weekNewCustomers, setWeekNewCustomers] =
     useState<GetWeekCustomersMetricsResponse | null>(null);
   const [weekOrders, setWeekOrders] =
     useState<GetWeekOrdersMetricsResponse | null>(null);
-  const [weekRevenue, setWeekRevenue] =
-    useState<GetWeekRevenueMetricsResponse | null>(null);
+  const [weekRevenue, setWeekRevenue] = useState<GetWeekRevenueMetricsResponse>(
+    { weekRevenue: 0, percentageChange: 0 }
+  );
   const [monthRevenue, setMonthRevenue] =
-    useState<GetMonthRevenueMetricsResponse | null>(null);
+    useState<GetMonthRevenueMetricsResponse>({
+      weekRevenue: 0,
+      percentageChange: 0,
+    });
   const [revenueByPeriod, setRevenueByPeriod] = useState<
     RevenuePeriod[] | null
   >(null);
@@ -58,15 +63,11 @@ export default function Home() {
   async function getWeekCustomers() {
     const data = await getWeekCustomersMetrics();
 
-    console.log("Week customers -> ", data);
-
     setWeekNewCustomers(data);
   }
 
   async function getWeekOrders() {
     const data = await getWeekOrdersMetrics();
-
-    console.log("Week orders -> ", data);
 
     setWeekOrders(data);
   }
@@ -74,23 +75,25 @@ export default function Home() {
   async function getWeekRevenue() {
     const data = await getWeekRevenueMetrics();
 
-    console.log("Week revenue -> ", data);
-
     setWeekRevenue(data);
   }
 
   async function getMonthRevenue() {
     const data = await getMonthRevenueMetrics();
 
-    console.log("Month revenue -> ", data);
-
     setMonthRevenue(data);
+  }
+
+  async function getPendingOrders() {
+    const data = await fetchPendingOrders();
+
+    const cuttedPendingOrdersdata = data.splice(0, 8);
+
+    setPendingOrders(cuttedPendingOrdersdata);
   }
 
   async function fetchMonthlyRevenueByPeriod(period: number = 3) {
     const data = await fetchRevenueByPeriod(3);
-
-    console.log("Monthly revenue -> ", data);
 
     setRevenueByPeriod(data);
   }
@@ -130,23 +133,15 @@ export default function Home() {
   // }
 
   useEffect(() => {
+    setIsLoading(true);
     getWeekCustomers();
     getWeekOrders();
     getWeekRevenue();
     getMonthRevenue();
+    getPendingOrders();
     fetchMonthlyRevenueByPeriod();
+    setIsLoading(false);
   }, []);
-
-  if (!weekNewCustomers || !weekOrders || !weekRevenue) {
-    return (
-      <div style={{ padding: "2rem", textAlign: "center", color: "#666" }}>
-        Carregando métricas da semana...
-      </div>
-    );
-  }
-
-  const fixedRevenuePercentage =
-    weekRevenue.weekRevenue === 0 ? 0 : weekRevenue.percentageChange;
 
   const currentPeriodMessage = getCurrentPeriodMessage();
 
@@ -154,38 +149,43 @@ export default function Home() {
     <Container>
       <Header
         title={currentPeriodMessage}
-        description="Não se esqueça! Na edna seu brechó sempre é a prioridade!"
+        description="Não se esqueça! Na edna seu brechó cresce mais!"
       />
 
       <Main>
         <InfoCardContainer>
           <InfoCard
             title="Pedidos"
-            value={weekOrders.newOrders}
-            percentage={weekOrders.percentageChange}
+            value={weekOrders ? weekOrders.newOrders : 0}
+            percentage={weekOrders ? weekOrders.percentageChange : 0}
             type="default"
+            isLoading={isLoading}
           />
           <InfoCard
             title="Novos clientes"
-            value={weekNewCustomers.newCustomers}
-            percentage={weekNewCustomers.percentageChange}
+            value={weekNewCustomers ? weekNewCustomers.newCustomers : 0}
+            percentage={
+              weekNewCustomers ? weekNewCustomers.percentageChange : 0
+            }
             type="default"
+            isLoading={isLoading}
           />
           <InfoCard
             title="Receita"
-            value={weekRevenue.weekRevenue}
-            percentage={fixedRevenuePercentage}
+            value={weekRevenue ? weekRevenue.weekRevenue : 0}
+            percentage={weekRevenue ? weekRevenue.percentageChange : 0}
             type="currency"
+            isLoading={isLoading}
           />
         </InfoCardContainer>
 
         <PendingOrdersContainer>
-          <PendingOrderList orders={pendingOrders} />
+          <PendingOrderList orders={pendingOrders} isLoading={isLoading} />
         </PendingOrdersContainer>
 
-        <Chart />
+        <Chart monthRevenue={monthRevenue} />
 
-        <Button>Baixar relatório</Button>
+        {/* <Button>Baixar relatório</Button> */}
       </Main>
     </Container>
   );
