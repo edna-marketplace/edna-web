@@ -1,4 +1,3 @@
-import { Card } from "@/components/@ui/Card";
 import { Text } from "@/components/@ui/Text";
 import { Title } from "@/components/@ui/Title";
 import { Header } from "@/components/Header";
@@ -10,9 +9,11 @@ import {
 } from "@phosphor-icons/react";
 import { ProfilePreview } from "./_components/ProfilePreview";
 import { Container, EditInfoButton, Main, RightColumn } from "./styles";
-import { useIsMobile } from "@/hooks/use-is-mobile";
+import { useRouter } from "next/router";
 
 export default function Store() {
+  const router = useRouter();
+
   return (
     <Container>
       <Header
@@ -24,7 +25,7 @@ export default function Store() {
         <ProfilePreview />
 
         <RightColumn>
-          <EditInfoButton>
+          <EditInfoButton onClick={() => router.push("/store/general-info")}>
             <div>
               <IdentificationCard size={32} color="#4F4C42" />
 
@@ -37,7 +38,7 @@ export default function Store() {
             <CaretRight size={30} color="#4F4C42" />
           </EditInfoButton>
 
-          <EditInfoButton>
+          <EditInfoButton onClick={() => router.push("/store/address")}>
             <div>
               <MapPin size={32} color="#4F4C42" />
 
@@ -50,7 +51,7 @@ export default function Store() {
             <CaretRight size={30} color="#4F4C42" />
           </EditInfoButton>
 
-          <EditInfoButton>
+          <EditInfoButton onClick={() => router.push("/store/schedule")}>
             <div>
               <Clock size={32} color="#4F4C42" />
 

@@ -1,18 +1,29 @@
-import { ComponentProps, ElementRef, forwardRef } from 'react'
-import { toast } from 'sonner'
-import { ErrorContainer, ErrorMessage, ErrorPlaceholder, FileInputContainer, Input, Label } from './styles'
-import { UploadSimple } from '@phosphor-icons/react/dist/ssr'
+import { ComponentProps, ElementRef, forwardRef } from "react";
+import { toast } from "sonner";
+import {
+  ErrorContainer,
+  ErrorMessage,
+  ErrorPlaceholder,
+  FileInputContainer,
+  Input,
+  Label,
+} from "./styles";
+import { UploadSimple } from "@phosphor-icons/react/dist/ssr";
 
 export interface FileInputProps extends ComponentProps<typeof Input> {
-  maxFiles?: number
-  maxSizeInMB?: number
-  errorMessage?: string
-  hasErrorPlaceholder?: boolean
+  title?: string;
+  contentSize?: "sm" | "md";
+  maxFiles?: number;
+  maxSizeInMB?: number;
+  errorMessage?: string;
+  hasErrorPlaceholder?: boolean;
 }
 
 export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
   (
     {
+      title = "Escolher fotos",
+      contentSize = "md",
       css,
       maxFiles = 5,
       maxSizeInMB = 5,
@@ -22,44 +33,44 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
       hasErrorPlaceholder,
       ...props
     }: FileInputProps,
-    ref,
+    ref
   ) => {
-    const maxSizeInBytes = maxSizeInMB * 1024 * 1024
+    const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const files = event.target.files
+      const files = event.target.files;
 
       if (files && files.length > maxFiles) {
-        toast.error(`Você pode adicionar no máximo ${maxFiles} imagens.`)
+        toast.error(`Você pode adicionar no máximo ${maxFiles} imagens.`);
 
-        event.target.value = ''
-        return
+        event.target.value = "";
+        return;
       }
 
       if (files) {
         for (let i = 0; i < files.length; i++) {
           if (files[i].size > maxSizeInBytes) {
             toast.error(
-              `A imagem "${files[i].name}" excedeu o limite de ${maxSizeInMB}MB.`,
-            )
+              `A imagem "${files[i].name}" excedeu o limite de ${maxSizeInMB}MB.`
+            );
 
-            event.target.value = ''
-            return
+            event.target.value = "";
+            return;
           }
         }
       }
 
       if (onChange) {
-        onChange(event)
+        onChange(event);
       }
-    }
+    };
 
     return (
       <>
         <FileInputContainer css={css} hasError={!!errorMessage}>
-          <Label htmlFor="file-input">
+          <Label size={contentSize} htmlFor="file-input">
             <UploadSimple size={17} />
-            Escolher fotos
+            {title}
           </Label>
           <Input
             id="file-input"
@@ -68,22 +79,21 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
             multiple
             accept=".jpeg,.jpg,.png"
             onChange={handleFileChange}
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             {...props}
           />
         </FileInputContainer>
-        {hasErrorPlaceholder && (
-          errorMessage ? (
+        {hasErrorPlaceholder &&
+          (errorMessage ? (
             <ErrorContainer>
               <ErrorMessage>{errorMessage}</ErrorMessage>
             </ErrorContainer>
           ) : (
             <ErrorPlaceholder />
-          )
-        )}
+          ))}
       </>
-    )
-  },
-)
+    );
+  }
+);
 
-FileInput.displayName = 'File Input'
+FileInput.displayName = "File Input";

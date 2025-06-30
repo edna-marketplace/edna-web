@@ -1,4 +1,18 @@
+import { GetAuthenticatedStoreResponse } from "@/api/get-authenticated-store";
 import { Card } from "@/components/@ui/Card";
+import { SpecialTitle } from "@/components/@ui/SpecialTitle";
+import { Text } from "@/components/@ui/Text";
+import { Title } from "@/components/@ui/Title";
+import { Spinner } from "@/components/Spinner";
+import { useIsMobile } from "@/hooks/use-is-mobile";
+import { useStore } from "@/hooks/use-store";
+import { convertMinutesToTimeString } from "@/utils/convert-minutes-to-time-string";
+import { formatCNPJ } from "@/utils/format-cnpj";
+import { formatPhoneNumber } from "@/utils/format-phone-number";
+import { toTargetCustomerDisplay } from "@/utils/to-target-customer-display";
+import { weekDayMapper } from "@/utils/weekDayMapper";
+import { MapPin, Star, Storefront } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
 import {
   BannerImage,
   BannerPlaceholder,
@@ -9,22 +23,6 @@ import {
   ScheduleContainer,
   Section,
 } from "./styles";
-import { Text } from "@/components/@ui/Text";
-import { Title } from "@/components/@ui/Title";
-import { MapPin, Star, Storefront } from "@phosphor-icons/react";
-import { weekDayMapper } from "@/utils/weekDayMapper";
-import { convertMinutesToTimeString } from "@/utils/convert-minutes-to-time-string";
-import { useEffect, useState } from "react";
-import {
-  getAuthenticatedStore,
-  GetAuthenticatedStoreResponse,
-} from "@/api/get-authenticated-store";
-import { Spinner } from "@/components/Spinner";
-import { toTargetCustomerDisplay } from "@/utils/to-target-customer-display";
-import { formatPhoneNumber } from "@/utils/format-phone-number";
-import { formatCNPJ } from "@/utils/format-cnpj";
-import { SpecialTitle } from "@/components/@ui/SpecialTitle";
-import { useIsMobile } from "@/hooks/use-is-mobile";
 
 export function ProfilePreview() {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,10 +30,12 @@ export function ProfilePreview() {
     null
   );
 
+  const { fetchStoreInfo } = useStore();
+
   const isMobile = useIsMobile();
 
   async function getStoreInfo() {
-    const data = await getAuthenticatedStore();
+    const data = await fetchStoreInfo();
 
     setStore(data);
   }

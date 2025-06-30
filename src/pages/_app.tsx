@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 import { AppLayout } from "../layouts/App";
 import { globalStyles } from "../styles/global";
 import { SignInContextProvider } from "@/contexts/SignInContext";
+import { StoreContextProvider } from "@/contexts/StoreContext";
 
 globalStyles();
 
@@ -20,8 +21,10 @@ export default function App({ Component, pageProps }: AppProps) {
     <Layout>
       <SignUpContextProvider>
         <SignInContextProvider>
-          <Toaster richColors position="top-right" />
-          <Component {...pageProps} />
+          <StoreContextProvider>
+            <Toaster richColors position="top-right" />
+            <Component {...pageProps} />
+          </StoreContextProvider>
         </SignInContextProvider>
       </SignUpContextProvider>
     </Layout>

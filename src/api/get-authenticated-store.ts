@@ -7,6 +7,7 @@ export interface GetAuthenticatedStoreResponse {
   bannerImageUrl: string | null;
   profileImageUrl: string | null;
   name: string;
+  email: string;
   phone: string;
   targetCustomer: "ALL" | "MALE" | "FEMALE";
   distanceInKilometers: null;
