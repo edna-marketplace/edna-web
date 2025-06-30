@@ -46,9 +46,14 @@ import { PendingOrderList } from "./_components/PendingOrderList";
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [weekNewCustomers, setWeekNewCustomers] =
-    useState<GetWeekCustomersMetricsResponse | null>(null);
-  const [weekOrders, setWeekOrders] =
-    useState<GetWeekOrdersMetricsResponse | null>(null);
+    useState<GetWeekCustomersMetricsResponse>({
+      newCustomers: 0,
+      percentageChange: 0,
+    });
+  const [weekOrders, setWeekOrders] = useState<GetWeekOrdersMetricsResponse>({
+    newOrders: 0,
+    percentageChange: 0,
+  });
   const [weekRevenue, setWeekRevenue] = useState<GetWeekRevenueMetricsResponse>(
     { weekRevenue: 0, percentageChange: 0 }
   );
@@ -57,9 +62,7 @@ export default function Home() {
       weekRevenue: 0,
       percentageChange: 0,
     });
-  const [revenueByPeriod, setRevenueByPeriod] = useState<
-    RevenuePeriod[] | null
-  >(null);
+  const [revenueByPeriod, setRevenueByPeriod] = useState<RevenuePeriod[]>([]);
   const [pendingOrders, setPendingOrders] = useState<PendingOrder[]>([]);
 
   async function getWeekCustomers() {
