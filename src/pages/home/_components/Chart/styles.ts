@@ -99,6 +99,11 @@ export const CurrentMonthContainer = styled("div", {
   width: "100%",
 
   marginBottom: "$3",
+
+  "@sm": {
+    alignItems: "start",
+    flexDirection: "column",
+  },
 });
 
 export const ComparisonPercentage = styled("div", {

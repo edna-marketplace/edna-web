@@ -22,9 +22,11 @@ export const Main = styled("main", {
   gridTemplateRows: "132px auto auto",
   rowGap: "$2",
   columnGap: "$3",
+  position: "relative",
 
   width: "100%",
 
+  marginTop: "$8",
   padding: "$6 $40",
 
   "@xl": {

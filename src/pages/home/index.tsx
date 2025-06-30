@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
 import { getCurrentPeriodMessage } from "@/utils/get-current-period-message";
+import { useEffect, useState } from "react";
 import { Chart } from "./_components/Chart";
 import { InfoCard } from "./_components/InfoCard";
 import {
@@ -30,16 +30,18 @@ import {
   PendingOrder,
 } from "@/api/fetch-pending-orders-metrics";
 
-import { PendingOrderList } from "./_components/PendingOrderList";
+import {
+  getMonthRevenueMetrics,
+  GetMonthRevenueMetricsResponse,
+} from "@/api/get-month-revenue-metrics";
 import {
   fetchRevenueByPeriod,
   RevenuePeriod,
 } from "@/api/get-monthly-revenue-by-period-metrics";
 import { Button } from "@/components/@ui/Button";
-import {
-  getMonthRevenueMetrics,
-  GetMonthRevenueMetricsResponse,
-} from "@/api/get-month-revenue-metrics";
+import { downloadFinancialReport } from "@/utils/download-financial-report";
+import { DownloadSimple } from "@phosphor-icons/react";
+import { PendingOrderList } from "./_components/PendingOrderList";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -93,44 +95,23 @@ export default function Home() {
   }
 
   async function fetchMonthlyRevenueByPeriod(period: number = 3) {
-    const data = await fetchRevenueByPeriod(3);
+    const data = await fetchRevenueByPeriod(12);
 
     setRevenueByPeriod(data);
   }
 
-  // async function handleDownloadFinancialReport() {
-  //   if (
-  //     weekNewCustomers &&
-  //     weekOrders &&
-  //     weekRevenue &&
-  //     monthRevenue &&
-  //     revenueByPeriod
-  //   ) {
-  //     const { pdf } = await import("@react-pdf/renderer");
-  //     const FinancialReportModule = await import(
-  //       "@/components/FinancialReport"
-  //     );
-  //     const FinancialReport = FinancialReportModule.default;
+  function handleDownloadFinancialReport() {
+    if (weekOrders && weekRevenue && weekNewCustomers && revenueByPeriod) {
+      downloadFinancialReport({
+        weekOrders,
+        weekRevenue,
+        weekNewCustomers,
+        revenueByPeriod,
+      });
+    }
+  }
 
-  //     const reportData = {
-  //       weekNewCustomers,
-  //       weekOrders,
-  //       weekRevenue,
-  //       monthRevenue,
-  //       revenueByPeriod,
-  //     };
-
-  //     const blob = await pdf(<FinancialReport {...reportData} />);
-
-  //     const url = URL.createObjectURL(blob);
-  //     const link = document.createElement("a");
-  //     link.href = url;
-  //     link.download = `relatorio-${new Date().toISOString().split("T")[0]}.pdf`;
-  //     link.click();
-
-  //     URL.revokeObjectURL(url);
-  //   }
-  // }
+  const currentPeriodMessage = getCurrentPeriodMessage();
 
   useEffect(() => {
     setIsLoading(true);
@@ -143,8 +124,6 @@ export default function Home() {
     setIsLoading(false);
   }, []);
 
-  const currentPeriodMessage = getCurrentPeriodMessage();
-
   return (
     <Container>
       <Header
@@ -153,6 +132,15 @@ export default function Home() {
       />
 
       <Main>
+        <Button
+          style={{ position: "absolute", right: 32, top: -22 }}
+          variant="secondary"
+          size="sm"
+          onClick={handleDownloadFinancialReport}
+        >
+          <DownloadSimple />
+          Exportar para PDF
+        </Button>
         <InfoCardContainer>
           <InfoCard
             title="Pedidos"
@@ -184,8 +172,6 @@ export default function Home() {
         </PendingOrdersContainer>
 
         <Chart monthRevenue={monthRevenue} />
-
-        {/* <Button>Baixar relatório</Button> */}
       </Main>
     </Container>
   );
