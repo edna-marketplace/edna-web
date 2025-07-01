@@ -33,7 +33,6 @@ export const Main = styled("main", {
 export const RightColumn = styled("aside", {
   backgroundColor: "$neutral100",
   paddingLeft: "$6",
-  paddingRight: "$12",
   borderRadius: "$lg",
   height: "fit-content",
   display: "flex",
@@ -42,36 +41,40 @@ export const RightColumn = styled("aside", {
 
   "@md": {
     paddingLeft: "$0",
-    paddingRight: "$16",
     marginTop: "$6",
   },
 });
 
-export const EditInfoButton = styled("button", {
-  all: "unset",
-
+export const Field = styled("div", {
   display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
-
   width: "100%",
-  padding: "$6",
+  flexDirection: "column",
 
-  background: "$base600",
-  border: "1px solid $base500",
-  borderRadius: "$md",
+  "& > div": {
+    display: "flex",
+    alignItems: "center",
+    gap: "$1",
+  },
+});
+
+export const Section = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  gap: "$3",
+
+  borderBottom: "1px solid $base500",
+  paddingBottom: "$5",
+  marginBottom: "$5",
 
   "& > div": {
     display: "flex",
     alignItems: "center",
     gap: "$4",
+    width: "100%",
   },
 
-  transition: "border-color .2s",
-
-  "&:hover": {
-    borderColor: "$base400",
-    cursor: "pointer",
+  form: {
+    display: "flex",
+    flexDirection: "column",
   },
 });

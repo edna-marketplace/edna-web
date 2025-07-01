@@ -3,12 +3,13 @@ import { Container } from "./styles";
 
 interface SpinnerProps {
   color?: string;
+  size?: number;
 }
 
-export function Spinner({ color = "#4F4C42" }: SpinnerProps) {
+export function Spinner({ size = 16, color = "#4F4C42" }: SpinnerProps) {
   return (
     <Container>
-      <CircleNotch weight="bold" color={color} />
+      <CircleNotch size={size} weight="bold" color={color} />
     </Container>
   );
 }
