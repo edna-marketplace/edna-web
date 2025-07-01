@@ -2,16 +2,16 @@ import {
   getAuthenticatedStore,
   GetAuthenticatedStoreResponse,
 } from "@/api/get-authenticated-store";
+import { updateStoreInfo } from "@/api/update-store-info";
 import { createContext, ReactNode, useState } from "react";
 
 export interface GeneralInfoData {
-  id: string;
   name: string;
   cnpj: string;
   email: string;
   phone: string;
   targetCustomer: "MALE" | "FEMALE" | "ALL";
-  description: string | null;
+  description?: string | null;
 }
 
 export interface AddressInfoData {
@@ -34,9 +34,6 @@ export interface DayScheduleData {
 interface StoreContextDataProps {
   fetchStoreInfo: () => Promise<GetAuthenticatedStoreResponse>;
   getValue: (type: string) => any;
-  updateGeneralInfo: (data: GeneralInfoData) => void;
-  updateAddress: (data: AddressInfoData) => void;
-  updateSchedule: (data: DayScheduleData[]) => void;
 }
 
 export type StoreContextProviderProps = {
@@ -70,7 +67,6 @@ export function StoreContextProvider({ children }: StoreContextProviderProps) {
     const data = await getAuthenticatedStore();
 
     setGeneralInfo({
-      id: data.id,
       name: data.name,
       cnpj: data.cnpj,
       email: data.email,
@@ -86,38 +82,11 @@ export function StoreContextProvider({ children }: StoreContextProviderProps) {
     return data;
   }
 
-  async function updateGeneralInfo(data: GeneralInfoData) {
-    // await updateGeneralStoreInfo(data)
-
-    console.log(data);
-
-    setGeneralInfo(data);
-  }
-
-  async function updateAddress(data: AddressInfoData) {
-    // await updateStoreAddress(data)
-
-    console.log(data);
-
-    setAddress(data);
-  }
-
-  async function updateSchedule(data: DayScheduleData[]) {
-    // await updateStoreSchedule(data)
-
-    console.log(data);
-
-    setSchedule(data);
-  }
-
   return (
     <StoreContext.Provider
       value={{
         fetchStoreInfo,
         getValue,
-        updateGeneralInfo,
-        updateAddress,
-        updateSchedule,
       }}
     >
       {children}

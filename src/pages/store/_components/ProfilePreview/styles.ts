@@ -8,7 +8,7 @@ export const LeftColumn = styled("section", {
   borderRight: "1px solid #E3DBBD",
   paddingRight: "$6",
 
-  "@md": {
+  "@lg": {
     borderRight: "none",
   },
 

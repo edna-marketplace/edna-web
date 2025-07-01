@@ -53,6 +53,7 @@ export const TextInput = forwardRef<ElementRef<typeof Input>, TextInputProps>(
               isPassword ? (showPassword ? "text" : "password") : props.type
             }
             step={0.01}
+            readOnly={readOnly}
             {...props}
           />
           {isPassword && (
