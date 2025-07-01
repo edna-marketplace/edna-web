@@ -15,6 +15,7 @@ export interface FileInputProps extends ComponentProps<typeof Input> {
   id?: string;
   title?: string;
   isMultiple?: boolean;
+  hasFileCounter?: boolean;
   contentSize?: "sm" | "md";
   maxFiles?: number;
   maxSizeInMB?: number;
@@ -29,6 +30,7 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
       title = "Escolher fotos",
       contentSize = "md",
       isMultiple = true,
+      hasFileCounter = false,
       css,
       maxFiles = 5,
       maxSizeInMB = 5,
@@ -83,7 +85,7 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
             <UploadSimple size={17} />
             {title}
           </Label>
-          {fileCount > 0 && (
+          {fileCount > 0 && hasFileCounter && (
             <FileCountIndicator>{fileCount}</FileCountIndicator>
           )}
           <Input

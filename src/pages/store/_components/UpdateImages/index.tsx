@@ -103,6 +103,7 @@ export function UpdateImages() {
               title="Imagem"
               contentSize="sm"
               isMultiple={false}
+              hasFileCounter
               onChange={(event) => setProfileImage(event.target.files?.[0])}
             />
             <Button
@@ -119,6 +120,12 @@ export function UpdateImages() {
               )}
             </Button>
           </div>
+          <Text
+            size="xs"
+            style={{ fontWeight: "normal", color: "var(--colors-base300)" }}
+          >
+            Recomendado: 400x400
+          </Text>
         </Field>
 
         <Field>
@@ -131,6 +138,7 @@ export function UpdateImages() {
               title="Imagem"
               contentSize="sm"
               isMultiple={false}
+              hasFileCounter
               onChange={(event) => setBannerImage(event.target.files?.[0])}
             />
             <Button
@@ -147,6 +155,12 @@ export function UpdateImages() {
               )}
             </Button>
           </div>
+          <Text
+            size="xs"
+            style={{ fontWeight: "normal", color: "var(--colors-base300)" }}
+          >
+            Recomendado: 1200x360
+          </Text>
         </Field>
       </div>
 
