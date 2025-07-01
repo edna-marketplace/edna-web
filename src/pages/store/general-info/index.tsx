@@ -24,6 +24,7 @@ import { formatCNPJ } from "@/utils/format-cnpj";
 import { formatPhoneNumber } from "@/utils/format-phone-number";
 import { updateStoreInfo } from "@/api/update-store-info";
 import { UpdateImages } from "../_components/UpdateImages";
+import { useRouter } from "next/router";
 
 const cnpjRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/;
 const phoneRegex = /^(\(\d{2}\)\s?9\s?\d{4}-\d{4}|\d{2}9\d{8})$/;
@@ -80,6 +81,8 @@ export default function GeneralInfo() {
     resolver: zodResolver(GeneralInfoSchema),
   });
 
+  const router = useRouter();
+
   async function handleUpdateGeneralInfo(data: GeneralInfoFormData) {
     try {
       await updateStoreInfo(data);
@@ -115,7 +118,11 @@ export default function GeneralInfo() {
         <ProfilePreview />
 
         <RightColumn>
-          <Button variant="tertiary" style={{ width: "fit-content" }}>
+          <Button
+            variant="tertiary"
+            style={{ width: "fit-content" }}
+            onClick={() => router.push("/store")}
+          >
             <CaretLeft weight="bold" />
             Voltar
           </Button>
@@ -220,7 +227,6 @@ export default function GeneralInfo() {
                 </Field>
 
                 <Button
-                  type="submit"
                   size="sm"
                   style={{
                     width: "fit-content",

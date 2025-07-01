@@ -27,6 +27,5 @@ export const Section = styled("div", {
   form: {
     display: "flex",
     flexDirection: "column",
-    gap: "$4",
   },
 });

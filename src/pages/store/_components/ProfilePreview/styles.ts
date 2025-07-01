@@ -4,7 +4,7 @@ import Image from "next/image";
 export const LeftColumn = styled("section", {
   display: "flex",
   flexDirection: "column",
-  gap: "$6",
+  gap: "$4",
   borderRight: "1px solid #E3DBBD",
   paddingRight: "$6",
 
