@@ -64,6 +64,7 @@ export default function RegisterAddress() {
     handleSubmit,
     watch,
     setValue,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<RegisterAddressFormData>({
     resolver: zodResolver(RegisterAddressSchema),
@@ -79,9 +80,25 @@ export default function RegisterAddress() {
     if (formattedCepValue && formattedCepValue.length === 8) {
       const data = await getViaCep(cepValue);
 
-      setValue("street", data.logradouro, { shouldValidate: true });
-      setValue("neighborhood", data.bairro, { shouldValidate: true });
-      setValue("city", data.localidade, { shouldValidate: true });
+      if (data.logradouro && data.bairro && data.localidade) {
+        setValue("street", data.logradouro, { shouldValidate: true });
+        setValue("neighborhood", data.bairro, { shouldValidate: true });
+        setValue("city", data.localidade, { shouldValidate: true });
+      } else {
+        setValue("street", "");
+        setValue("neighborhood", "");
+        setValue("city", "");
+
+        setError("street", {
+          message: "CEP não encontrado - Rua é obrigatória",
+        });
+        setError("neighborhood", {
+          message: "CEP não encontrado - Bairro é obrigatório",
+        });
+        setError("city", {
+          message: "CEP não encontrado - Cidade é obrigatória",
+        });
+      }
     }
   }
 
@@ -197,7 +214,10 @@ export default function RegisterAddress() {
           >
             Voltar
           </Button>
-          <Button disabled={isSubmitting} type="submit">
+          <Button
+            disabled={isSubmitting || Object.keys(errors).length > 0}
+            type="submit"
+          >
             {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
           </Button>
         </ButtonContainer>
