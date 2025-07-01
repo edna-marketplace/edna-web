@@ -36,7 +36,6 @@ export const RightColumn = styled("aside", {
   paddingRight: "$12",
   borderRadius: "$lg",
   height: "fit-content",
-  boxShadow: "0 0 0 1px $colors$border",
   display: "flex",
   flexDirection: "column",
   gap: "$4",

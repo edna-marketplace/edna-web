@@ -6,6 +6,8 @@ export const FileInputContainer = styled("div", {
   boxSizing: "border-box",
   border: "1px solid $base500",
 
+  position: "relative",
+
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -77,6 +79,27 @@ export const Label = styled("label", {
   defaultVariants: {
     size: "md",
   },
+});
+
+export const FileCountIndicator = styled("div", {
+  position: "absolute",
+  top: "-6px",
+  left: "-6px",
+
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+
+  backgroundColor: "$base500",
+  color: "$base100",
+  borderRadius: "50%",
+
+  width: "20px",
+  height: "20px",
+
+  fontSize: "$xs",
+  fontWeight: "bold",
+  zIndex: 1,
 });
 
 export const ErrorContainer = styled("div", {

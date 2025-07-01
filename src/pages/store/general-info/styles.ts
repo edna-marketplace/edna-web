@@ -24,7 +24,7 @@ export const Main = styled("main", {
     padding: "$10 $12",
   },
 
-  "@lg": {
+  "@md": {
     gridTemplateColumns: "1fr",
     padding: "64px $4 $8 $12",
   },
@@ -33,15 +33,14 @@ export const Main = styled("main", {
 export const RightColumn = styled("aside", {
   backgroundColor: "$neutral100",
   paddingLeft: "$6",
+  borderRadius: "$lg",
   height: "fit-content",
   display: "flex",
   flexDirection: "column",
   gap: "$4",
-  width: "100%",
 
-  "@lg": {
+  "@md": {
     paddingLeft: "$0",
-    paddingRight: "$16",
     marginTop: "$6",
   },
 });

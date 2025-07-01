@@ -1,4 +1,4 @@
-import { ComponentProps, ElementRef, forwardRef } from "react";
+import { ComponentProps, ElementRef, forwardRef, useState } from "react";
 import { toast } from "sonner";
 import {
   ErrorContainer,
@@ -7,11 +7,14 @@ import {
   FileInputContainer,
   Input,
   Label,
+  FileCountIndicator,
 } from "./styles";
 import { UploadSimple } from "@phosphor-icons/react/dist/ssr";
 
 export interface FileInputProps extends ComponentProps<typeof Input> {
+  id?: string;
   title?: string;
+  isMultiple?: boolean;
   contentSize?: "sm" | "md";
   maxFiles?: number;
   maxSizeInMB?: number;
@@ -22,8 +25,10 @@ export interface FileInputProps extends ComponentProps<typeof Input> {
 export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
   (
     {
+      id,
       title = "Escolher fotos",
       contentSize = "md",
+      isMultiple = true,
       css,
       maxFiles = 5,
       maxSizeInMB = 5,
@@ -35,15 +40,18 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
     }: FileInputProps,
     ref
   ) => {
+    const [fileCount, setFileCount] = useState(0);
     const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
 
+      setFileCount(files ? files.length : 0);
+
       if (files && files.length > maxFiles) {
         toast.error(`Você pode adicionar no máximo ${maxFiles} imagens.`);
-
         event.target.value = "";
+        setFileCount(0);
         return;
       }
 
@@ -53,8 +61,8 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
             toast.error(
               `A imagem "${files[i].name}" excedeu o limite de ${maxSizeInMB}MB.`
             );
-
             event.target.value = "";
+            setFileCount(0);
             return;
           }
         }
@@ -65,18 +73,24 @@ export const FileInput = forwardRef<ElementRef<typeof Input>, FileInputProps>(
       }
     };
 
+    const inputId =
+      id || `file-input-${Math.random().toString(36).substr(2, 9)}`;
+
     return (
       <>
         <FileInputContainer css={css} hasError={!!errorMessage}>
-          <Label size={contentSize} htmlFor="file-input">
+          <Label size={contentSize} htmlFor={inputId}>
             <UploadSimple size={17} />
             {title}
           </Label>
+          {fileCount > 0 && (
+            <FileCountIndicator>{fileCount}</FileCountIndicator>
+          )}
           <Input
-            id="file-input"
+            id={inputId}
             ref={ref}
             type="file"
-            multiple
+            multiple={isMultiple}
             accept=".jpeg,.jpg,.png"
             onChange={handleFileChange}
             style={{ display: "none" }}

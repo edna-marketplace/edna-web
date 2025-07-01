@@ -27,11 +27,11 @@ export default function Store() {
         <RightColumn>
           <EditInfoButton onClick={() => router.push("/store/general-info")}>
             <div>
-              <IdentificationCard size={32} color="#4F4C42" />
+              <IdentificationCard size={28} color="#4F4C42" />
 
               <div>
                 <Title size="sm">Informações gerais</Title>
-                <Text size="sm">Nome, email, telefone e imagens</Text>
+                <Text size="sm">Informações da loja, imagens e senha</Text>
               </div>
             </div>
 
@@ -40,7 +40,7 @@ export default function Store() {
 
           <EditInfoButton onClick={() => router.push("/store/address")}>
             <div>
-              <MapPin size={32} color="#4F4C42" />
+              <MapPin size={28} color="#4F4C42" />
 
               <div>
                 <Title size="sm">Endereço</Title>
@@ -53,7 +53,7 @@ export default function Store() {
 
           <EditInfoButton onClick={() => router.push("/store/schedule")}>
             <div>
-              <Clock size={32} color="#4F4C42" />
+              <Clock size={28} color="#4F4C42" />
 
               <div>
                 <Title size="sm">Horário de atendimento</Title>

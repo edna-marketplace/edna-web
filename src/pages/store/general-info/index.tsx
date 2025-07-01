@@ -23,6 +23,7 @@ import { toast } from "sonner";
 import { formatCNPJ } from "@/utils/format-cnpj";
 import { formatPhoneNumber } from "@/utils/format-phone-number";
 import { updateStoreInfo } from "@/api/update-store-info";
+import { UpdateImages } from "../_components/UpdateImages";
 
 const cnpjRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/;
 const phoneRegex = /^(\(\d{2}\)\s?9\s?\d{4}-\d{4}|\d{2}9\d{8})$/;
@@ -94,7 +95,7 @@ export default function GeneralInfo() {
 
       toast.error("Erro ao atualizar informações!", {
         description:
-          "Não foi possível registrar o brechó, tente novamente mais tarde.",
+          "Não foi possível atualizar as informações, tente novamente mais tarde.",
       });
     }
   }
@@ -120,35 +121,7 @@ export default function GeneralInfo() {
           </Button>
 
           <Card>
-            <Section>
-              <Title size="sm">Imagens</Title>
-
-              <div>
-                <Field>
-                  <Text type="label" size="sm">
-                    Perfil
-                  </Text>
-                  <div>
-                    <FileInput title="Imagem" contentSize="sm" />
-                    <Button size="sm">
-                      <ArrowsClockwise weight="bold" />
-                    </Button>
-                  </div>
-                </Field>
-
-                <Field>
-                  <Text type="label" size="sm">
-                    Banner
-                  </Text>
-                  <div>
-                    <FileInput title="Imagem" contentSize="sm" />
-                    <Button size="sm">
-                      <ArrowsClockwise weight="bold" />
-                    </Button>
-                  </div>
-                </Field>
-              </div>
-            </Section>
+            <UpdateImages />
 
             <Section>
               <Title size="sm">Informações do brechó</Title>
