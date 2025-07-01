@@ -38,7 +38,7 @@ export default function Store() {
             <CaretRight size={30} color="#4F4C42" />
           </EditInfoButton>
 
-          <EditInfoButton onClick={() => router.push("/store/address")}>
+          <EditInfoButton onClick={() => router.push("/store/address-info")}>
             <div>
               <MapPin size={28} color="#4F4C42" />
 
@@ -51,7 +51,7 @@ export default function Store() {
             <CaretRight size={30} color="#4F4C42" />
           </EditInfoButton>
 
-          <EditInfoButton onClick={() => router.push("/store/schedule")}>
+          <EditInfoButton onClick={() => router.push("/store/schedule-info")}>
             <div>
               <Clock size={28} color="#4F4C42" />
 
