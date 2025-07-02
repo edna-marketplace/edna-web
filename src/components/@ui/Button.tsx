@@ -67,7 +67,7 @@ export const Button = styled("button", {
       },
 
       destructive: {
-        color: "$red400",
+        color: "red",
         background: "$red600",
 
         fontWeight: "$bold",

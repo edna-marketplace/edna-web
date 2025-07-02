@@ -35,7 +35,7 @@ export const RightColumn = styled("aside", {
   paddingLeft: "$6",
   paddingRight: "$12",
   borderRadius: "$lg",
-  height: "fit-content",
+  height: "100%",
   display: "flex",
   flexDirection: "column",
   gap: "$4",
@@ -72,6 +72,37 @@ export const EditInfoButton = styled("button", {
 
   "&:hover": {
     borderColor: "$base400",
+    cursor: "pointer",
+  },
+});
+
+export const DeactivateAccountButton = styled("button", {
+  all: "unset",
+
+  marginTop: "auto",
+
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+
+  width: "100%",
+  padding: "$6",
+
+  background: "$red600",
+  border: "1px solid $red400",
+  borderRadius: "$md",
+
+  "& > div": {
+    display: "flex",
+    alignItems: "center",
+    gap: "$4",
+  },
+
+  transition: "border-color .2s",
+
+  "&:hover": {
+    borderColor: "red",
     cursor: "pointer",
   },
 });

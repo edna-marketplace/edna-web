@@ -6,13 +6,58 @@ import {
   Clock,
   IdentificationCard,
   MapPin,
+  Skull,
 } from "@phosphor-icons/react";
-import { ProfilePreview } from "./_components/ProfilePreview";
-import { Container, EditInfoButton, Main, RightColumn } from "./styles";
 import { useRouter } from "next/router";
+import { ProfilePreview } from "./_components/ProfilePreview";
+import {
+  Container,
+  DeactivateAccountButton,
+  EditInfoButton,
+  Main,
+  RightColumn,
+} from "./styles";
+import Swal from "sweetalert2";
+import { destroyCookie } from "nookies";
+import { toast } from "sonner";
+import { deleteStore } from "@/api/deactivate-store";
 
 export default function Store() {
   const router = useRouter();
+
+  async function handleDeactivateAccount() {
+    try {
+      Swal.fire({
+        title: "Desativar conta!",
+        icon: "warning",
+        text: "Você não poderá recuparar sua conta. Pagamentos pendentes no Stripe ainda serão repassados.",
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Sim, desejo desativar.",
+        confirmButtonColor: "red",
+        cancelButtonText: "Não",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await deleteStore();
+
+          toast.success("Conta desativada com sucesso.");
+          destroyCookie(null, "@edna:auth-token");
+          router.push("/signin");
+        }
+      });
+    } catch (error: any) {
+      if (error.response.data.message) {
+        toast.error("Erro ao desativar conta!", {
+          description: error.response.data.message,
+        });
+        return;
+      }
+      toast.error("Erro ao desativar conta!", {
+        description:
+          "Não foi possível desativar a conta, tente novamente mais tarde.",
+      });
+    }
+  }
 
   return (
     <Container>
@@ -63,6 +108,23 @@ export default function Store() {
 
             <CaretRight size={30} color="#4F4C42" />
           </EditInfoButton>
+
+          <DeactivateAccountButton onClick={handleDeactivateAccount}>
+            <div>
+              <Skull size={28} color="red" />
+
+              <div>
+                <Title size="sm" style={{ color: "red" }}>
+                  Desativar conta
+                </Title>
+                <Text size="sm" style={{ color: "red" }}>
+                  Ao fazer isso você não poderá recuperar sua conta
+                </Text>
+              </div>
+            </div>
+
+            <CaretRight size={30} color="red" />
+          </DeactivateAccountButton>
         </RightColumn>
       </Main>
     </Container>
