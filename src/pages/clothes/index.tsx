@@ -23,6 +23,7 @@ import {
 } from "./styles";
 import { FilterForm } from "./_components/FilterForm";
 import { Pagination } from "@/components/Pagination";
+import { Spinner } from "@/components/Spinner";
 
 export const FilterFormSchema = z.object({
   name: z.string().optional(),
@@ -34,6 +35,7 @@ export const FilterFormSchema = z.object({
 export type FilterFormData = z.infer<typeof FilterFormSchema>;
 
 export default function Clothes() {
+  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>();
   const [clothes, setClothes] = useState<ClotheSummary[]>([]);
@@ -79,7 +81,9 @@ export default function Clothes() {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     handleFetchClothesWithFilter({});
+    setIsLoading(false);
   }, [currentPage]);
 
   return (
@@ -109,7 +113,18 @@ export default function Clothes() {
           </NewClotheContainer>
         </form>
 
-        {clothes.length > 0 ? (
+        {isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              flex: "1",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Spinner size={30} />
+          </div>
+        ) : clothes.length > 0 ? (
           <ClothesContainer>
             {clothes.map((clothe) => (
               <ClotheItem
