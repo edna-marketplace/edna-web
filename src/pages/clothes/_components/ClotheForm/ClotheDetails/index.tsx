@@ -1,18 +1,29 @@
-import { Control, Controller, FieldErrors, UseFormRegister, UseFormWatch } from "react-hook-form"
-import { ClotheFormData } from ".."
-import { InputContainer, Separator } from "../styles"
-import { Text } from "@/components/@ui/Text"
-import { SelectInput } from "@/components/@ui/SelectInput"
-import { brands, categories, genders, sizes } from "@/utils/enums"
-import { SelectItem } from "@/components/@ui/SelectItem"
-import { TextInput } from "@/components/@ui/TextInput"
-import { brandDisplayNames, categoryDisplayNames, genderDisplayNames, sizeDisplayNames } from "@/utils/select-input-mapper"
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormRegister,
+  UseFormWatch,
+} from "react-hook-form";
+import { ClotheFormData } from "..";
+import { InputContainer, Separator } from "../styles";
+import { Text } from "@/components/@ui/Text";
+import { SelectInput } from "@/components/@ui/SelectInput";
+import { brands, categories, genders, sizes } from "@/utils/enums";
+import { SelectItem } from "@/components/@ui/SelectItem";
+import { TextInput } from "@/components/@ui/TextInput";
+import {
+  brandDisplayNames,
+  categoryDisplayNames,
+  genderDisplayNames,
+  sizeDisplayNames,
+} from "@/utils/select-input-mapper";
 
 export interface ProductDetailsProps {
-  register: UseFormRegister<ClotheFormData>
-  errors: FieldErrors<ClotheFormData>
-  control: Control<ClotheFormData>
-  watch: UseFormWatch<ClotheFormData>
+  register: UseFormRegister<ClotheFormData>;
+  errors: FieldErrors<ClotheFormData>;
+  control: Control<ClotheFormData>;
+  watch: UseFormWatch<ClotheFormData>;
 }
 
 export function ProductDetails({
@@ -21,32 +32,33 @@ export function ProductDetails({
   control,
   watch,
 }: ProductDetailsProps) {
-  const brandField = watch('brand')
-  const sizeField = watch('size')
+  const categoryField = watch("category");
+  const brandField = watch("brand");
+  const sizeField = watch("size");
 
   return (
     <>
       <div>
         <InputContainer>
-          <Text type="label">Categoria</Text>
+          <Text type="label">Categoria*</Text>
           <Controller
             name="category"
             control={control}
             render={({ field }) => (
               <SelectInput
                 onValueChange={field.onChange}
-                placeholder={'Categoria'}
+                placeholder={"Categoria"}
                 errorMessage={errors.category?.message}
                 hasErrorPlaceholder
                 {...field}
               >
                 {categories.map((category) => {
-                  if (category !== 'ALL') {
+                  if (category !== "ALL") {
                     return (
                       <SelectItem key={category} value={category}>
                         {categoryDisplayNames[category]}
                       </SelectItem>
-                    )
+                    );
                   }
                 })}
               </SelectInput>
@@ -55,7 +67,7 @@ export function ProductDetails({
         </InputContainer>
 
         <InputContainer>
-          <Text type="label">Gênero</Text>
+          <Text type="label">Gênero*</Text>
           <Controller
             name="gender"
             control={control}
@@ -78,9 +90,24 @@ export function ProductDetails({
         </InputContainer>
       </div>
 
+      {categoryField === "OTHER" && (
+        <InputContainer css={{ width: "49%", marginBottom: "$4" }}>
+          <Text
+            type="label"
+            style={{ alignSelf: "start", marginBottom: "-8px" }}
+          >
+            Categoria (Outra)
+          </Text>
+          <TextInput
+            placeholder="Categoria (Outra)"
+            {...register("categoryOther")}
+          />
+        </InputContainer>
+      )}
+
       <div>
         <InputContainer>
-          <Text type="label">Marca</Text>
+          <Text type="label">Marca*</Text>
           <Controller
             name="brand"
             control={control}
@@ -89,16 +116,16 @@ export function ProductDetails({
                 value={field.value}
                 onValueChange={field.onChange}
                 placeholder="Marca"
-                errorMessage={errors.category?.message}
+                errorMessage={errors.brand?.message}
                 hasErrorPlaceholder
               >
                 {brands.map((brand) => {
-                  if (brand !== 'ALL') {
+                  if (brand !== "ALL") {
                     return (
                       <SelectItem key={brand} value={brand}>
                         {brandDisplayNames[brand]}
                       </SelectItem>
-                    )
+                    );
                   }
                 })}
               </SelectInput>
@@ -107,7 +134,7 @@ export function ProductDetails({
         </InputContainer>
 
         <InputContainer>
-          <Text type="label">Tamanho</Text>
+          <Text type="label">Tamanho*</Text>
           <Controller
             name="size"
             control={control}
@@ -116,16 +143,16 @@ export function ProductDetails({
                 value={field.value}
                 onValueChange={field.onChange}
                 placeholder="Tamanho"
-                errorMessage={errors.category?.message}
+                errorMessage={errors.size?.message}
                 hasErrorPlaceholder
               >
                 {sizes.map((size) => {
-                  if (size !== 'ALL') {
+                  if (size !== "ALL") {
                     return (
                       <SelectItem key={size} value={size}>
                         {sizeDisplayNames[size]}
                       </SelectItem>
-                    )
+                    );
                   }
                 })}
               </SelectInput>
@@ -135,23 +162,23 @@ export function ProductDetails({
       </div>
 
       <div>
-        {brandField === 'OTHER' && (
-          <InputContainer css={{ width: '49%', marginBottom: '$4' }}>
+        {brandField === "OTHER" && (
+          <InputContainer css={{ width: "49%", marginBottom: "$4" }}>
             <Text type="label">Marca (Outro)</Text>
             <TextInput
               placeholder="Marca (Outra)"
-              {...register('brandOther')}
+              {...register("brandOther")}
             />
           </InputContainer>
         )}
-        {sizeField === 'OTHER' && (
+        {sizeField === "OTHER" && (
           <InputContainer
-            css={{ width: '49%', marginLeft: 'auto', marginBottom: '$4' }}
+            css={{ width: "49%", marginLeft: "auto", marginBottom: "$4" }}
           >
             <Text type="label">Tamanho (Outro)</Text>
             <TextInput
               placeholder="Tamanho (Outro)"
-              {...register('sizeOther')}
+              {...register("sizeOther")}
             />
           </InputContainer>
         )}
@@ -161,25 +188,25 @@ export function ProductDetails({
 
       <div>
         <InputContainer>
-          <Text type="label">Tecido</Text>
+          <Text type="label">Tecido*</Text>
           <TextInput
             placeholder="Tecido"
             errorMessage={errors.fabric?.message}
             hasErrorPlaceholder
-            {...register('fabric')}
+            {...register("fabric")}
           />
         </InputContainer>
 
         <InputContainer>
-          <Text type="label">Cor</Text>
+          <Text type="label">Cor*</Text>
           <TextInput
             placeholder="Cor"
             errorMessage={errors.color?.message}
             hasErrorPlaceholder
-            {...register('color')}
+            {...register("color")}
           />
         </InputContainer>
       </div>
     </>
-  )
+  );
 }
