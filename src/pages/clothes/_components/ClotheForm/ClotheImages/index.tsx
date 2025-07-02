@@ -1,5 +1,5 @@
-import { Control, Controller, FieldErrors } from "react-hook-form"
-import { ClotheFormData } from ".."
+import { Control, Controller, FieldErrors } from "react-hook-form";
+import { ClotheFormData } from "..";
 import { InputContainer, Section } from "../styles";
 import { FileInput } from "@/components/@ui/FileInput";
 import { Text } from "@/components/@ui/Text";
@@ -8,13 +8,13 @@ import { TipContainer } from "./styles";
 import { Lightbulb } from "@phosphor-icons/react";
 
 export interface ClotheImagesProps {
-  imagePreviews: string[]
-  existingImages: { id: string; url: string }[]
-  imagesField: File[]
-  handleRemoveImage: (name: string) => void
-  handleRemoveExistingImage: (id: string) => void
-  control: Control<ClotheFormData>
-  errors: FieldErrors<ClotheFormData>
+  imagePreviews: string[];
+  existingImages: { id: string; url: string }[];
+  imagesField: File[];
+  handleRemoveImage: (name: string) => void;
+  handleRemoveExistingImage: (id: string) => void;
+  control: Control<ClotheFormData>;
+  errors: FieldErrors<ClotheFormData>;
 }
 
 export function ClotheImages({
@@ -28,8 +28,8 @@ export function ClotheImages({
 }: ClotheImagesProps) {
   return (
     <>
-      <div style={{ marginTop: '32px' }}>
-        <InputContainer css={{ maxWidth: '200px' }}>
+      <div style={{ marginTop: "32px" }}>
+        <InputContainer css={{ maxWidth: "200px" }}>
           <Controller
             name="images"
             control={control}
@@ -42,8 +42,8 @@ export function ClotheImages({
                 onChange={(event) => {
                   const files = event.target.files
                     ? Array.from(event.target.files)
-                    : []
-                  field.onChange(files)
+                    : [];
+                  field.onChange(files);
                 }}
               />
             )}
@@ -52,9 +52,9 @@ export function ClotheImages({
 
         <Text
           css={{
-            maxWidth: '400px',
-            minWidth: '190px',
-            marginBottom: '1.5rem',
+            maxWidth: "400px",
+            minWidth: "190px",
+            marginBottom: "1.5rem",
           }}
           size="xs"
         >
@@ -63,15 +63,16 @@ export function ClotheImages({
         </Text>
       </div>
 
-      <Section css={{ minHeight: '140px' }}>
+      <Section css={{ minHeight: "140px" }}>
         {imagePreviews.length > 0 || existingImages.length > 0 ? (
           <>
-            {existingImages.map((image) => (
+            {existingImages.map((image, index) => (
               <ImagePreviewItem
                 key={image.id}
                 name={image.id}
                 src={image.url}
                 onRemove={() => handleRemoveExistingImage(image.id)}
+                isCover={index === 0}
               />
             ))}
             {imagesField.map((file, i) => (
@@ -80,6 +81,7 @@ export function ClotheImages({
                 name={file.name}
                 src={imagePreviews[i]}
                 onRemove={handleRemoveImage}
+                isCover={i === 0 && existingImages.length === 0}
               />
             ))}
           </>
@@ -92,9 +94,9 @@ export function ClotheImages({
       <TipContainer>
         <Lightbulb weight="bold" />
         <Text size="xs">
-          Recomendamos que a primeira foto da peça seja no corpo
+          Recomendamos que a foto capa seja da peça no corpo
         </Text>
       </TipContainer>
     </>
-  )
+  );
 }

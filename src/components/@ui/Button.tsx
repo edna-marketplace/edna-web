@@ -8,7 +8,7 @@ export const Button = styled("button", {
   fontWeight: "$regular",
   fontFamily: "$default",
   textAlign: "center",
-  minWidth: 56,
+  // minWidth: 56,
   boxSizing: "border-box",
   padding: "$4 $4",
 
