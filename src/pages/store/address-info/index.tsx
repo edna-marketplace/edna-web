@@ -6,7 +6,7 @@ import { Text } from "@/components/@ui/Text";
 import { TextArea } from "@/components/@ui/TextArea";
 import { TextInput } from "@/components/@ui/TextInput";
 import { Title } from "@/components/@ui/Title";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header";
 import { Spinner } from "@/components/Spinner";
 import { AddressInfoData } from "@/contexts/StoreContext";
 import { useStore } from "@/hooks/use-store";

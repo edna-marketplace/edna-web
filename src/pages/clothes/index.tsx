@@ -5,7 +5,7 @@ import {
 import { Button } from "@/components/@ui/Button";
 import { Text } from "@/components/@ui/Text";
 import { Title } from "@/components/@ui/Title";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header";
 import { brands, categories, sizes } from "@/utils/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "@phosphor-icons/react";

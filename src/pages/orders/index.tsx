@@ -1,6 +1,6 @@
 import { SpecialTitle } from "@/components/@ui/SpecialTitle";
 import { Container, Main } from "../../styles/orders/styles";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header";
 
 export default function Orders() {
   return (

@@ -1,6 +1,6 @@
 import { Text } from "@/components/@ui/Text";
 import { Title } from "@/components/@ui/Title";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header";
 import {
   CaretRight,
   Clock,

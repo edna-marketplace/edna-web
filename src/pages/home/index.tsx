@@ -1,4 +1,4 @@
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header";
 import { getCurrentPeriodMessage } from "@/utils/get-current-period-message";
 import { useEffect, useState } from "react";
 import { Chart } from "../../components/Chart";

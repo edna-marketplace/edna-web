@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import { Container, Main } from "../../../styles/clothes/id/styles";
 
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header";
 import { useEffect, useState } from "react";
 import { Clothe } from "@/api/create-clothe";
 import { getClotheById } from "@/api/get-clothe-by-id";

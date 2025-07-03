@@ -5,7 +5,7 @@ import { SelectItem } from "@/components/@ui/SelectItem";
 import { Text } from "@/components/@ui/Text";
 import { TextInput } from "@/components/@ui/TextInput";
 import { Title } from "@/components/@ui/Title";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header";
 import { ArrowsClockwise, CaretLeft } from "@phosphor-icons/react";
 import { Controller, useForm } from "react-hook-form";
 import { ProfilePreview } from "../../../components/ProfilePreview";
