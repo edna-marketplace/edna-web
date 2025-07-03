@@ -143,7 +143,7 @@ export default function Clothes() {
           onPageChange={handlePaginate}
           pageIndex={currentPage}
           perPage={10}
-          totalCount={totalCount ? totalCount : 1}
+          totalCount={totalCount ? totalCount : 0}
         />
       </Main>
     </Container>
