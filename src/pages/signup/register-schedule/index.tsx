@@ -1,8 +1,17 @@
-import { AlreadyHaveAccountContainer, ButtonContainer, Container, FormError, FormTitle, IntervalDay, IntervalInputs, IntervalItem, RegisterScheduleForm } from "./styles";
+import {
+  AlreadyHaveAccountContainer,
+  ButtonContainer,
+  Container,
+  FormError,
+  FormTitle,
+  IntervalDay,
+  IntervalInputs,
+  IntervalItem,
+  RegisterScheduleForm,
+} from "./styles";
 
 import { Button } from "@/components/@ui/Button";
 import { Text } from "@/components/@ui/Text";
-
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -16,6 +25,10 @@ import { Checkbox } from "@/components/@ui/Checkbox";
 import { TextInput } from "@/components/@ui/TextInput";
 import { useIsMobile } from "@/hooks/use-is-mobile";
 import { useSignUp } from "@/hooks/use-signup";
+import { DayScheduleInfo } from "@/api/sign-up";
+import { useEffect } from "react";
+import { convertMinutesToTimeString } from "@/utils/convert-minutes-to-time-string";
+import { Spinner } from "@/components/Spinner";
 
 const registerScheduleFormSchema = z.object({
   intervals: z
@@ -25,12 +38,16 @@ const registerScheduleFormSchema = z.object({
         enabled: z.boolean(),
         startTime: z.string(),
         endTime: z.string(),
-      }),
+      })
     )
     .length(7)
-    .refine((intervals) => intervals.filter((interval) => interval.enabled).length > 0, {
-      message: 'Você precisa selecionar pelo menos um dia da semana',
-    })
+    .refine(
+      (intervals) =>
+        intervals.filter((interval) => interval.enabled).length > 0,
+      {
+        message: "Você precisa selecionar pelo menos um dia da semana",
+      }
+    )
     .transform((intervals) => {
       return intervals.map((interval) => {
         return {
@@ -38,57 +55,73 @@ const registerScheduleFormSchema = z.object({
           enabled: interval.enabled,
           openingTimeInMinutes: convertTimeStringToMinutes(interval.startTime),
           closingTimeInMinutes: convertTimeStringToMinutes(interval.endTime),
-        }
-      })
+        };
+      });
     })
     .refine(
       (intervals) => {
         return intervals.every(
           (interval) =>
-            interval.closingTimeInMinutes - 60 >= interval.openingTimeInMinutes,
-        )
+            interval.closingTimeInMinutes - 60 >= interval.openingTimeInMinutes
+        );
       },
       {
         message:
-          'O horário de término deve ter pelo menos 1 hora a mais que o de início',
-      },
+          "O horário de término deve ter pelo menos 1 hora a mais que o de início",
+      }
     ),
-})
+});
 
-type RegisterScheduleFormOutput = z.output<typeof registerScheduleFormSchema>
+type RegisterScheduleFormOutput = z.output<typeof registerScheduleFormSchema>;
 
 export default function RegisterSchedule() {
+  const { registerSchedule, getValue } = useSignUp();
+
+  function getInputValues() {
+    const data = getValue("scheduleInfo") as DayScheduleInfo[];
+
+    if (data && data.length > 0) {
+      const formattedIntervals = data.map((interval) => ({
+        dayOfWeek: interval.dayOfWeek,
+        enabled: interval.enabled,
+        startTime: convertMinutesToTimeString(interval.openingTimeInMinutes),
+        endTime: convertMinutesToTimeString(interval.closingTimeInMinutes),
+      }));
+
+      setValue("intervals", formattedIntervals, { shouldValidate: true });
+    }
+  }
+
   const {
     register,
     handleSubmit,
     control,
     watch,
+    setValue,
     formState: { isSubmitting, errors },
   } = useForm<any>({
     resolver: zodResolver(registerScheduleFormSchema),
     defaultValues: {
       intervals: [
-        { dayOfWeek: 0, enabled: false, startTime: '09:00', endTime: '18:00' },
-        { dayOfWeek: 1, enabled: true, startTime: '09:00', endTime: '18:00' },
-        { dayOfWeek: 2, enabled: true, startTime: '09:00', endTime: '18:00' },
-        { dayOfWeek: 3, enabled: true, startTime: '09:00', endTime: '18:00' },
-        { dayOfWeek: 4, enabled: true, startTime: '09:00', endTime: '18:00' },
-        { dayOfWeek: 5, enabled: true, startTime: '09:00', endTime: '18:00' },
-        { dayOfWeek: 6, enabled: false, startTime: '09:00', endTime: '18:00' },
+        { dayOfWeek: 0, enabled: false, startTime: "09:00", endTime: "18:00" },
+        { dayOfWeek: 1, enabled: true, startTime: "09:00", endTime: "18:00" },
+        { dayOfWeek: 2, enabled: true, startTime: "09:00", endTime: "18:00" },
+        { dayOfWeek: 3, enabled: true, startTime: "09:00", endTime: "18:00" },
+        { dayOfWeek: 4, enabled: true, startTime: "09:00", endTime: "18:00" },
+        { dayOfWeek: 5, enabled: true, startTime: "09:00", endTime: "18:00" },
+        { dayOfWeek: 6, enabled: false, startTime: "09:00", endTime: "18:00" },
       ],
     },
-  })
-
-  const { registerSchedule } = useSignUp()
+  });
 
   const { fields } = useFieldArray({
     control,
-    name: 'intervals',
-  })
+    name: "intervals",
+  });
 
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
-  const router = useRouter()
+  const router = useRouter();
 
   async function handleContinue(data: any) {
     try {
@@ -96,24 +129,28 @@ export default function RegisterSchedule() {
 
       registerSchedule(intervals);
 
-      router.push('/signup/register-password')
+      router.push("/signup/register-password");
     } catch (error: any) {
       toast.error(JSON.stringify(error.response.data));
     }
   }
 
-  const dayOfWeeks = getWeekDays({ short: isMobile })
+  const dayOfWeeks = getWeekDays({ short: isMobile });
 
-  const intervals = watch('intervals')
+  const intervals = watch("intervals");
+
+  useEffect(() => {
+    getInputValues();
+  }, []);
 
   return (
     <Container>
       <RegisterScheduleForm onSubmit={handleSubmit(handleContinue)}>
-        <FormTitle style={{ alignSelf: 'flex-start' }}>
+        <FormTitle style={{ alignSelf: "flex-start" }}>
           Horário de atendimento
         </FormTitle>
 
-        <div style={{ width: '100%', marginBottom: '16px' }}>
+        <div style={{ width: "100%", marginBottom: "16px" }}>
           {fields.map((field, index) => {
             return (
               <IntervalItem key={field.id}>
@@ -125,15 +162,17 @@ export default function RegisterSchedule() {
                       return (
                         <Checkbox
                           onCheckedChange={(checked) => {
-                            field.onChange(checked === true)
+                            field.onChange(checked === true);
                           }}
                           checked={field.value}
                         />
-                      )
+                      );
                     }}
                   />
                   {/* @ts-ignore */}
-                  <Text size={isMobile ? "sm" : "md"}>{dayOfWeeks[field.dayOfWeek]}</Text>
+                  <Text size={isMobile ? "sm" : "md"}>
+                    {dayOfWeeks[(field as any).dayOfWeek]}
+                  </Text>
                 </IntervalDay>
                 <IntervalInputs>
                   <TextInput
@@ -150,7 +189,7 @@ export default function RegisterSchedule() {
                   />
                 </IntervalInputs>
               </IntervalItem>
-            )
+            );
           })}
         </div>
 
@@ -162,20 +201,28 @@ export default function RegisterSchedule() {
         )}
 
         <ButtonContainer>
-          <Button type="button" variant="tertiary" onClick={() => router.back()} disabled={isSubmitting}>
+          <Button
+            type="button"
+            variant="tertiary"
+            onClick={() => router.back()}
+            disabled={isSubmitting}
+          >
             Voltar
           </Button>
-          <Button disabled={isSubmitting} type='submit'>
-            Continuar
+          <Button disabled={isSubmitting} type="submit">
+            {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
           </Button>
         </ButtonContainer>
       </RegisterScheduleForm>
 
       <AlreadyHaveAccountContainer>
-        <Text size="sm">
-          Já possui uma conta?
-        </Text>
-        <Button type="button" variant="tertiary" onClick={() => router.push('/signin')} disabled={isSubmitting}>
+        <Text size="sm">Já possui uma conta?</Text>
+        <Button
+          type="button"
+          variant="tertiary"
+          onClick={() => router.push("/signin")}
+          disabled={isSubmitting}
+        >
           <Text size="sm" weight="bold">
             Entrar
           </Text>

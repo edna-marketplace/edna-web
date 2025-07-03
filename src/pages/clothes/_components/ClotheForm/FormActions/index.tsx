@@ -1,13 +1,14 @@
-import { Clothe } from "@/api/create-clothe"
-import { ButtonContainer } from "./styles"
-import { Button } from "@/components/@ui/Button"
-import { ArrowsClockwise, Check, Trash } from "@phosphor-icons/react"
+import { Clothe } from "@/api/create-clothe";
+import { ButtonContainer } from "./styles";
+import { Button } from "@/components/@ui/Button";
+import { ArrowsClockwise, Check, Trash } from "@phosphor-icons/react";
+import { Spinner } from "@/components/Spinner";
 
 export interface FormActionsProps {
-  clothe: Clothe | undefined
-  isSubmitting: boolean
-  handleGoBack: () => void
-  handleDeleteClothe: () => void
+  clothe: Clothe | undefined;
+  isSubmitting: boolean;
+  handleGoBack: () => void;
+  handleDeleteClothe: () => void;
 }
 
 export function FormActions({
@@ -35,17 +36,29 @@ export function FormActions({
         <Button type="submit" disabled={isSubmitting}>
           {clothe ? (
             <>
-              <ArrowsClockwise />
-              Atualizar peça
+              {!isSubmitting ? (
+                <>
+                  <ArrowsClockwise />
+                  Atualizar peça
+                </>
+              ) : (
+                <Spinner color="#FFF6D8" />
+              )}
             </>
           ) : (
             <>
-              <Check />
-              Cadastrar peça
+              {!isSubmitting ? (
+                <>
+                  <Check />
+                  Cadastrar peça
+                </>
+              ) : (
+                <Spinner color="#FFF6D8" />
+              )}
             </>
           )}
         </Button>
       </div>
     </ButtonContainer>
-  )
+  );
 }

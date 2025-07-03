@@ -1,5 +1,5 @@
-import { api } from '@/lib/axios'
-import { Clothe } from './create-clothe'
+import { api } from "@/lib/axios";
+import { Clothe } from "./create-clothe";
 
 export async function updateClothe({
   id,
@@ -7,6 +7,7 @@ export async function updateClothe({
   priceInCents,
   description,
   category,
+  categoryOther,
   gender,
   brand,
   brandOther,
@@ -14,8 +15,10 @@ export async function updateClothe({
   sizeOther,
   fabric,
   color,
+  height,
+  width,
 }: Clothe) {
-  await api.put('/clothes', {
+  await api.put("/clothes", {
     id,
     name,
     priceInCents,
@@ -28,5 +31,7 @@ export async function updateClothe({
     sizeOther,
     fabric,
     color,
-  })
+    height,
+    width,
+  });
 }

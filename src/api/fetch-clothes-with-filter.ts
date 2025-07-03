@@ -1,38 +1,38 @@
-import { api } from '@/lib/axios'
-import { brands, categories, genders, sizes } from '@/utils/enums'
+import { api } from "@/lib/axios";
+import { brands, categories, genders, sizes } from "@/utils/enums";
 
 export interface ClotheSummary {
-  id: string
-  name: string
-  priceInCents: number
-  brand: typeof brands[number]
-  brandOther: string
-  size: typeof sizes[number]
-  sizeOther: string
-  imageURL: string
-  storeImageUrl: string | null
+  id: string;
+  name: string;
+  priceInCents: number;
+  brand: (typeof brands)[number];
+  brandOther: string;
+  size: (typeof sizes)[number];
+  sizeOther: string;
+  imageURL: string;
+  storeImageUrl: string | null;
 }
 
 export interface FetchClothesWithFilterResponse {
-  clothes: ClotheSummary[]
+  clothes: ClotheSummary[];
   meta: {
-    pageIndex: number
-    perPage: number
-    totalCount: number
-  }
+    pageIndex: number;
+    perPage: number;
+    totalCount: number;
+  };
 }
 
 export interface FetchClothesWithFilterRequest {
-  limit?: string
-  page?: string
-  name?: string
-  fabric?: string
-  color?: string
-  storeId?: string
-  category?: typeof categories[number]
-  size?: typeof sizes[number]
-  brand?: typeof brands[number]
-  gender?: typeof genders[number]
+  limit?: number;
+  page?: number;
+  name?: string;
+  fabric?: string;
+  color?: string;
+  storeId?: string;
+  category?: (typeof categories)[number];
+  size?: (typeof sizes)[number];
+  brand?: (typeof brands)[number];
+  gender?: (typeof genders)[number];
 }
 
 export async function fetchClothesWithFilter({
@@ -45,9 +45,9 @@ export async function fetchClothesWithFilter({
   fabric,
   gender,
   size,
-  storeId
-}: FetchClothesWithFilterRequest) {
-  const response = await api.post('/clothes/filter', {
+  storeId,
+}: FetchClothesWithFilterRequest): Promise<FetchClothesWithFilterResponse> {
+  const response = await api.post("/clothes/filter", {
     limit,
     page,
     name,
@@ -57,8 +57,8 @@ export async function fetchClothesWithFilter({
     fabric,
     gender,
     size,
-    storeId
-  })
+    storeId,
+  });
 
-  return response.data
+  return response.data;
 }
