@@ -8,7 +8,7 @@ import {
   IntervalInputs,
   IntervalItem,
   RegisterScheduleForm,
-} from "./styles";
+} from "../../../styles/signup/register-schedule/styles";
 
 import { Button } from "@/components/@ui/Button";
 import { Text } from "@/components/@ui/Text";

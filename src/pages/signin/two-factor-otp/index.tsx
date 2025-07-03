@@ -15,7 +15,7 @@ import {
   InputContainer,
   TwoFactorOTPForm,
   WarningContainer,
-} from "./styles";
+} from "../../../styles/signin/two-factor-otp/styles";
 import { useSignIn } from "@/hooks/use-signin";
 import { twoFactorAuth } from "@/api/two-factor-auth";
 

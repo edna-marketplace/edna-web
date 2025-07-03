@@ -13,17 +13,17 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ClotheItem } from "./_components/ClotheItem";
 import {
   ClothesContainer,
   Container,
   EmptyListContainer,
   Main,
   NewClotheContainer,
-} from "./styles";
-import { FilterForm } from "./_components/FilterForm";
+} from "../../styles/clothes/styles";
 import { Pagination } from "@/components/Pagination";
 import { Spinner } from "@/components/Spinner";
+import { FilterForm } from "@/components/FilterForm";
+import { ClotheItem } from "@/components/ClotheItem";
 
 export const FilterFormSchema = z.object({
   name: z.string().optional(),

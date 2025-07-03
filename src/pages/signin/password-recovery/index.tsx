@@ -15,7 +15,7 @@ import {
   InputContainer,
   PasswordRecoveryForm,
   WarningContainer,
-} from "./styles";
+} from "../../../styles/signin/password-recovery/styles";
 import { sendNewPassword } from "@/api/send-new-password";
 
 const passwordRecoverySchema = z.object({

@@ -5,7 +5,7 @@ import {
   FormTitle,
   InputContainer,
   RegisterPasswordForm,
-} from "./styles";
+} from "../../../styles/signup/register-password/styles";
 
 import { Button } from "@/components/@ui/Button";
 import { Text } from "@/components/@ui/Text";

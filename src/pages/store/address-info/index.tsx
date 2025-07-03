@@ -17,8 +17,14 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { ProfilePreview } from "../_components/ProfilePreview";
-import { Container, Field, Main, RightColumn, Section } from "./styles";
+import { ProfilePreview } from "../../../components/ProfilePreview";
+import {
+  Container,
+  Field,
+  Main,
+  RightColumn,
+  Section,
+} from "../../../styles/stores/address-info/styles";
 import { getViaCep } from "@/api/get-via-cep";
 import { updateAddress } from "@/api/update-address";
 

@@ -16,7 +16,7 @@ import {
   InputContainer,
   StripeRefreshForm,
   WarningContainer,
-} from "./styles";
+} from "../../../styles/signup/stripe-refresh/styles";
 
 const stripeRefreshSchema = z.object({
   email: z

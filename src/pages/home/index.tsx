@@ -1,14 +1,14 @@
 import { Header } from "@/components/Header";
 import { getCurrentPeriodMessage } from "@/utils/get-current-period-message";
 import { useEffect, useState } from "react";
-import { Chart } from "./_components/Chart";
-import { InfoCard } from "./_components/InfoCard";
+import { Chart } from "../../components/Chart";
+import { InfoCard } from "../../components/InfoCard";
 import {
   Container,
   InfoCardContainer,
   Main,
   PendingOrdersContainer,
-} from "./styles";
+} from "../../styles/home/styles";
 
 import {
   getWeekCustomersMetrics,
@@ -41,7 +41,7 @@ import {
 import { Button } from "@/components/@ui/Button";
 import { downloadFinancialReport } from "@/utils/download-financial-report";
 import { DownloadSimple } from "@phosphor-icons/react";
-import { PendingOrderList } from "./_components/PendingOrderList";
+import { PendingOrderList } from "../../components/PendingOrderList";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);

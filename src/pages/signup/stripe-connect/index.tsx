@@ -7,7 +7,7 @@ import {
   FormTitle,
   Heading,
   WhatsStripeContainer,
-} from "./styles";
+} from "../../../styles/signup/stripe-connect/styles";
 import { useIsMobile } from "@/hooks/use-is-mobile";
 import { Text } from "@/components/@ui/Text";
 import { useSignUp } from "@/hooks/use-signup";

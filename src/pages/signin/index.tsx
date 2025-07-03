@@ -4,7 +4,7 @@ import {
   InputContainer,
   LogoImage,
   SignInForm,
-} from "./styles";
+} from "../../styles/signin/styles";
 
 import logo from "@/assets/logoImg.png";
 

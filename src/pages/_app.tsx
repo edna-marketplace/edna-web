@@ -1,11 +1,11 @@
 "use client";
 
 import { SignUpContextProvider } from "@/contexts/SignUpContext";
-import { AuthLayout } from "@/layouts/Auth";
+import { AuthLayout } from "@/layouts/auth";
 import type { AppProps } from "next/app";
 import { parseCookies } from "nookies";
 import { Toaster } from "sonner";
-import { AppLayout } from "../layouts/App";
+import { AppLayout } from "../layouts/app";
 import { globalStyles } from "../styles/global";
 import { SignInContextProvider } from "@/contexts/SignInContext";
 import { StoreContextProvider } from "@/contexts/StoreContext";

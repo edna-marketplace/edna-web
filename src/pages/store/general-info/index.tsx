@@ -8,11 +8,17 @@ import { Title } from "@/components/@ui/Title";
 import { Header } from "@/components/Header";
 import { ArrowsClockwise, CaretLeft } from "@phosphor-icons/react";
 import { Controller, useForm } from "react-hook-form";
-import { ProfilePreview } from "../_components/ProfilePreview";
-import { Container, Field, Main, RightColumn, Section } from "./styles";
+import { ProfilePreview } from "../../../components/ProfilePreview";
+import {
+  Container,
+  Field,
+  Main,
+  RightColumn,
+  Section,
+} from "../../../styles/stores/general-info/styles";
 import { TextArea } from "@/components/@ui/TextArea";
 import { Button } from "@/components/@ui/Button";
-import { UpdatePassword } from "../_components/UpdatePassword";
+import { UpdatePassword } from "../../../components/UpdatePassword";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStore } from "@/hooks/use-store";
@@ -23,7 +29,7 @@ import { toast } from "sonner";
 import { formatCNPJ } from "@/utils/format-cnpj";
 import { formatPhoneNumber } from "@/utils/format-phone-number";
 import { updateStoreInfo } from "@/api/update-store-info";
-import { UpdateImages } from "../_components/UpdateImages";
+import { UpdateImages } from "../../../components/UpdateImages";
 import { useRouter } from "next/router";
 
 const cnpjRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/;

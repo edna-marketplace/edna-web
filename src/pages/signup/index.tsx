@@ -1,4 +1,9 @@
-import { Container, Heading, InputContainer, SignUpForm } from "./styles";
+import {
+  Container,
+  Heading,
+  InputContainer,
+  SignUpForm,
+} from "../../styles/signup/styles";
 
 import { Button } from "@/components/@ui/Button";
 import { SelectInput } from "@/components/@ui/SelectInput";

@@ -6,7 +6,7 @@ import {
   Heading,
   InputContainer,
   RegisterAddressForm,
-} from "./styles";
+} from "../../../styles/signup/register-address/styles";
 
 import { Button } from "@/components/@ui/Button";
 import { SpecialTitle } from "@/components/@ui/SpecialTitle";

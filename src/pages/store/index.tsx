@@ -9,14 +9,14 @@ import {
   Skull,
 } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
-import { ProfilePreview } from "./_components/ProfilePreview";
+import { ProfilePreview } from "../../components/ProfilePreview";
 import {
   Container,
   DeactivateAccountButton,
   EditInfoButton,
   Main,
   RightColumn,
-} from "./styles";
+} from "../../styles/stores/styles";
 import Swal from "sweetalert2";
 import { destroyCookie } from "nookies";
 import { toast } from "sonner";

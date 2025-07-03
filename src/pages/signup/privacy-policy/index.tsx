@@ -3,7 +3,11 @@ import { Text } from "@/components/@ui/Text";
 import { Button } from "@/components/@ui/Button";
 import { ArrowRight } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
-import { Container, ContentContainer, Heading } from "./styles";
+import {
+  Container,
+  ContentContainer,
+  Heading,
+} from "../../../styles/signup/privacy-policy/styles";
 import { Title } from "@/components/@ui/Title";
 
 export default function PrivacyPolicy() {

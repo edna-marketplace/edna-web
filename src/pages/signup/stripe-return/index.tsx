@@ -1,5 +1,8 @@
 import { SpecialTitle } from "@/components/@ui/SpecialTitle";
-import { Container, Heading } from "./styles";
+import {
+  Container,
+  Heading,
+} from "../../../styles/signup/stripe-return/styles";
 import { Text } from "@/components/@ui/Text";
 import { Button } from "@/components/@ui/Button";
 import { ArrowRight } from "@phosphor-icons/react";

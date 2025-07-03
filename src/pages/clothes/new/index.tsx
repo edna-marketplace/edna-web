@@ -1,15 +1,15 @@
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
-import { Container, Main } from './styles'
+import { Container, Main } from "../../../styles/clothes/new/styles";
 
-import { Header } from '@/components/Header'
-import { ClotheForm } from '../_components/ClotheForm'
+import { Header } from "@/components/Header";
+import { ClotheForm } from "@/components/ClotheForm";
 
 export default function ClotheDetails() {
-  const router = useRouter()
+  const router = useRouter();
 
   function handleGoBack() {
-    router.push('/clothes')
+    router.push("/clothes");
   }
 
   return (
@@ -24,5 +24,5 @@ export default function ClotheDetails() {
         <ClotheForm />
       </Main>
     </Container>
-  )
+  );
 }

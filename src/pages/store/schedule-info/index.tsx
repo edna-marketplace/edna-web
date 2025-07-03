@@ -17,7 +17,7 @@ import { useEffect } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { ProfilePreview } from "../_components/ProfilePreview";
+import { ProfilePreview } from "../../../components/ProfilePreview";
 import {
   Container,
   Field,
@@ -28,7 +28,7 @@ import {
   Main,
   RightColumn,
   Section,
-} from "./styles";
+} from "../../../styles/stores/schedule-info/styles";
 import { convertMinutesToTimeString } from "@/utils/convert-minutes-to-time-string";
 import { useIsMobile } from "@/hooks/use-is-mobile";
 import { getWeekDays } from "@/utils/get-week-days";

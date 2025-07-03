@@ -33,7 +33,6 @@ export const Text = styled("p", {
     size: "md",
     weight: "regular",
     type: "default",
-    weight: "regular",
   },
 });
 

@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 
-import { Container, Main } from "./styles";
+import { Container, Main } from "../../../styles/clothes/id/styles";
 
 import { Header } from "@/components/Header";
-import { ClotheForm } from "../_components/ClotheForm";
 import { useEffect, useState } from "react";
 import { Clothe } from "@/api/create-clothe";
 import { getClotheById } from "@/api/get-clothe-by-id";
 import { Form } from "react-hook-form";
+import { ClotheForm } from "@/components/ClotheForm";
 
 export default function ClotheDetails() {
   const [clothe, setClothe] = useState<Clothe>();
