@@ -2,7 +2,7 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 
 export const api = axios.create({
-  baseURL: "http://31.97.31.201:8080",
+  baseURL: "https://edna-marketplace.shop",
 });
 
 api.interceptors.request.use(
