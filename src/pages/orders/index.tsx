@@ -1,35 +1,38 @@
 import { awaitWithdrawalOrder } from '@/api/await-withdrawal-order'
+import { cancelOrder } from '@/api/cancel-order'
 import { completeOrder } from '@/api/complete-order'
+import { fetchAllStoreOrders } from '@/api/fetch-all-store-orders'
 import {
   fetchOrdersWithFilter,
   StoreOrderDTO,
 } from '@/api/fetch-orders-with-filter'
-import { fetchAllStoreOrders } from '@/api/fetch-all-store-orders'
+import { refundOrder } from '@/api/refund-order'
+import { Button } from '@/components/@ui/Button'
 import { Card } from '@/components/@ui/Card'
-import { Header } from '@/components/header'
-import { Button, Title } from '@edna-ui/react'
 import { Text } from '@/components/@ui/Text'
+import { Title } from '@/components/@ui/Title'
+import { Header } from '@/components/header'
+import { Pagination } from '@/components/Pagination'
+import { Spinner } from '@/components/Spinner'
+import { downloadOrdersReport } from '@/utils/download-orders-report'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowRight, MagnifyingGlass, X } from '@phosphor-icons/react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import Swal from 'sweetalert2'
+import { EmptyListContainer } from '../clothes/styles'
 import {
   FilterForm,
   FilterFormData,
   FilterFormSchema,
 } from './_components/FilterForm'
+import { StatusBadge } from './_components/StatusBadge'
 import { Table } from './_components/Table/styles'
 import { Container, Main } from './styles'
-import { cancelOrder } from '@/api/cancel-order'
-import { orderStatusDisplayNames } from '@/utils/select-input-mapper'
-import { EmptyListContainer } from '../clothes/styles'
-import { Spinner } from '@/components/Spinner'
-import { StatusBadge } from './_components/StatusBadge'
-import { Pagination } from '@/components/Pagination'
-import { refundOrder } from '@/api/refund-order'
-import { downloadOrdersReport } from '@/utils/download-orders-report'
+
+
 
 export default function Orders() {
   const [isLoading, setIsLoading] = useState(false)
@@ -37,18 +40,7 @@ export default function Orders() {
   const [totalCount, setTotalCount] = useState<number>()
   const [orders, setOrders] = useState<StoreOrderDTO[]>([])
   const [ordersReport, setOrdersReport] = useState<StoreOrderDTO[]>([])
-  const [selectedOrder, setSelectedOrder] = useState<StoreOrderDTO | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  function handleOpenModal(order: StoreOrderDTO) {
-    setSelectedOrder(order)
-    setIsModalOpen(true)
-  }
-
-  function handleCloseModal() {
-    setIsModalOpen(false)
-    setSelectedOrder(null)
-  }
 
   const router = useRouter()
 
@@ -105,18 +97,34 @@ export default function Orders() {
     }
   }
 
-  async function handleCancelOrder(orderId: string) {
+  async function handleCancelOrder(orderId: string, paymentIntentId: string) {
+    const result = await Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você realmente deseja cancelar este pedido? Essa ação não pode ser desfeita.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sim, cancelar',
+      cancelButtonText: 'Não, manter pedido',
+    })
+
+    if (!result.isConfirmed) return
+
     try {
+      await refundOrder(paymentIntentId)
       await cancelOrder(orderId)
-      toast.success('Pedido cancelado com sucesso.')
+      Swal.fire('Cancelado!', 'O pedido foi cancelado com sucesso.', 'success')
       await handleFetchOrdersWithFilter({})
     } catch (error: any) {
-      toast.error('Erro ao cancelar pedido.', {
-        description:
-          error?.response?.data?.message || 'Tente novamente mais tarde.',
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao cancelar',
+        text: error?.response?.data?.message || 'Tente novamente mais tarde.',
       })
     }
   }
+
 
   function formatPrice(priceInCents: number) {
     return new Intl.NumberFormat('pt-BR', {
@@ -201,12 +209,12 @@ export default function Orders() {
                             onClick={() =>
                               alert(`Aprovado pedido #${order.orderStatus}`)
                             }
-                            style={{ width: '5px' }}
+                            style={{ width: '45px' }}
                           >
                             <MagnifyingGlass size={20} />
                           </Button>
                         </Table.Cell>
-                        <Table.Cell>{order.createdAt}</Table.Cell>
+                        <Table.Cell>{new Date(order.createdAt).toLocaleDateString("pt-br")}</Table.Cell>
                         <Table.Cell>{order.customerName}</Table.Cell>
                         <Table.Cell>{order.clotheName}</Table.Cell>
                         <Table.Cell>
@@ -216,7 +224,13 @@ export default function Orders() {
                           {formatPrice(order.priceInCents)}
                         </Table.Cell>
                         <Table.Cell>
-                          <div style={{ display: 'flex', gap: '8px' }}>
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',   // Alinha verticalmente
+                            justifyContent: 'flex-start',
+                            gap: '8px',
+                            height: '100%',         // Garante que o alinhamento vertical funcione
+                          }}>
                             <Button
                               variant="primary"
                               size="sm"
@@ -247,7 +261,7 @@ export default function Orders() {
                                 order.orderStatus === 'COMPLETED' ||
                                 order.orderStatus === 'CANCELED'
                               }
-                              onClick={() => handleCancelOrder(order.orderId)}
+                              onClick={() => handleCancelOrder(order.orderId, order.paymentIntentId)}
                             >
                               <X size={16} />
                               Cancelar

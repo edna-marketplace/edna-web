@@ -8,6 +8,7 @@ export interface StoreOrderDTO {
   orderStatus: (typeof orderStatus)[number]
   priceInCents: number
   createdAt: string
+  paymentIntentId: string
 }
 
 export interface FetchOrdersWithFilterResponse {
