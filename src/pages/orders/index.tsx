@@ -22,15 +22,15 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
-import { EmptyListContainer } from "../clothes/styles";
+import { EmptyListContainer } from "@/styles/clothes/styles";
 import {
   FilterForm,
   FilterFormData,
   FilterFormSchema,
-} from "./_components/FilterForm";
-import { StatusBadge } from "./_components/StatusBadge";
-import { Table } from "./_components/Table/styles";
-import { Container, Main } from "./styles";
+} from "../../components/OrdersFilterForm";
+import { StatusBadge } from "../../components/StatusBadge";
+import { Table } from "../../components/Table/styles";
+import { Container, Main } from "@/styles/orders/styles";
 
 export default function Orders() {
   const [isLoading, setIsLoading] = useState(false);
@@ -188,10 +188,10 @@ export default function Orders() {
               <div style={{ overflowX: "auto" }}>
                 <Table.Root>
                   <Table.Row>
-                    <Table.Head></Table.Head>
+                    <Table.Head style={{ padding: "12px 8px" }}></Table.Head>
                     <Table.Head>Data</Table.Head>
-                    <Table.Head>Cliente</Table.Head>
-                    <Table.Head>Peça</Table.Head>
+                    <Table.Head style={{ width: "200px" }}>Cliente</Table.Head>
+                    <Table.Head style={{ width: "200px" }}>Peça</Table.Head>
                     <Table.Head>Status</Table.Head>
                     <Table.Head>Valor</Table.Head>
                   </Table.Row>
@@ -199,16 +199,13 @@ export default function Orders() {
                     {orders.map((order) => (
                       <Table.Row key={order.orderId}>
                         <Table.Cell>
-                          <Button
-                            variant="secondary"
-                            size="sm"
+                          <Table.DetailsButton
                             onClick={() =>
                               alert(`Aprovado pedido #${order.orderStatus}`)
                             }
-                            style={{ width: "45px" }}
                           >
-                            <MagnifyingGlass size={20} />
-                          </Button>
+                            <MagnifyingGlass size={15} weight="bold" />
+                          </Table.DetailsButton>
                         </Table.Cell>
                         <Table.Cell>
                           {new Date(order.createdAt).toLocaleDateString(
@@ -220,8 +217,24 @@ export default function Orders() {
                         <Table.Cell>
                           <StatusBadge status={order.orderStatus} />
                         </Table.Cell>
-                        <Table.Cell style={{ fontWeight: "bold" }}>
-                          {formatPrice(order.priceInCents)}
+                        <Table.Cell
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            fontWeight: "bold",
+                            paddingTop: "24px",
+                          }}
+                        >
+                          <span>{formatPrice(order.priceInCents)}</span>
+                          <span
+                            style={{
+                              fontWeight: "normal",
+                              fontSize: "12px",
+                              marginTop: "6px",
+                            }}
+                          >
+                            ({formatPrice(order.priceInCents * 0.86)})
+                          </span>
                         </Table.Cell>
                         <Table.Cell>
                           <div
@@ -242,7 +255,7 @@ export default function Orders() {
                               }
                               onClick={() => handleStatusAction(order)}
                               style={{
-                                width: "125px",
+                                width: "100px",
                                 fontSize: "12px",
                                 display: "flex",
                                 alignItems: "center",
@@ -269,6 +282,13 @@ export default function Orders() {
                                   order.paymentIntentId
                                 )
                               }
+                              style={{
+                                width: "110px",
+                                fontSize: "12px",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "4px",
+                              }}
                             >
                               <X size={16} />
                               Cancelar

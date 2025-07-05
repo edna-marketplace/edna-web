@@ -1,123 +1,123 @@
-import { styled } from '@edna-ui/react'
+import { styled } from "@edna-ui/react";
 
-export const Container = styled('div', {
-  position: 'fixed',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  gap: '$4',
+export const Container = styled("div", {
+  position: "fixed",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  gap: "$4",
 
-  width: '230px',
-  minHeight: '100vh',
+  width: "230px",
+  minHeight: "100%",
 
-  '@xl': {
-    width: '200px',
+  "@xl": {
+    width: "200px",
   },
 
-  background: '$base100',
-  padding: '$8',
-})
+  background: "$base100",
+  padding: "$8",
+});
 
-export const LinksContainer = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  gap: '$4',
+export const LinksContainer = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  gap: "$4",
   flex: 1,
-})
+});
 
-export const Link = styled('button', {
-  all: 'unset',
+export const Link = styled("button", {
+  all: "unset",
 
-  display: 'flex',
-  alignItems: 'center',
-  gap: '$3',
+  display: "flex",
+  alignItems: "center",
+  gap: "$3",
 
-  padding: '$3 $4',
-  borderRadius: '$sm',
+  padding: "$3 $4",
+  borderRadius: "$sm",
 
-  fontSize: '$md',
+  fontSize: "$md",
 
-  transition: 'background 0.2s',
+  transition: "background 0.2s",
 
-  '&:not(:active):hover': {
-    cursor: 'pointer',
-    background: '$base200',
+  "&:not(:active):hover": {
+    cursor: "pointer",
+    background: "$base200",
   },
 
   variants: {
     isActive: {
       true: {
-        color: '$base700',
-        background: '$base200',
+        color: "$base700",
+        background: "$base200",
       },
       false: {
-        color: '$base500',
+        color: "$base500",
       },
     },
   },
-})
+});
 
-export const DrawerToggle = styled('button', {
-  position: 'fixed',
-  top: '$4',
-  left: '$4',
-  background: 'none',
-  border: 'none',
-  cursor: 'pointer',
+export const DrawerToggle = styled("button", {
+  position: "fixed",
+  top: "$4",
+  left: "$4",
+  background: "none",
+  border: "none",
+  cursor: "pointer",
   zIndex: 1000,
-})
+});
 
-export const DrawerOverlay = styled('div', {
-  position: 'fixed',
+export const DrawerOverlay = styled("div", {
+  position: "fixed",
   top: 0,
   left: 0,
-  width: '100vw',
-  height: '100vh',
-  backgroundColor: 'rgba(0,0,0,0.5)',
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(0,0,0,0.5)",
   zIndex: 999,
-})
+});
 
-export const DrawerContent = styled('div', {
-  position: 'fixed',
+export const DrawerContent = styled("div", {
+  position: "fixed",
   top: 0,
   left: 0,
-  width: '230px',
-  height: '100vh',
-  background: '$base100',
-  padding: '$8',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '$4',
+  width: "230px",
+  height: "100%",
+  background: "$base100",
+  padding: "$8",
+  display: "flex",
+  flexDirection: "column",
+  gap: "$4",
   zIndex: 1000,
-  transition: 'transform 0.3s ease-in-out',
-})
+  transition: "transform 0.3s ease-in-out",
+});
 
-export const SignOutContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'start',
-  alignItems: 'flex-end',
-})
+export const SignOutContainer = styled("div", {
+  display: "flex",
+  justifyContent: "start",
+  alignItems: "flex-end",
+});
 
-export const SignOutButton = styled('button', {
-  all: 'unset',
+export const SignOutButton = styled("button", {
+  all: "unset",
 
-  display: 'flex',
-  alignItems: 'center',
-  gap: '$3',
+  display: "flex",
+  alignItems: "center",
+  gap: "$3",
 
-  width: '100%',
+  width: "100%",
 
-  padding: '$3 $4',
-  borderRadius: '$sm',
+  padding: "$3 $4",
+  borderRadius: "$sm",
 
-  fontSize: '$md',
-  color: '$red400',
+  fontSize: "$md",
+  color: "$red400",
 
-  transition: 'background 0.2s',
+  transition: "background 0.2s",
 
-  '&:not(:active):hover': {
-    cursor: 'pointer',
-    background: '$base200',
+  "&:not(:active):hover": {
+    cursor: "pointer",
+    background: "$base200",
   },
-})
+});

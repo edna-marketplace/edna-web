@@ -6,6 +6,7 @@ import {
 } from "@phosphor-icons/react";
 import { Button } from "../@ui/Button";
 import { Text } from "../@ui/Text";
+import { Container, Content } from "./styles";
 
 export interface PaginationProps {
   pageIndex: number;
@@ -23,17 +24,10 @@ export function Pagination({
   const pages = Math.ceil(totalCount / perPage) || 1;
 
   return (
-    <div
-      className="flex items-center justify-between"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
+    <Container>
       <Text size="xs">Total de {totalCount} item(s)</Text>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+      <Content>
         <Text size="xs">
           Página {pageIndex} de {pages}
         </Text>
@@ -75,7 +69,7 @@ export function Pagination({
             <CaretDoubleRight />
           </Button>
         </div>
-      </div>
-    </div>
+      </Content>
+    </Container>
   );
 }
