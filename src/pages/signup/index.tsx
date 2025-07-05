@@ -14,17 +14,16 @@ import { TextInput } from "@/components/@ui/TextInput";
 import { SignInSignUpSwitch } from "@/components/SwitchSignInSignUp";
 import { useIsMobile } from "@/hooks/use-is-mobile";
 
+import { StoreInfo } from "@/api/sign-up";
 import { verifyDuplicateSignUp } from "@/api/verify-duplicate-sign-up";
+import { Spinner } from "@/components/Spinner";
 import { useSignUp } from "@/hooks/use-signup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useEffect, useState } from "react";
-import { StoreInfo } from "@/api/sign-up";
-import { Spinner } from "@/components/Spinner";
-import { CircleNotch } from "@phosphor-icons/react";
 
 const cnpjRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/;
 const phoneRegex = /^(\(\d{2}\)\s?9\s?\d{4}-\d{4}|\d{2}9\d{8})$/;

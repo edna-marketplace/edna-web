@@ -45,8 +45,6 @@ export default function Orders() {
   const [totalCount, setTotalCount] = useState<number>();
   const [orders, setOrders] = useState<StoreOrderDTO[]>([]);
 
-  const router = useRouter();
-
   const { register, handleSubmit, control, reset } = useForm<FilterFormData>({
     resolver: zodResolver(FilterFormSchema),
   });
@@ -105,12 +103,11 @@ export default function Orders() {
 
   async function handleCancelOrder(orderId: string, paymentIntentId: string) {
     const result = await Swal.fire({
-      title: "Tem certeza?",
-      text: "Você realmente deseja cancelar este pedido? Essa ação não pode ser desfeita.",
+      title: "Cancelar pedido",
+      text: "Ao cancelar o pedido, o valor será totalmente reembolsado ao cliente. Você realmente deseja cancelar esse pedido?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
+      confirmButtonColor: "var(--colors-base100)",
       confirmButtonText: "Sim, cancelar",
       cancelButtonText: "Não, manter pedido",
     });
@@ -120,13 +117,20 @@ export default function Orders() {
     try {
       await refundOrder(paymentIntentId);
       await cancelOrder(orderId);
-      Swal.fire("Cancelado!", "O pedido foi cancelado com sucesso.", "success");
+
+      toast.success("Pedido cancelado com sucesso!");
+
       await handleFetchOrdersWithFilter({});
     } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Erro ao cancelar",
-        text: error?.response?.data?.message || "Tente novamente mais tarde.",
+      if (error.response.data.message) {
+        toast.error("Erro ao cancelar pedido!", {
+          description: error.response.data.message,
+        });
+        return;
+      }
+      toast.error("Erro ao cancelar pedido!", {
+        description:
+          "Não foi possível cancelar o pedido, tente novamente mais tarde.",
       });
     }
   }
@@ -332,12 +336,14 @@ export default function Orders() {
             <Text>Os pedidos da sua loja aparecerão aqui.</Text>
           </EmptyListContainer>
         )}
-        <Pagination
-          onPageChange={handlePaginate}
-          pageIndex={currentPage}
-          perPage={10}
-          totalCount={totalCount || 0}
-        />
+        {orders.length !== 0 && (
+          <Pagination
+            onPageChange={handlePaginate}
+            pageIndex={currentPage}
+            perPage={10}
+            totalCount={totalCount ? totalCount : 0}
+          />
+        )}
       </Main>
     </Container>
   );

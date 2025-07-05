@@ -114,8 +114,6 @@ export function ClotheForm() {
 
   async function handleCreateClothe(data: ClotheFormData) {
     try {
-      console.log(errors);
-
       // valida se há pelo menos uma imagem (nova ou existente)
       if (imagesField.length === 0 && existingImages.length === 0) {
         setError("images", {

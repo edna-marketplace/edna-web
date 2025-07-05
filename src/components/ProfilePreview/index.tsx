@@ -46,10 +46,6 @@ export function ProfilePreview() {
     setIsLoading(false);
   }, []);
 
-  if (!store) {
-    return <Spinner />;
-  }
-
   return (
     <LeftColumn>
       {isLoading ? (
@@ -64,7 +60,7 @@ export function ProfilePreview() {
         >
           <Spinner size={30} />
         </div>
-      ) : (
+      ) : store ? (
         <>
           <Card
             css={{
@@ -240,6 +236,8 @@ export function ProfilePreview() {
             </Text>
           </Section>
         </>
+      ) : (
+        <Text>Loja não encontrada</Text>
       )}
     </LeftColumn>
   );

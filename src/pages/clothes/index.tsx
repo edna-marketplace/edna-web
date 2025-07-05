@@ -139,12 +139,14 @@ export default function Clothes() {
             <Text>Adicione uma nova peça clicando no botão acima</Text>
           </EmptyListContainer>
         )}
-        <Pagination
-          onPageChange={handlePaginate}
-          pageIndex={currentPage}
-          perPage={10}
-          totalCount={totalCount ? totalCount : 0}
-        />
+        {clothes.length !== 0 && (
+          <Pagination
+            onPageChange={handlePaginate}
+            pageIndex={currentPage}
+            perPage={10}
+            totalCount={totalCount ? totalCount : 0}
+          />
+        )}
       </Main>
     </Container>
   );

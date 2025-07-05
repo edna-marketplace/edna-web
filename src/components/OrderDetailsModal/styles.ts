@@ -30,16 +30,16 @@ export const Header = styled("div", {
 export const CustomerInfoContainer = styled("div", {
   display: "flex",
   flexDirection: "column",
-  gap: "$6",
+  gap: "$5",
 
-  padding: "$6 $4 0 $4",
+  padding: "$6 $4 $2 $4",
 
   "& > div": {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
 
-    padding: "0 $2 $6 $2",
+    padding: "0 $2 $5 $2",
 
     "&:not(:last-child)": {
       borderBottom: "1px solid $base500",

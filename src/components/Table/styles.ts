@@ -78,7 +78,9 @@ export class Table {
 
     background: "$base500",
 
-    "$:hover": {
+    transition: "border-color 200ms",
+
+    "&:hover": {
       border: "1px solid $base400",
       cursor: "pointer",
     },
