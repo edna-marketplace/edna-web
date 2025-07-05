@@ -4,6 +4,14 @@ const genderDisplayNames = {
   UNISEX: "Unissex",
 };
 
+const orderStatusDisplayNames = {
+  'ALL': "Todos",
+  'CANCELED': 'Cancelado',
+  'COMPLETED': 'Concluído',
+  'PENDING': 'Pendente',
+  'AWAITING_WITHDRAWAL': 'Aguardando Retirada',
+};
+
 const brandDisplayNames = {
   ALL: "Todas",
   NIKE: "Nike",
@@ -61,4 +69,5 @@ export {
   brandDisplayNames,
   categoryDisplayNames,
   sizeDisplayNames,
+  orderStatusDisplayNames
 };
