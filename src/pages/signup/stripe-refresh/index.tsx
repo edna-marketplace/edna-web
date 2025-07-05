@@ -51,7 +51,16 @@ export default function StripeReturn() {
           "Um e-mail foi enviado com o link para conexão com o Stripe.",
       });
     } catch (error: any) {
-      toast.error(JSON.stringify(error.response.data));
+      if (error.response.data.message) {
+        toast.error("Erro ao conectar conta Stripe!", {
+          description: error.response.data.message,
+        });
+        return;
+      }
+      toast.error("Erro ao conectar conta Stripe!", {
+        description:
+          "Não foi possível conectar a conta Stripe, tente novamente mais tarde.",
+      });
     }
   }
 

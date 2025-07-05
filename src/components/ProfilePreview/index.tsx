@@ -166,7 +166,14 @@ export function ProfilePreview() {
             <Text size="lg" weight="bold" css={{ marginBottom: "$2" }}>
               Descrição
             </Text>
-            <Text size="md" style={{ color: "var(--colors-base300)" }}>
+            <Text
+              size="md"
+              style={{
+                color: "var(--colors-base300)",
+                wordBreak: "break-all",
+                display: "inline-block",
+              }}
+            >
               {store?.description ? store.description : "Sem descrição."}
             </Text>
           </Section>

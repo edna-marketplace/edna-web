@@ -275,16 +275,18 @@ export function ClotheForm() {
         </div>
 
         <Section>
-          <Text size="sm">
+          <Text size="sm" css={{ whiteSpace: "normal" }}>
             A PLATAFORMA COBRA UMA <strong>TAXA DE 14%</strong> POR VENDA, VOCÊ
             RECEBERÁ{" "}
             <strong>
-              {priceField
-                ? (priceField * 0.86).toLocaleString("pt-br", {
-                    style: "currency",
-                    currency: "BRL",
-                  })
-                : "R$ 00,00"}
+              <span style={{ wordBreak: "break-all", display: "inline-block" }}>
+                {priceField
+                  ? (priceField * 0.86).toLocaleString("pt-br", {
+                      style: "currency",
+                      currency: "BRL",
+                    })
+                  : "R$ 00,00"}
+              </span>
             </strong>{" "}
             POR ESSA PEÇA
           </Text>
@@ -322,7 +324,7 @@ export function ClotheForm() {
             <TextInput
               suffix="cm"
               placeholder="0"
-              // step={1}
+              step={1}
               type="number"
               {...register("width", {
                 valueAsNumber: true,
