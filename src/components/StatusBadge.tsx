@@ -32,9 +32,7 @@ export function StatusBadge({ status }: StatusBadgeProps) {
   const label = orderStatusDisplayNames[status] || status;
 
   return (
-    <div
-      style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 12 }}
-    >
+    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
       <span
         style={{
           minWidth: 8,

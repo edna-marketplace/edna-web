@@ -13,6 +13,7 @@
     "@edna-ui/tokens": "^1.0.1",
     "@hookform/resolvers": "^5.0.1",
     "@phosphor-icons/react": "^2.1.7",
+    "@radix-ui/react-dialog": "^1.1.14",
     "@react-pdf/renderer": "^4.3.0",
     "@swc/helpers": "^0.5.17",
     "@types/node": "18.11.14",

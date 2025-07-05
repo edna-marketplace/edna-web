@@ -2,6 +2,7 @@ import { awaitWithdrawalOrder } from "@/api/await-withdrawal-order";
 import { cancelOrder } from "@/api/cancel-order";
 import { completeOrder } from "@/api/complete-order";
 import { fetchAllStoreOrders } from "@/api/fetch-all-store-orders";
+import * as Dialog from "@radix-ui/react-dialog";
 import {
   fetchOrdersWithFilter,
   StoreOrderDTO,
@@ -16,7 +17,12 @@ import { Pagination } from "@/components/Pagination";
 import { Spinner } from "@/components/Spinner";
 import { downloadOrdersReport } from "@/utils/download-orders-report";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, MagnifyingGlass, X } from "@phosphor-icons/react";
+import {
+  ArrowRight,
+  DownloadSimple,
+  MagnifyingGlass,
+  X,
+} from "@phosphor-icons/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -31,13 +37,13 @@ import {
 import { StatusBadge } from "../../components/StatusBadge";
 import { Table } from "../../components/Table/styles";
 import { Container, Main } from "@/styles/orders/styles";
+import { OrderDetailsModal } from "@/components/OrderDetailsModal";
 
 export default function Orders() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>();
   const [orders, setOrders] = useState<StoreOrderDTO[]>([]);
-  const [ordersReport, setOrdersReport] = useState<StoreOrderDTO[]>([]);
 
   const router = useRouter();
 
@@ -45,7 +51,9 @@ export default function Orders() {
     resolver: zodResolver(FilterFormSchema),
   });
 
-  function handleDownloadOrdersReport() {
+  async function handleDownloadOrdersReport() {
+    const ordersReport = await handleFetchAllStoreOrders();
+
     if (ordersReport) {
       downloadOrdersReport(ordersReport);
     }
@@ -58,7 +66,8 @@ export default function Orders() {
   async function handleFetchAllStoreOrders() {
     try {
       const data = await fetchAllStoreOrders();
-      setOrdersReport(data);
+
+      return data;
     } catch (error: any) {
       if (error.response.data.message) {
         toast.error("Erro ao buscar todos os pedidos da loja.", {
@@ -152,7 +161,6 @@ export default function Orders() {
   useEffect(() => {
     setIsLoading(true);
     handleFetchOrdersWithFilter({});
-    handleFetchAllStoreOrders();
     setIsLoading(false);
   }, [currentPage]);
 
@@ -170,7 +178,21 @@ export default function Orders() {
             handleClearFilters={handleClearFilters}
           />
         </form>
-        <Button onClick={handleDownloadOrdersReport}>Baixar Relatório</Button>
+
+        <div
+          style={{ position: "relative", height: "20px", marginTop: "-32px" }}
+        >
+          <Button
+            style={{ position: "absolute", right: 0, top: "40%" }}
+            variant="secondary"
+            size="sm"
+            onClick={handleDownloadOrdersReport}
+          >
+            <DownloadSimple />
+            Exportar para PDF
+          </Button>
+        </div>
+
         {isLoading ? (
           <div
             style={{
@@ -199,13 +221,15 @@ export default function Orders() {
                     {orders.map((order) => (
                       <Table.Row key={order.orderId}>
                         <Table.Cell>
-                          <Table.DetailsButton
-                            onClick={() =>
-                              alert(`Aprovado pedido #${order.orderStatus}`)
-                            }
-                          >
-                            <MagnifyingGlass size={15} weight="bold" />
-                          </Table.DetailsButton>
+                          <Dialog.Root>
+                            <Dialog.Trigger asChild>
+                              <Table.DetailsButton>
+                                <MagnifyingGlass size={15} weight="bold" />
+                              </Table.DetailsButton>
+                            </Dialog.Trigger>
+
+                            <OrderDetailsModal orderId={order.orderId} />
+                          </Dialog.Root>
                         </Table.Cell>
                         <Table.Cell>
                           {new Date(order.createdAt).toLocaleDateString(
