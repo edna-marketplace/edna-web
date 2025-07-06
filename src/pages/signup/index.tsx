@@ -149,7 +149,7 @@ export default function SignUp() {
             E-mail
           </Text>
           <TextInput
-            maxLength={100}
+            maxLength={250}
             placeholder="Ex: brechoedna@exemplo.com"
             errorMessage={errors.email?.message}
             hasErrorPlaceholder
