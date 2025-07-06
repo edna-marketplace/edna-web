@@ -252,8 +252,26 @@ export default function Orders() {
                             "pt-br"
                           )}
                         </Table.Cell>
-                        <Table.Cell>{order.customerName}</Table.Cell>
-                        <Table.Cell>{order.clotheName}</Table.Cell>
+                        <Table.Cell
+                          css={{
+                            maxWidth: "330px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {order.customerName}
+                        </Table.Cell>
+                        <Table.Cell
+                          css={{
+                            maxWidth: "330px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {order.clotheName}
+                        </Table.Cell>
                         <Table.Cell>
                           <StatusBadge status={order.orderStatus} />
                         </Table.Cell>
@@ -280,10 +298,10 @@ export default function Orders() {
                           <div
                             style={{
                               display: "flex",
-                              alignItems: "center", // Alinha verticalmente
+                              alignItems: "center",
                               justifyContent: "flex-start",
                               gap: "8px",
-                              height: "100%", // Garante que o alinhamento vertical funcione
+                              height: "100%",
                             }}
                           >
                             <Button

@@ -92,7 +92,16 @@ export function OrderDetailsModal({ orderId }: OrderDetailsModalProps) {
           <>
             <Header>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <Dialog.Title>{orderDetails.clotheName}</Dialog.Title>
+                <Dialog.Title
+                  style={{
+                    maxWidth: "400px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {orderDetails.clotheName}
+                </Dialog.Title>
 
                 <Text css={{ color: "$base400" }}>
                   {new Date(orderDetails.createdAt).toLocaleDateString("pt-br")}
@@ -114,7 +123,16 @@ export function OrderDetailsModal({ orderId }: OrderDetailsModalProps) {
 
               <div>
                 <Text css={{ color: "$base400" }}>Cliente</Text>
-                <Text>{orderDetails.customerName}</Text>
+                <Text
+                  css={{
+                    maxWidth: "330px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {orderDetails.customerName}
+                </Text>
               </div>
 
               <div>
@@ -124,7 +142,16 @@ export function OrderDetailsModal({ orderId }: OrderDetailsModalProps) {
 
               <div>
                 <Text css={{ color: "$base400" }}>E-mail</Text>
-                <Text>{orderDetails.customerEmail}</Text>
+                <Text
+                  css={{
+                    maxWidth: "330px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {orderDetails.customerEmail}
+                </Text>
               </div>
             </CustomerInfoContainer>
 
@@ -132,7 +159,16 @@ export function OrderDetailsModal({ orderId }: OrderDetailsModalProps) {
               <ClotheDetailsContainer>
                 <div>
                   <Text type="label">Nome</Text>
-                  <Text>{orderDetails.clotheName}</Text>
+                  <Text
+                    style={{
+                      maxWidth: "400px",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {orderDetails.clotheName}
+                  </Text>
                 </div>
                 <SizeGenderBrandContainer>
                   <div>
