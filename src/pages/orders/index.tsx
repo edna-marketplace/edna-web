@@ -86,6 +86,18 @@ export default function Orders() {
         await awaitWithdrawalOrder(order.orderId);
         toast.success("Pedido marcado como aguardando retirada.");
       } else if (order.orderStatus === "AWAITING_WITHDRAWAL") {
+        const result = await Swal.fire({
+          title: "Concluir pedido",
+          text: "Ao concluir o pedido, você não poderá mais cancelá-lo. Você realmente deseja concluir esse pedido?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "var(--colors-base100)",
+          confirmButtonText: "Sim, concluir",
+          cancelButtonText: "Não",
+        });
+
+        if (!result.isConfirmed) return;
+
         await completeOrder(order.orderId);
         toast.success("Pedido marcado como concluído.");
       } else {
