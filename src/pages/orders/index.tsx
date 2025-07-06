@@ -320,7 +320,9 @@ export default function Orders() {
                                 gap: "4px",
                               }}
                             >
-                              <ArrowRight size={16} />
+                              {order.orderStatus !== "COMPLETED" && (
+                                <ArrowRight size={16} />
+                              )}
                               {order.orderStatus === "PENDING" && "Aprovar"}
                               {order.orderStatus === "COMPLETED" && "Concluído"}
                               {order.orderStatus === "AWAITING_WITHDRAWAL" &&

@@ -16,6 +16,25 @@ export const Container = styled("div", {
   },
 });
 
+export const DownloadReportContainer = styled("div", {
+  position: "relative",
+  height: "20px",
+
+  margin: "0 $40",
+
+  "@xl": {
+    margin: "0 $8",
+  },
+
+  "@lg": {
+    margin: "0 $8",
+  },
+
+  "@md": {
+    margin: "0 $4 $2 0",
+  },
+});
+
 export const Main = styled("main", {
   display: "grid",
   gridTemplateColumns: "3fr 1fr",
@@ -26,7 +45,7 @@ export const Main = styled("main", {
 
   width: "100%",
 
-  marginTop: "$8",
+  marginTop: "$3",
   padding: "$6 $40",
 
   "@xl": {

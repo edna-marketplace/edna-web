@@ -5,6 +5,7 @@ import { Chart } from "../../components/Chart";
 import { InfoCard } from "../../components/InfoCard";
 import {
   Container,
+  DownloadReportContainer,
   InfoCardContainer,
   Main,
   PendingOrdersContainer,
@@ -134,9 +135,9 @@ export default function Home() {
         description="Não se esqueça! Na edna seu brechó cresce mais!"
       />
 
-      <Main>
+      <DownloadReportContainer>
         <Button
-          style={{ position: "absolute", right: 32, top: -22 }}
+          style={{ position: "absolute", right: 0, top: "40%" }}
           variant="secondary"
           size="sm"
           onClick={handleDownloadFinancialReport}
@@ -144,6 +145,9 @@ export default function Home() {
           <DownloadSimple />
           Exportar para PDF
         </Button>
+      </DownloadReportContainer>
+
+      <Main>
         <InfoCardContainer>
           <InfoCard
             title="Pedidos"
