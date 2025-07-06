@@ -8,6 +8,7 @@ import { Clothe } from "@/api/create-clothe";
 import { getClotheById } from "@/api/get-clothe-by-id";
 import { Form } from "react-hook-form";
 import { ClotheForm } from "@/components/ClotheForm";
+import { NextSeo } from "next-seo";
 
 export default function ClotheDetails() {
   const [clothe, setClothe] = useState<Clothe>();
@@ -32,16 +33,19 @@ export default function ClotheDetails() {
   }, []);
 
   return (
-    <Container>
-      <Header
-        title="Peças"
-        description="Essa é a área das suas peças, aqui você pode cadastrar novas roupas, editá-las e excluí-las."
-        goBack={handleGoBack}
-      />
+    <>
+      <NextSeo title="Editar peça | edna" />
+      <Container>
+        <Header
+          title="Peças"
+          description="Essa é a área das suas peças, aqui você pode cadastrar novas roupas, editá-las e excluí-las."
+          goBack={handleGoBack}
+        />
 
-      <Main>
-        <ClotheForm />
-      </Main>
-    </Container>
+        <Main>
+          <ClotheForm />
+        </Main>
+      </Container>
+    </>
   );
 }

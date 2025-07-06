@@ -17,6 +17,7 @@ import {
   StripeRefreshForm,
   WarningContainer,
 } from "../../../styles/signup/stripe-refresh/styles";
+import { NextSeo } from "next-seo";
 
 const stripeRefreshSchema = z.object({
   email: z
@@ -65,51 +66,54 @@ export default function StripeReturn() {
   }
 
   return (
-    <Container>
-      <Heading>
-        <SpecialTitle>Conecte sua conta Stripe!</SpecialTitle>
-        <Text>
-          Para finalizar seu cadastro você deve conectar sua conta Stripe.
-        </Text>
-      </Heading>
-
-      <StripeRefreshForm>
-        <WarningContainer>
-          <Text weight="regular">
-            Após você inserir seu e-mail e clicar no botão "Enviar link",
-            enviaremos um e-mail contendo o link para você conectar sua conta
-            Stripe.
+    <>
+      <NextSeo title="Crie sua conta | edna" />
+      <Container>
+        <Heading>
+          <SpecialTitle>Conecte sua conta Stripe!</SpecialTitle>
+          <Text>
+            Para finalizar seu cadastro você deve conectar sua conta Stripe.
           </Text>
-        </WarningContainer>
+        </Heading>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            E-mail
-          </Text>
-          <TextInput
-            placeholder="Seu email"
-            errorMessage={errors.email?.message}
-            {...register("email")}
-          />
-        </InputContainer>
+        <StripeRefreshForm>
+          <WarningContainer>
+            <Text weight="regular">
+              Após você inserir seu e-mail e clicar no botão "Enviar link",
+              enviaremos um e-mail contendo o link para você conectar sua conta
+              Stripe.
+            </Text>
+          </WarningContainer>
 
-        <ButtonContainer>
-          <Button
-            type="button"
-            variant="tertiary"
-            onClick={() => router.push("/signin")}
-            disabled={isSubmitting}
-          >
-            Fazer login
-          </Button>
-          <Button
-            disabled={isSubmitting}
-            onClick={handleSubmit(handleSendOnboardingUrl)}
-          >
-            {!isSubmitting ? "Enviar link" : <Spinner color="#FFF6D8" />}
-          </Button>
-        </ButtonContainer>
-      </StripeRefreshForm>
-    </Container>
+          <InputContainer>
+            <Text type="label" size="xs">
+              E-mail
+            </Text>
+            <TextInput
+              placeholder="Seu email"
+              errorMessage={errors.email?.message}
+              {...register("email")}
+            />
+          </InputContainer>
+
+          <ButtonContainer>
+            <Button
+              type="button"
+              variant="tertiary"
+              onClick={() => router.push("/signin")}
+              disabled={isSubmitting}
+            >
+              Fazer login
+            </Button>
+            <Button
+              disabled={isSubmitting}
+              onClick={handleSubmit(handleSendOnboardingUrl)}
+            >
+              {!isSubmitting ? "Enviar link" : <Spinner color="#FFF6D8" />}
+            </Button>
+          </ButtonContainer>
+        </StripeRefreshForm>
+      </Container>
+    </>
   );
 }

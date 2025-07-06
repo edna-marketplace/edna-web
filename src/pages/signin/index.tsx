@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Spinner } from "@/components/Spinner";
+import { NextSeo } from "next-seo";
 
 const signInSchema = z.object({
   email: z
@@ -85,56 +86,61 @@ export default function SignIn() {
   }
 
   return (
-    <Container>
-      <LogoImage src={logo} alt="" />
-      <div>
-        <Heading>
-          <SpecialTitle size="md">Bem-vindo(a) novamente</SpecialTitle>
-          <Text size="sm">Por favor, insira as credenciais do seu brechó</Text>
-        </Heading>
-
-        <SignInForm onSubmit={handleSubmit(handleSignIn)}>
-          <SignInSignUpSwitch />
-          <InputContainer>
-            <Text type="label" size="xs">
-              E-mail
+    <>
+      <NextSeo title="Login | edna" />
+      <Container>
+        <LogoImage src={logo} alt="" />
+        <div>
+          <Heading>
+            <SpecialTitle size="md">Bem-vindo(a) novamente</SpecialTitle>
+            <Text size="sm">
+              Por favor, insira as credenciais do seu brechó
             </Text>
-            <TextInput
-              placeholder="Seu email"
-              errorMessage={errors.email?.message}
-              {...register("email")}
-            />
-          </InputContainer>
+          </Heading>
 
-          <InputContainer>
-            <Text type="label" size="xs">
-              Senha
-            </Text>
-            <TextInput
-              placeholder="Sua senha"
-              isPassword
-              errorMessage={errors.password?.message}
-              {...register("password")}
-            />
-          </InputContainer>
-          <Button
-            onClick={() => router.push("/signin/password-recovery")}
-            type="button"
-            size="sm"
-            variant="tertiary"
-            style={{ alignSelf: "end" }}
-          >
-            <strong>Esqueceu a senha?</strong>
-          </Button>
-          <Button
-            disabled={isSubmitting}
-            type="submit"
-            style={{ width: "100%" }}
-          >
-            {!isSubmitting ? "Entrar" : <Spinner color="#FFF6D8" />}
-          </Button>
-        </SignInForm>
-      </div>
-    </Container>
+          <SignInForm onSubmit={handleSubmit(handleSignIn)}>
+            <SignInSignUpSwitch />
+            <InputContainer>
+              <Text type="label" size="xs">
+                E-mail
+              </Text>
+              <TextInput
+                placeholder="Seu email"
+                errorMessage={errors.email?.message}
+                {...register("email")}
+              />
+            </InputContainer>
+
+            <InputContainer>
+              <Text type="label" size="xs">
+                Senha
+              </Text>
+              <TextInput
+                placeholder="Sua senha"
+                isPassword
+                errorMessage={errors.password?.message}
+                {...register("password")}
+              />
+            </InputContainer>
+            <Button
+              onClick={() => router.push("/signin/password-recovery")}
+              type="button"
+              size="sm"
+              variant="tertiary"
+              style={{ alignSelf: "end" }}
+            >
+              <strong>Esqueceu a senha?</strong>
+            </Button>
+            <Button
+              disabled={isSubmitting}
+              type="submit"
+              style={{ width: "100%" }}
+            >
+              {!isSubmitting ? "Entrar" : <Spinner color="#FFF6D8" />}
+            </Button>
+          </SignInForm>
+        </div>
+      </Container>
+    </>
   );
 }

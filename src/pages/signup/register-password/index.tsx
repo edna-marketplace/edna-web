@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { useSignUp } from "@/hooks/use-signup";
 import { Spinner } from "@/components/Spinner";
 import Link from "next/link";
+import { NextSeo } from "next-seo";
 
 const RegisterPasswordSchema = z
   .object({
@@ -65,79 +66,82 @@ export default function RegisterPassword() {
   }
 
   return (
-    <Container>
-      <RegisterPasswordForm onSubmit={handleSubmit(handleContinue)}>
-        <FormTitle style={{ alignSelf: "flex-start" }}>Senha</FormTitle>
+    <>
+      <NextSeo title="Crie sua conta | edna" />
+      <Container>
+        <RegisterPasswordForm onSubmit={handleSubmit(handleContinue)}>
+          <FormTitle style={{ alignSelf: "flex-start" }}>Senha</FormTitle>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            Senha
-          </Text>
-          <TextInput
-            maxLength={15}
-            placeholder="Digite sua senha"
-            isPassword
-            errorMessage={errors.password?.message}
-            hasErrorPlaceholder
-            {...register("password")}
-          />
-        </InputContainer>
-
-        <InputContainer>
-          <Text type="label" size="xs">
-            Confirmar senha
-          </Text>
-          <TextInput
-            maxLength={15}
-            placeholder="Digite novamente sua senha"
-            isPassword
-            errorMessage={errors.password_confirm?.message}
-            hasErrorPlaceholder
-            {...register("password_confirm")}
-          />
-        </InputContainer>
-
-        <Text size="sm" style={{ marginBottom: "20px" }}>
-          Ao clicar em Continuar, você concorda com a nossa{" "}
-          <Link
-            href="/signup/privacy-policy"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Política de Privacidade
-          </Link>
-        </Text>
-
-        <ButtonContainer>
-          <Button
-            type="button"
-            variant="tertiary"
-            onClick={() => router.back()}
-            disabled={isSubmitting}
-          >
-            Voltar
-          </Button>
-          <Button disabled={isSubmitting} type="submit">
-            {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
-          </Button>
-        </ButtonContainer>
-      </RegisterPasswordForm>
-
-      <AlreadyHaveAccountContainer>
-        <div>
-          <Text size="sm">Já possui uma conta?</Text>
-          <Button
-            type="button"
-            variant="tertiary"
-            onClick={() => router.push("/signin")}
-            disabled={isSubmitting}
-          >
-            <Text size="sm" weight="bold">
-              Entrar
+          <InputContainer>
+            <Text type="label" size="xs">
+              Senha
             </Text>
-          </Button>
-        </div>
-      </AlreadyHaveAccountContainer>
-    </Container>
+            <TextInput
+              maxLength={15}
+              placeholder="Digite sua senha"
+              isPassword
+              errorMessage={errors.password?.message}
+              hasErrorPlaceholder
+              {...register("password")}
+            />
+          </InputContainer>
+
+          <InputContainer>
+            <Text type="label" size="xs">
+              Confirmar senha
+            </Text>
+            <TextInput
+              maxLength={15}
+              placeholder="Digite novamente sua senha"
+              isPassword
+              errorMessage={errors.password_confirm?.message}
+              hasErrorPlaceholder
+              {...register("password_confirm")}
+            />
+          </InputContainer>
+
+          <Text size="sm" style={{ marginBottom: "20px" }}>
+            Ao clicar em Continuar, você concorda com a nossa{" "}
+            <Link
+              href="/signup/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Política de Privacidade
+            </Link>
+          </Text>
+
+          <ButtonContainer>
+            <Button
+              type="button"
+              variant="tertiary"
+              onClick={() => router.back()}
+              disabled={isSubmitting}
+            >
+              Voltar
+            </Button>
+            <Button disabled={isSubmitting} type="submit">
+              {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
+            </Button>
+          </ButtonContainer>
+        </RegisterPasswordForm>
+
+        <AlreadyHaveAccountContainer>
+          <div>
+            <Text size="sm">Já possui uma conta?</Text>
+            <Button
+              type="button"
+              variant="tertiary"
+              onClick={() => router.push("/signin")}
+              disabled={isSubmitting}
+            >
+              <Text size="sm" weight="bold">
+                Entrar
+              </Text>
+            </Button>
+          </div>
+        </AlreadyHaveAccountContainer>
+      </Container>
+    </>
   );
 }

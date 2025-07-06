@@ -29,6 +29,7 @@ import { DayScheduleInfo } from "@/api/sign-up";
 import { useEffect } from "react";
 import { convertMinutesToTimeString } from "@/utils/convert-minutes-to-time-string";
 import { Spinner } from "@/components/Spinner";
+import { NextSeo } from "next-seo";
 
 const registerScheduleFormSchema = z.object({
   intervals: z
@@ -144,90 +145,93 @@ export default function RegisterSchedule() {
   }, []);
 
   return (
-    <Container>
-      <RegisterScheduleForm onSubmit={handleSubmit(handleContinue)}>
-        <FormTitle style={{ alignSelf: "flex-start" }}>
-          Horário de atendimento
-        </FormTitle>
+    <>
+      <NextSeo title="Crie sua conta | edna" />
+      <Container>
+        <RegisterScheduleForm onSubmit={handleSubmit(handleContinue)}>
+          <FormTitle style={{ alignSelf: "flex-start" }}>
+            Horário de atendimento
+          </FormTitle>
 
-        <div style={{ width: "100%", marginBottom: "16px" }}>
-          {fields.map((field, index) => {
-            return (
-              <IntervalItem key={field.id}>
-                <IntervalDay>
-                  <Controller
-                    name={`intervals.${index}.enabled`}
-                    control={control}
-                    render={({ field }) => {
-                      return (
-                        <Checkbox
-                          onCheckedChange={(checked) => {
-                            field.onChange(checked === true);
-                          }}
-                          checked={field.value}
-                        />
-                      );
-                    }}
-                  />
-                  {/* @ts-ignore */}
-                  <Text size={isMobile ? "sm" : "md"}>
-                    {dayOfWeeks[(field as any).dayOfWeek]}
-                  </Text>
-                </IntervalDay>
-                <IntervalInputs>
-                  <TextInput
-                    type="time"
-                    step={60}
-                    disabled={!intervals[index].enabled}
-                    {...register(`intervals.${index}.startTime`)}
-                  />
-                  <TextInput
-                    type="time"
-                    step={60}
-                    disabled={!intervals[index].enabled}
-                    {...register(`intervals.${index}.endTime`)}
-                  />
-                </IntervalInputs>
-              </IntervalItem>
-            );
-          })}
-        </div>
+          <div style={{ width: "100%", marginBottom: "16px" }}>
+            {fields.map((field, index) => {
+              return (
+                <IntervalItem key={field.id}>
+                  <IntervalDay>
+                    <Controller
+                      name={`intervals.${index}.enabled`}
+                      control={control}
+                      render={({ field }) => {
+                        return (
+                          <Checkbox
+                            onCheckedChange={(checked) => {
+                              field.onChange(checked === true);
+                            }}
+                            checked={field.value}
+                          />
+                        );
+                      }}
+                    />
+                    {/* @ts-ignore */}
+                    <Text size={isMobile ? "sm" : "md"}>
+                      {dayOfWeeks[(field as any).dayOfWeek]}
+                    </Text>
+                  </IntervalDay>
+                  <IntervalInputs>
+                    <TextInput
+                      type="time"
+                      step={60}
+                      disabled={!intervals[index].enabled}
+                      {...register(`intervals.${index}.startTime`)}
+                    />
+                    <TextInput
+                      type="time"
+                      step={60}
+                      disabled={!intervals[index].enabled}
+                      {...register(`intervals.${index}.endTime`)}
+                    />
+                  </IntervalInputs>
+                </IntervalItem>
+              );
+            })}
+          </div>
 
-        {errors.intervals && (
-          <>
-            {/* @ts-ignore */}
-            <FormError size="sm">{errors.intervals.root?.message}</FormError>
-          </>
-        )}
+          {errors.intervals && (
+            <>
+              {/* @ts-ignore */}
+              <FormError size="sm">{errors.intervals.root?.message}</FormError>
+            </>
+          )}
 
-        <ButtonContainer>
+          <ButtonContainer>
+            <Button
+              type="button"
+              variant="tertiary"
+              onClick={() => router.back()}
+              disabled={isSubmitting}
+            >
+              Voltar
+            </Button>
+            <Button disabled={isSubmitting} type="submit">
+              {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
+            </Button>
+          </ButtonContainer>
+        </RegisterScheduleForm>
+
+        <AlreadyHaveAccountContainer>
+          <Text size="sm">Já possui uma conta?</Text>
           <Button
             type="button"
             variant="tertiary"
-            onClick={() => router.back()}
+            onClick={() => router.push("/signin")}
             disabled={isSubmitting}
           >
-            Voltar
+            <Text size="sm" weight="bold">
+              Entrar
+            </Text>
           </Button>
-          <Button disabled={isSubmitting} type="submit">
-            {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
-          </Button>
-        </ButtonContainer>
-      </RegisterScheduleForm>
-
-      <AlreadyHaveAccountContainer>
-        <Text size="sm">Já possui uma conta?</Text>
-        <Button
-          type="button"
-          variant="tertiary"
-          onClick={() => router.push("/signin")}
-          disabled={isSubmitting}
-        >
-          <Text size="sm" weight="bold">
-            Entrar
-          </Text>
-        </Button>
-      </AlreadyHaveAccountContainer>
-    </Container>
+        </AlreadyHaveAccountContainer>
+      </Container>
+    </>
   );
 }

@@ -24,6 +24,7 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { NextSeo } from "next-seo";
 
 const cnpjRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/;
 const phoneRegex = /^(\(\d{2}\)\s?9\s?\d{4}-\d{4}|\d{2}9\d{8})$/;
@@ -106,96 +107,103 @@ export default function SignUp() {
   }, []);
 
   return (
-    <Container>
-      <Heading>
-        <SpecialTitle size={isMobile ? "sm" : "md"}>
-          Será um prazer ter o seu brechó na edna!
-        </SpecialTitle>
-        <Text size={isMobile ? "xs" : "sm"}>
-          Por favor, insira as informações do seu brechó
-        </Text>
-      </Heading>
-
-      <SignUpForm onSubmit={handleSubmit(handleContinue)}>
-        <SignInSignUpSwitch />
-        <InputContainer>
-          <Text type="label" size="xs">
-            Nome
+    <>
+      <NextSeo title="Crie sua conta | edna" />
+      <Container>
+        <Heading>
+          <SpecialTitle size={isMobile ? "sm" : "md"}>
+            Será um prazer ter o seu brechó na edna!
+          </SpecialTitle>
+          <Text size={isMobile ? "xs" : "sm"}>
+            Por favor, insira as informações do seu brechó
           </Text>
-          <TextInput
-            maxLength={50}
-            placeholder="Ex: Brechó da Edna"
-            errorMessage={errors.name?.message}
-            hasErrorPlaceholder
-            {...register("name")}
-          />
-        </InputContainer>
+        </Heading>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            CNPJ
-          </Text>
-          <TextInput
-            maxLength={18}
-            placeholder="Ex: 12.345.678/0001-90"
-            errorMessage={errors.cnpj?.message}
-            hasErrorPlaceholder
-            {...register("cnpj")}
-          />
-        </InputContainer>
+        <SignUpForm onSubmit={handleSubmit(handleContinue)}>
+          <SignInSignUpSwitch />
+          <InputContainer>
+            <Text type="label" size="xs">
+              Nome
+            </Text>
+            <TextInput
+              maxLength={50}
+              placeholder="Ex: Brechó da Edna"
+              errorMessage={errors.name?.message}
+              hasErrorPlaceholder
+              {...register("name")}
+            />
+          </InputContainer>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            E-mail
-          </Text>
-          <TextInput
-            maxLength={250}
-            placeholder="Ex: brechoedna@exemplo.com"
-            errorMessage={errors.email?.message}
-            hasErrorPlaceholder
-            {...register("email")}
-          />
-        </InputContainer>
+          <InputContainer>
+            <Text type="label" size="xs">
+              CNPJ
+            </Text>
+            <TextInput
+              maxLength={18}
+              placeholder="Ex: 12.345.678/0001-90"
+              errorMessage={errors.cnpj?.message}
+              hasErrorPlaceholder
+              {...register("cnpj")}
+            />
+          </InputContainer>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            Telefone
-          </Text>
-          <TextInput
-            maxLength={16}
-            placeholder="Ex: (48) 9 1234-5678"
-            errorMessage={errors.phone?.message}
-            hasErrorPlaceholder
-            {...register("phone")}
-          />
-        </InputContainer>
+          <InputContainer>
+            <Text type="label" size="xs">
+              E-mail
+            </Text>
+            <TextInput
+              maxLength={250}
+              placeholder="Ex: brechoedna@exemplo.com"
+              errorMessage={errors.email?.message}
+              hasErrorPlaceholder
+              {...register("email")}
+            />
+          </InputContainer>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            Público alvo
-          </Text>
-          <Controller
-            name="targetCustomer"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <SelectInput
-                placeholder="Selecionar"
-                value={value}
-                onValueChange={onChange}
-                errorMessage={errors.targetCustomer?.message}
-                hasErrorPlaceholder
-              >
-                <SelectItem value="MALE">Moda Masculina</SelectItem>
-                <SelectItem value="FEMALE">Moda Feminina</SelectItem>
-                <SelectItem value="ALL">Todos os públicos</SelectItem>
-              </SelectInput>
-            )}
-          />
-        </InputContainer>
-        <Button disabled={isSubmitting} type="submit" style={{ width: "100%" }}>
-          {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
-        </Button>
-      </SignUpForm>
-    </Container>
+          <InputContainer>
+            <Text type="label" size="xs">
+              Telefone
+            </Text>
+            <TextInput
+              maxLength={16}
+              placeholder="Ex: (48) 9 1234-5678"
+              errorMessage={errors.phone?.message}
+              hasErrorPlaceholder
+              {...register("phone")}
+            />
+          </InputContainer>
+
+          <InputContainer>
+            <Text type="label" size="xs">
+              Público alvo
+            </Text>
+            <Controller
+              name="targetCustomer"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <SelectInput
+                  placeholder="Selecionar"
+                  value={value}
+                  onValueChange={onChange}
+                  errorMessage={errors.targetCustomer?.message}
+                  hasErrorPlaceholder
+                >
+                  <SelectItem value="MALE">Moda Masculina</SelectItem>
+                  <SelectItem value="FEMALE">Moda Feminina</SelectItem>
+                  <SelectItem value="ALL">Todos os públicos</SelectItem>
+                </SelectInput>
+              )}
+            />
+          </InputContainer>
+          <Button
+            disabled={isSubmitting}
+            type="submit"
+            style={{ width: "100%" }}
+          >
+            {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
+          </Button>
+        </SignUpForm>
+      </Container>
+    </>
   );
 }

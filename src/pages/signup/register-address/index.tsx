@@ -27,6 +27,7 @@ import { useSignUp } from "@/hooks/use-signup";
 import { verifyDuplicateAddress } from "@/api/verify-duplicate-address";
 import { AddressInfo } from "@/api/sign-up";
 import { Spinner } from "@/components/Spinner";
+import { NextSeo } from "next-seo";
 
 const cepRegex = /^\d{5}-?\d{3}$/;
 
@@ -132,110 +133,113 @@ export default function RegisterAddress() {
   }, [cepValue]);
 
   return (
-    <Container>
-      <RegisterAddressForm onSubmit={handleSubmit(handleContinue)}>
-        <FormTitle style={{ alignSelf: "flex-start" }}>Endereço</FormTitle>
+    <>
+      <NextSeo title="Crie sua conta | edna" />
+      <Container>
+        <RegisterAddressForm onSubmit={handleSubmit(handleContinue)}>
+          <FormTitle style={{ alignSelf: "flex-start" }}>Endereço</FormTitle>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            CEP
-          </Text>
-          <TextInput
-            maxLength={9}
-            placeholder="Ex: 88064-001"
-            errorMessage={errors.cep?.message}
-            hasErrorPlaceholder
-            {...register("cep")}
-          />
-        </InputContainer>
+          <InputContainer>
+            <Text type="label" size="xs">
+              CEP
+            </Text>
+            <TextInput
+              maxLength={9}
+              placeholder="Ex: 88064-001"
+              errorMessage={errors.cep?.message}
+              hasErrorPlaceholder
+              {...register("cep")}
+            />
+          </InputContainer>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            Número
-          </Text>
-          <TextInput
-            maxLength={6}
-            type="number"
-            placeholder="Ex: 1234"
-            errorMessage={errors.number?.message}
-            hasErrorPlaceholder
-            {...register("number", { valueAsNumber: true })}
-          />
-        </InputContainer>
+          <InputContainer>
+            <Text type="label" size="xs">
+              Número
+            </Text>
+            <TextInput
+              maxLength={6}
+              type="number"
+              placeholder="Ex: 1234"
+              errorMessage={errors.number?.message}
+              hasErrorPlaceholder
+              {...register("number", { valueAsNumber: true })}
+            />
+          </InputContainer>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            Rua
-          </Text>
-          <TextInput
-            maxLength={100}
-            placeholder="Ex: Rodovia Baldicero Filomeno"
-            errorMessage={errors.street?.message}
-            hasErrorPlaceholder
-            readOnly
-            {...register("street")}
-          />
-        </InputContainer>
+          <InputContainer>
+            <Text type="label" size="xs">
+              Rua
+            </Text>
+            <TextInput
+              maxLength={100}
+              placeholder="Ex: Rodovia Baldicero Filomeno"
+              errorMessage={errors.street?.message}
+              hasErrorPlaceholder
+              readOnly
+              {...register("street")}
+            />
+          </InputContainer>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            Bairro
-          </Text>
-          <TextInput
-            maxLength={16}
-            placeholder="Ex: Ribeirão da Ilha"
-            errorMessage={errors.neighborhood?.message}
-            hasErrorPlaceholder
-            readOnly
-            {...register("neighborhood")}
-          />
-        </InputContainer>
+          <InputContainer>
+            <Text type="label" size="xs">
+              Bairro
+            </Text>
+            <TextInput
+              maxLength={16}
+              placeholder="Ex: Ribeirão da Ilha"
+              errorMessage={errors.neighborhood?.message}
+              hasErrorPlaceholder
+              readOnly
+              {...register("neighborhood")}
+            />
+          </InputContainer>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            Cidade
-          </Text>
-          <TextInput
-            maxLength={16}
-            placeholder="Ex: Florianópolis"
-            errorMessage={errors.city?.message}
-            hasErrorPlaceholder
-            readOnly
-            {...register("city")}
-          />
-        </InputContainer>
+          <InputContainer>
+            <Text type="label" size="xs">
+              Cidade
+            </Text>
+            <TextInput
+              maxLength={16}
+              placeholder="Ex: Florianópolis"
+              errorMessage={errors.city?.message}
+              hasErrorPlaceholder
+              readOnly
+              {...register("city")}
+            />
+          </InputContainer>
 
-        <ButtonContainer>
+          <ButtonContainer>
+            <Button
+              type="button"
+              variant="tertiary"
+              onClick={() => router.back()}
+              disabled={isSubmitting}
+            >
+              Voltar
+            </Button>
+            <Button
+              disabled={isSubmitting || Object.keys(errors).length > 0}
+              type="submit"
+            >
+              {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
+            </Button>
+          </ButtonContainer>
+        </RegisterAddressForm>
+
+        <AlreadyHaveAccountContainer>
+          <Text size="sm">Já possui uma conta?</Text>
           <Button
             type="button"
             variant="tertiary"
-            onClick={() => router.back()}
+            onClick={() => router.push("/signin")}
             disabled={isSubmitting}
           >
-            Voltar
+            <Text size="sm" weight="bold">
+              Entrar
+            </Text>
           </Button>
-          <Button
-            disabled={isSubmitting || Object.keys(errors).length > 0}
-            type="submit"
-          >
-            {!isSubmitting ? "Continuar" : <Spinner color="#FFF6D8" />}
-          </Button>
-        </ButtonContainer>
-      </RegisterAddressForm>
-
-      <AlreadyHaveAccountContainer>
-        <Text size="sm">Já possui uma conta?</Text>
-        <Button
-          type="button"
-          variant="tertiary"
-          onClick={() => router.push("/signin")}
-          disabled={isSubmitting}
-        >
-          <Text size="sm" weight="bold">
-            Entrar
-          </Text>
-        </Button>
-      </AlreadyHaveAccountContainer>
-    </Container>
+        </AlreadyHaveAccountContainer>
+      </Container>
+    </>
   );
 }

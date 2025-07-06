@@ -38,6 +38,7 @@ import { StatusBadge } from "../../components/StatusBadge";
 import { Table } from "../../components/Table/styles";
 import { Container, Main } from "@/styles/orders/styles";
 import { OrderDetailsModal } from "@/components/OrderDetailsModal";
+import { NextSeo } from "next-seo";
 
 export default function Orders() {
   const [isLoading, setIsLoading] = useState(false);
@@ -181,202 +182,209 @@ export default function Orders() {
   }, [currentPage]);
 
   return (
-    <Container>
-      <Header
-        title="Pedidos"
-        description="Essa é a área dos seus pedidos, aqui você pode gerenciar todos os pedidos que seus clientes fizeram."
-      />
-      <Main>
-        <form onSubmit={handleSubmit(handleFetchOrdersWithFilter)}>
-          <FilterForm
-            register={register}
-            control={control}
-            handleClearFilters={handleClearFilters}
-          />
-        </form>
+    <>
+      <NextSeo title="Pedidos | edna" />
+      <Container>
+        <Header
+          title="Pedidos"
+          description="Essa é a área dos seus pedidos, aqui você pode gerenciar todos os pedidos que seus clientes fizeram."
+        />
+        <Main>
+          <form onSubmit={handleSubmit(handleFetchOrdersWithFilter)}>
+            <FilterForm
+              register={register}
+              control={control}
+              handleClearFilters={handleClearFilters}
+            />
+          </form>
 
-        <div
-          style={{ position: "relative", height: "20px", marginTop: "-32px" }}
-        >
-          <Button
-            style={{ position: "absolute", right: 0, top: "40%" }}
-            variant="secondary"
-            size="sm"
-            onClick={handleDownloadOrdersReport}
-          >
-            <DownloadSimple />
-            Exportar para PDF
-          </Button>
-        </div>
-
-        {isLoading ? (
           <div
-            style={{
-              display: "flex",
-              flex: "1",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            style={{ position: "relative", height: "20px", marginTop: "-32px" }}
           >
-            <Spinner size={30} />
+            <Button
+              style={{ position: "absolute", right: 0, top: "40%" }}
+              variant="secondary"
+              size="sm"
+              onClick={handleDownloadOrdersReport}
+            >
+              <DownloadSimple />
+              Exportar para PDF
+            </Button>
           </div>
-        ) : orders.length > 0 ? (
-          <Table.Container>
-            <Card>
-              <div style={{ overflowX: "auto" }}>
-                <Table.Root>
-                  <Table.Row>
-                    <Table.Head style={{ padding: "12px 8px" }}></Table.Head>
-                    <Table.Head>Data</Table.Head>
-                    <Table.Head style={{ width: "200px" }}>Cliente</Table.Head>
-                    <Table.Head style={{ width: "200px" }}>Peça</Table.Head>
-                    <Table.Head>Status</Table.Head>
-                    <Table.Head>Valor</Table.Head>
-                  </Table.Row>
-                  <Table.Body>
-                    {orders.map((order) => (
-                      <Table.Row key={order.orderId}>
-                        <Table.Cell>
-                          <Dialog.Root>
-                            <Dialog.Trigger asChild>
-                              <Table.DetailsButton>
-                                <MagnifyingGlass size={15} weight="bold" />
-                              </Table.DetailsButton>
-                            </Dialog.Trigger>
 
-                            <OrderDetailsModal orderId={order.orderId} />
-                          </Dialog.Root>
-                        </Table.Cell>
-                        <Table.Cell>
-                          {new Date(order.createdAt).toLocaleDateString(
-                            "pt-br"
-                          )}
-                        </Table.Cell>
-                        <Table.Cell
-                          css={{
-                            maxWidth: "330px",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          {order.customerName}
-                        </Table.Cell>
-                        <Table.Cell
-                          css={{
-                            maxWidth: "330px",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          {order.clotheName}
-                        </Table.Cell>
-                        <Table.Cell>
-                          <StatusBadge status={order.orderStatus} />
-                        </Table.Cell>
-                        <Table.Cell
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            fontWeight: "bold",
-                            paddingTop: "24px",
-                          }}
-                        >
-                          <span>{formatPrice(order.priceInCents)}</span>
-                          <span
-                            style={{
-                              fontWeight: "normal",
-                              fontSize: "12px",
-                              marginTop: "6px",
+          {isLoading ? (
+            <div
+              style={{
+                display: "flex",
+                flex: "1",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Spinner size={30} />
+            </div>
+          ) : orders.length > 0 ? (
+            <Table.Container>
+              <Card>
+                <div style={{ overflowX: "auto" }}>
+                  <Table.Root>
+                    <Table.Row>
+                      <Table.Head style={{ padding: "12px 8px" }}></Table.Head>
+                      <Table.Head>Data</Table.Head>
+                      <Table.Head style={{ width: "200px" }}>
+                        Cliente
+                      </Table.Head>
+                      <Table.Head style={{ width: "200px" }}>Peça</Table.Head>
+                      <Table.Head>Status</Table.Head>
+                      <Table.Head>Valor</Table.Head>
+                    </Table.Row>
+                    <Table.Body>
+                      {orders.map((order) => (
+                        <Table.Row key={order.orderId}>
+                          <Table.Cell>
+                            <Dialog.Root>
+                              <Dialog.Trigger asChild>
+                                <Table.DetailsButton>
+                                  <MagnifyingGlass size={15} weight="bold" />
+                                </Table.DetailsButton>
+                              </Dialog.Trigger>
+
+                              <OrderDetailsModal orderId={order.orderId} />
+                            </Dialog.Root>
+                          </Table.Cell>
+                          <Table.Cell>
+                            {new Date(order.createdAt).toLocaleDateString(
+                              "pt-br"
+                            )}
+                          </Table.Cell>
+                          <Table.Cell
+                            css={{
+                              maxWidth: "330px",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
                             }}
                           >
-                            ({formatPrice(order.priceInCents * 0.86)})
-                          </span>
-                        </Table.Cell>
-                        <Table.Cell>
-                          <div
+                            {order.customerName}
+                          </Table.Cell>
+                          <Table.Cell
+                            css={{
+                              maxWidth: "330px",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {order.clotheName}
+                          </Table.Cell>
+                          <Table.Cell>
+                            <StatusBadge status={order.orderStatus} />
+                          </Table.Cell>
+                          <Table.Cell
                             style={{
                               display: "flex",
-                              alignItems: "center",
-                              justifyContent: "flex-start",
-                              gap: "8px",
-                              height: "100%",
+                              flexDirection: "column",
+                              fontWeight: "bold",
+                              paddingTop: "24px",
                             }}
                           >
-                            <Button
-                              variant="primary"
-                              size="sm"
-                              disabled={
-                                order.orderStatus === "COMPLETED" ||
-                                order.orderStatus === "CANCELED"
-                              }
-                              onClick={() => handleStatusAction(order)}
+                            <span>{formatPrice(order.priceInCents)}</span>
+                            <span
                               style={{
-                                width: "100px",
+                                fontWeight: "normal",
                                 fontSize: "12px",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "4px",
+                                marginTop: "6px",
                               }}
                             >
-                              {order.orderStatus !== "COMPLETED" && (
-                                <ArrowRight size={16} />
-                              )}
-                              {order.orderStatus === "PENDING" && "Aprovar"}
-                              {order.orderStatus === "COMPLETED" && "Concluído"}
-                              {order.orderStatus === "AWAITING_WITHDRAWAL" &&
-                                "Concluir"}
-                              {order.orderStatus === "CANCELED" && "Cancelado"}
-                            </Button>
-                            <Button
-                              type="button"
-                              variant="tertiary"
-                              disabled={
-                                order.orderStatus === "COMPLETED" ||
-                                order.orderStatus === "CANCELED"
-                              }
-                              onClick={() =>
-                                handleCancelOrder(
-                                  order.orderId,
-                                  order.paymentIntentId
-                                )
-                              }
+                              ({formatPrice(order.priceInCents * 0.86)})
+                            </span>
+                          </Table.Cell>
+                          <Table.Cell>
+                            <div
                               style={{
-                                width: "110px",
-                                fontSize: "12px",
                                 display: "flex",
                                 alignItems: "center",
-                                gap: "4px",
+                                justifyContent: "flex-start",
+                                gap: "8px",
+                                height: "100%",
                               }}
                             >
-                              <X size={16} />
-                              Cancelar
-                            </Button>
-                          </div>
-                        </Table.Cell>
-                      </Table.Row>
-                    ))}
-                  </Table.Body>
-                </Table.Root>
-              </div>
-            </Card>
-          </Table.Container>
-        ) : (
-          <EmptyListContainer>
-            <Title>Nenhum pedido encontrado!</Title>
-            <Text>Os pedidos da sua loja aparecerão aqui.</Text>
-          </EmptyListContainer>
-        )}
-        {orders.length !== 0 && (
-          <Pagination
-            onPageChange={handlePaginate}
-            pageIndex={currentPage}
-            perPage={10}
-            totalCount={totalCount ? totalCount : 0}
-          />
-        )}
-      </Main>
-    </Container>
+                              <Button
+                                variant="primary"
+                                size="sm"
+                                disabled={
+                                  order.orderStatus === "COMPLETED" ||
+                                  order.orderStatus === "CANCELED"
+                                }
+                                onClick={() => handleStatusAction(order)}
+                                style={{
+                                  width: "100px",
+                                  fontSize: "12px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "4px",
+                                }}
+                              >
+                                {order.orderStatus !== "COMPLETED" && (
+                                  <ArrowRight size={16} />
+                                )}
+                                {order.orderStatus === "PENDING" && "Aprovar"}
+                                {order.orderStatus === "COMPLETED" &&
+                                  "Concluído"}
+                                {order.orderStatus === "AWAITING_WITHDRAWAL" &&
+                                  "Concluir"}
+                                {order.orderStatus === "CANCELED" &&
+                                  "Cancelado"}
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="tertiary"
+                                disabled={
+                                  order.orderStatus === "COMPLETED" ||
+                                  order.orderStatus === "CANCELED"
+                                }
+                                onClick={() =>
+                                  handleCancelOrder(
+                                    order.orderId,
+                                    order.paymentIntentId
+                                  )
+                                }
+                                style={{
+                                  width: "110px",
+                                  fontSize: "12px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "4px",
+                                }}
+                              >
+                                <X size={16} />
+                                Cancelar
+                              </Button>
+                            </div>
+                          </Table.Cell>
+                        </Table.Row>
+                      ))}
+                    </Table.Body>
+                  </Table.Root>
+                </div>
+              </Card>
+            </Table.Container>
+          ) : (
+            <EmptyListContainer>
+              <Title>Nenhum pedido encontrado!</Title>
+              <Text>Os pedidos da sua loja aparecerão aqui.</Text>
+            </EmptyListContainer>
+          )}
+          {orders.length !== 0 && (
+            <Pagination
+              onPageChange={handlePaginate}
+              pageIndex={currentPage}
+              perPage={10}
+              totalCount={totalCount ? totalCount : 0}
+            />
+          )}
+        </Main>
+      </Container>
+    </>
   );
 }

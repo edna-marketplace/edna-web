@@ -43,6 +43,7 @@ import { Button } from "@/components/@ui/Button";
 import { downloadFinancialReport } from "@/utils/download-financial-report";
 import { DownloadSimple } from "@phosphor-icons/react";
 import { PendingOrderList } from "../../components/PendingOrderList";
+import { NextSeo } from "next-seo";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -129,57 +130,60 @@ export default function Home() {
   }, []);
 
   return (
-    <Container>
-      <Header
-        title={currentPeriodMessage}
-        description="Não se esqueça! Na edna seu brechó cresce mais!"
-      />
+    <>
+      <NextSeo title={`${currentPeriodMessage} | edna`} />
+      <Container>
+        <Header
+          title={currentPeriodMessage}
+          description="Não se esqueça! Na edna seu brechó cresce mais!"
+        />
 
-      <DownloadReportContainer>
-        <Button
-          style={{ position: "absolute", right: 0, top: "40%" }}
-          variant="secondary"
-          size="sm"
-          onClick={handleDownloadFinancialReport}
-        >
-          <DownloadSimple />
-          Exportar para PDF
-        </Button>
-      </DownloadReportContainer>
+        <DownloadReportContainer>
+          <Button
+            style={{ position: "absolute", right: 0, top: "40%" }}
+            variant="secondary"
+            size="sm"
+            onClick={handleDownloadFinancialReport}
+          >
+            <DownloadSimple />
+            Exportar para PDF
+          </Button>
+        </DownloadReportContainer>
 
-      <Main>
-        <InfoCardContainer>
-          <InfoCard
-            title="Pedidos"
-            value={weekOrders ? weekOrders.newOrders : 0}
-            percentage={weekOrders ? weekOrders.percentageChange : 0}
-            type="default"
-            isLoading={isLoading}
-          />
-          <InfoCard
-            title="Novos clientes"
-            value={weekNewCustomers ? weekNewCustomers.newCustomers : 0}
-            percentage={
-              weekNewCustomers ? weekNewCustomers.percentageChange : 0
-            }
-            type="default"
-            isLoading={isLoading}
-          />
-          <InfoCard
-            title="Receita"
-            value={weekRevenue ? weekRevenue.weekRevenue : 0}
-            percentage={weekRevenue ? weekRevenue.percentageChange : 0}
-            type="currency"
-            isLoading={isLoading}
-          />
-        </InfoCardContainer>
+        <Main>
+          <InfoCardContainer>
+            <InfoCard
+              title="Pedidos"
+              value={weekOrders ? weekOrders.newOrders : 0}
+              percentage={weekOrders ? weekOrders.percentageChange : 0}
+              type="default"
+              isLoading={isLoading}
+            />
+            <InfoCard
+              title="Novos clientes"
+              value={weekNewCustomers ? weekNewCustomers.newCustomers : 0}
+              percentage={
+                weekNewCustomers ? weekNewCustomers.percentageChange : 0
+              }
+              type="default"
+              isLoading={isLoading}
+            />
+            <InfoCard
+              title="Receita"
+              value={weekRevenue ? weekRevenue.weekRevenue : 0}
+              percentage={weekRevenue ? weekRevenue.percentageChange : 0}
+              type="currency"
+              isLoading={isLoading}
+            />
+          </InfoCardContainer>
 
-        <PendingOrdersContainer>
-          <PendingOrderList orders={pendingOrders} isLoading={isLoading} />
-        </PendingOrdersContainer>
+          <PendingOrdersContainer>
+            <PendingOrderList orders={pendingOrders} isLoading={isLoading} />
+          </PendingOrdersContainer>
 
-        <Chart monthRevenue={monthRevenue} />
-      </Main>
-    </Container>
+          <Chart monthRevenue={monthRevenue} />
+        </Main>
+      </Container>
+    </>
   );
 }

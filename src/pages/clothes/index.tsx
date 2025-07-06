@@ -24,6 +24,7 @@ import { Pagination } from "@/components/Pagination";
 import { Spinner } from "@/components/Spinner";
 import { FilterForm } from "@/components/FilterForm";
 import { ClotheItem } from "@/components/ClotheItem";
+import { NextSeo } from "next-seo";
 
 export const FilterFormSchema = z.object({
   name: z.string().optional(),
@@ -87,67 +88,70 @@ export default function Clothes() {
   }, [currentPage]);
 
   return (
-    <Container>
-      <Header
-        title="Peças"
-        description="Essa é a área das suas peças, aqui você pode cadastrar novas roupas, editá-las e excluí-las."
-      />
+    <>
+      <NextSeo title="Peças | edna" />
+      <Container>
+        <Header
+          title="Peças"
+          description="Essa é a área das suas peças, aqui você pode cadastrar novas roupas, editá-las e excluí-las."
+        />
 
-      <Main>
-        <form onSubmit={handleSubmit(handleFetchClothesWithFilter)}>
-          <FilterForm
-            register={register}
-            control={control}
-            handleClearFilters={handleClearFilters}
-          />
-          <NewClotheContainer>
-            <Button
-              type="button"
-              size="sm"
-              onClick={handleNewClothe}
-              variant="primary"
+        <Main>
+          <form onSubmit={handleSubmit(handleFetchClothesWithFilter)}>
+            <FilterForm
+              register={register}
+              control={control}
+              handleClearFilters={handleClearFilters}
+            />
+            <NewClotheContainer>
+              <Button
+                type="button"
+                size="sm"
+                onClick={handleNewClothe}
+                variant="primary"
+              >
+                <Plus size={16} />
+                Nova peça
+              </Button>
+            </NewClotheContainer>
+          </form>
+
+          {isLoading ? (
+            <div
+              style={{
+                display: "flex",
+                flex: "1",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <Plus size={16} />
-              Nova peça
-            </Button>
-          </NewClotheContainer>
-        </form>
-
-        {isLoading ? (
-          <div
-            style={{
-              display: "flex",
-              flex: "1",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Spinner size={30} />
-          </div>
-        ) : clothes.length > 0 ? (
-          <ClothesContainer>
-            {clothes.map((clothe) => (
-              <ClotheItem
-                clothe={clothe}
-                onClick={() => handleClotheDetails(clothe.id)}
-              />
-            ))}
-          </ClothesContainer>
-        ) : (
-          <EmptyListContainer>
-            <Title>Nenhuma peça por aqui!</Title>
-            <Text>Adicione uma nova peça clicando no botão acima</Text>
-          </EmptyListContainer>
-        )}
-        {clothes.length !== 0 && (
-          <Pagination
-            onPageChange={handlePaginate}
-            pageIndex={currentPage}
-            perPage={10}
-            totalCount={totalCount ? totalCount : 0}
-          />
-        )}
-      </Main>
-    </Container>
+              <Spinner size={30} />
+            </div>
+          ) : clothes.length > 0 ? (
+            <ClothesContainer>
+              {clothes.map((clothe) => (
+                <ClotheItem
+                  clothe={clothe}
+                  onClick={() => handleClotheDetails(clothe.id)}
+                />
+              ))}
+            </ClothesContainer>
+          ) : (
+            <EmptyListContainer>
+              <Title>Nenhuma peça por aqui!</Title>
+              <Text>Adicione uma nova peça clicando no botão acima</Text>
+            </EmptyListContainer>
+          )}
+          {clothes.length !== 0 && (
+            <Pagination
+              onPageChange={handlePaginate}
+              pageIndex={currentPage}
+              perPage={10}
+              totalCount={totalCount ? totalCount : 0}
+            />
+          )}
+        </Main>
+      </Container>
+    </>
   );
 }

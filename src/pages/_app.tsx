@@ -9,6 +9,7 @@ import { AppLayout } from "../layouts/app";
 import { globalStyles } from "../styles/global";
 import { SignInContextProvider } from "@/contexts/SignInContext";
 import { StoreContextProvider } from "@/contexts/StoreContext";
+import { DefaultSeo } from "next-seo";
 
 globalStyles();
 
@@ -19,6 +20,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Layout>
+      <DefaultSeo
+        openGraph={{
+          type: "website",
+          locale: "pt_BR",
+          url: "https://edna-web.vercel.app",
+          siteName: "Edna Marketplace",
+        }}
+      />
       <SignUpContextProvider>
         <SignInContextProvider>
           <StoreContextProvider>

@@ -34,6 +34,7 @@ import { useIsMobile } from "@/hooks/use-is-mobile";
 import { getWeekDays } from "@/utils/get-week-days";
 import { Checkbox } from "@/components/@ui/Checkbox";
 import { updateSchedule } from "@/api/update-schedule";
+import { NextSeo } from "next-seo";
 
 const updateScheduleFormSchema = z.object({
   intervals: z
@@ -151,104 +152,107 @@ export default function ScheduleInfo() {
   }, []);
 
   return (
-    <Container>
-      <Header
-        title="Brechó"
-        description="Essa é a área do perfil do seu brechó, aqui você pode adicionar e alterar informações suas informações."
-      />
+    <>
+      <NextSeo title="Brechó | edna" />
+      <Container>
+        <Header
+          title="Brechó"
+          description="Essa é a área do perfil do seu brechó, aqui você pode adicionar e alterar informações suas informações."
+        />
 
-      <Main>
-        <ProfilePreview />
+        <Main>
+          <ProfilePreview />
 
-        <RightColumn>
-          <Button
-            variant="tertiary"
-            style={{ width: "fit-content" }}
-            onClick={() => router.push("/store")}
-          >
-            <CaretLeft weight="bold" />
-            Voltar
-          </Button>
+          <RightColumn>
+            <Button
+              variant="tertiary"
+              style={{ width: "fit-content" }}
+              onClick={() => router.push("/store")}
+            >
+              <CaretLeft weight="bold" />
+              Voltar
+            </Button>
 
-          <Card>
-            <Section>
-              <Title size="sm" style={{ marginBottom: "16px" }}>
-                Horários de atendimento
-              </Title>
+            <Card>
+              <Section>
+                <Title size="sm" style={{ marginBottom: "16px" }}>
+                  Horários de atendimento
+                </Title>
 
-              <div style={{ width: "100%", marginBottom: "16px" }}>
-                {fields.map((field, index) => {
-                  return (
-                    <IntervalItem key={field.id}>
-                      <IntervalDay>
-                        <Controller
-                          name={`intervals.${index}.enabled`}
-                          control={control}
-                          render={({ field }) => {
-                            return (
-                              <Checkbox
-                                onCheckedChange={(checked) => {
-                                  field.onChange(checked === true);
-                                }}
-                                checked={field.value}
-                              />
-                            );
-                          }}
-                        />
-                        {/* @ts-ignore */}
-                        <Text size={isMobile ? "sm" : "md"}>
-                          {dayOfWeeks[(field as any).dayOfWeek]}
-                        </Text>
-                      </IntervalDay>
-                      <IntervalInputs>
-                        <TextInput
-                          type="time"
-                          step={60}
-                          disabled={!intervals[index].enabled}
-                          {...register(`intervals.${index}.startTime`)}
-                        />
-                        <TextInput
-                          type="time"
-                          step={60}
-                          disabled={!intervals[index].enabled}
-                          {...register(`intervals.${index}.endTime`)}
-                        />
-                      </IntervalInputs>
-                    </IntervalItem>
-                  );
-                })}
-              </div>
+                <div style={{ width: "100%", marginBottom: "16px" }}>
+                  {fields.map((field, index) => {
+                    return (
+                      <IntervalItem key={field.id}>
+                        <IntervalDay>
+                          <Controller
+                            name={`intervals.${index}.enabled`}
+                            control={control}
+                            render={({ field }) => {
+                              return (
+                                <Checkbox
+                                  onCheckedChange={(checked) => {
+                                    field.onChange(checked === true);
+                                  }}
+                                  checked={field.value}
+                                />
+                              );
+                            }}
+                          />
+                          {/* @ts-ignore */}
+                          <Text size={isMobile ? "sm" : "md"}>
+                            {dayOfWeeks[(field as any).dayOfWeek]}
+                          </Text>
+                        </IntervalDay>
+                        <IntervalInputs>
+                          <TextInput
+                            type="time"
+                            step={60}
+                            disabled={!intervals[index].enabled}
+                            {...register(`intervals.${index}.startTime`)}
+                          />
+                          <TextInput
+                            type="time"
+                            step={60}
+                            disabled={!intervals[index].enabled}
+                            {...register(`intervals.${index}.endTime`)}
+                          />
+                        </IntervalInputs>
+                      </IntervalItem>
+                    );
+                  })}
+                </div>
 
-              {errors.intervals && (
-                <>
-                  <FormError size="sm">
-                    {/* @ts-ignore */}
-                    {errors.intervals.root?.message}
-                  </FormError>
-                </>
-              )}
-
-              <Button
-                size="sm"
-                style={{
-                  width: "fit-content",
-                  alignSelf: "end",
-                }}
-                disabled={isSubmitting}
-                onClick={handleSubmit(handleUpdateScheduleInfo)}
-              >
-                {!isSubmitting ? (
+                {errors.intervals && (
                   <>
-                    <ArrowsClockwise weight="bold" /> Atualizar horários
+                    <FormError size="sm">
+                      {/* @ts-ignore */}
+                      {errors.intervals.root?.message}
+                    </FormError>
                   </>
-                ) : (
-                  <Spinner color="#FFF6D8" />
                 )}
-              </Button>
-            </Section>
-          </Card>
-        </RightColumn>
-      </Main>
-    </Container>
+
+                <Button
+                  size="sm"
+                  style={{
+                    width: "fit-content",
+                    alignSelf: "end",
+                  }}
+                  disabled={isSubmitting}
+                  onClick={handleSubmit(handleUpdateScheduleInfo)}
+                >
+                  {!isSubmitting ? (
+                    <>
+                      <ArrowsClockwise weight="bold" /> Atualizar horários
+                    </>
+                  ) : (
+                    <Spinner color="#FFF6D8" />
+                  )}
+                </Button>
+              </Section>
+            </Card>
+          </RightColumn>
+        </Main>
+      </Container>
+    </>
   );
 }

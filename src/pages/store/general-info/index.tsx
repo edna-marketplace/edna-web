@@ -31,6 +31,7 @@ import { formatPhoneNumber } from "@/utils/format-phone-number";
 import { updateStoreInfo } from "@/api/update-store-info";
 import { UpdateImages } from "../../../components/UpdateImages";
 import { useRouter } from "next/router";
+import { NextSeo } from "next-seo";
 
 const cnpjRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/;
 const phoneRegex = /^(\(\d{2}\)\s?9\s?\d{4}-\d{4}|\d{2}9\d{8})$/;
@@ -114,148 +115,155 @@ export default function GeneralInfo() {
   }, []);
 
   return (
-    <Container>
-      <Header
-        title="Brechó"
-        description="Essa é a área do perfil do seu brechó, aqui você pode adicionar e alterar informações suas informações."
-      />
+    <>
+      <NextSeo title="Brechó | edna" />
+      <Container>
+        <Header
+          title="Brechó"
+          description="Essa é a área do perfil do seu brechó, aqui você pode adicionar e alterar informações suas informações."
+        />
 
-      <Main>
-        <ProfilePreview />
+        <Main>
+          <ProfilePreview />
 
-        <RightColumn>
-          <Button
-            variant="tertiary"
-            style={{ width: "fit-content" }}
-            onClick={() => router.push("/store")}
-          >
-            <CaretLeft weight="bold" />
-            Voltar
-          </Button>
+          <RightColumn>
+            <Button
+              variant="tertiary"
+              style={{ width: "fit-content" }}
+              onClick={() => router.push("/store")}
+            >
+              <CaretLeft weight="bold" />
+              Voltar
+            </Button>
 
-          <Card>
-            <UpdateImages />
+            <Card>
+              <UpdateImages />
 
-            <Section>
-              <Title size="sm">Informações do brechó</Title>
+              <Section>
+                <Title size="sm">Informações do brechó</Title>
 
-              <form onSubmit={handleSubmit(handleUpdateGeneralInfo)}>
-                <Field>
-                  <Text type="label" size="sm">
-                    Nome
-                  </Text>
-                  <TextInput
-                    placeholder="Nome do seu brechó"
-                    maxLength={50}
-                    {...register("name")}
-                    errorMessage={errors.name?.message}
-                    hasErrorPlaceholder
-                  />
-                </Field>
-
-                <Field>
-                  <Text type="label" size="sm">
-                    E-mail
-                  </Text>
-                  <TextInput
-                    placeholder="E-mail do seu brechó"
-                    {...register("email")}
-                    errorMessage={errors.email?.message}
-                    readOnly
-                    hasErrorPlaceholder
-                  />
-                </Field>
-
-                <Field>
-                  <Text type="label" size="sm">
-                    CNPJ
-                  </Text>
-                  <TextInput
-                    placeholder="CNPJ do seu brechó"
-                    {...register("cnpj")}
-                    errorMessage={errors.cnpj?.message}
-                    readOnly
-                    hasErrorPlaceholder
-                  />
-                </Field>
-
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Field style={{ width: "63%" }}>
+                <form onSubmit={handleSubmit(handleUpdateGeneralInfo)}>
+                  <Field>
                     <Text type="label" size="sm">
-                      Telefone
+                      Nome
                     </Text>
                     <TextInput
-                      placeholder="Telefone do seu brechó"
-                      {...register("phone")}
-                      errorMessage={errors.phone?.message}
+                      placeholder="Nome do seu brechó"
+                      maxLength={50}
+                      {...register("name")}
+                      errorMessage={errors.name?.message}
                       hasErrorPlaceholder
                     />
                   </Field>
 
-                  <Field style={{ width: "35%" }}>
+                  <Field>
                     <Text type="label" size="sm">
-                      Público alvo
+                      E-mail
                     </Text>
-                    <Controller
-                      name="targetCustomer"
-                      control={control}
-                      render={({ field: { onChange, value } }) => (
-                        <SelectInput
-                          placeholder="Selecionar"
-                          value={value}
-                          onValueChange={onChange}
-                          errorMessage={errors.targetCustomer?.message}
-                          hasErrorPlaceholder
-                        >
-                          <SelectItem value="MALE">Moda Masculina</SelectItem>
-                          <SelectItem value="FEMALE">Moda Feminina</SelectItem>
-                          <SelectItem value="ALL">Todos os públicos</SelectItem>
-                        </SelectInput>
-                      )}
+                    <TextInput
+                      placeholder="E-mail do seu brechó"
+                      {...register("email")}
+                      errorMessage={errors.email?.message}
+                      readOnly
+                      hasErrorPlaceholder
                     />
                   </Field>
-                </div>
 
-                <Field>
-                  <Text type="label" size="sm">
-                    Descrição
-                  </Text>
-                  <TextArea
-                    placeholder="Descrição do seu brechó"
-                    maxLength={400}
-                    {...register("description")}
-                  />
-                </Field>
+                  <Field>
+                    <Text type="label" size="sm">
+                      CNPJ
+                    </Text>
+                    <TextInput
+                      placeholder="CNPJ do seu brechó"
+                      {...register("cnpj")}
+                      errorMessage={errors.cnpj?.message}
+                      readOnly
+                      hasErrorPlaceholder
+                    />
+                  </Field>
 
-                <Button
-                  size="sm"
-                  style={{
-                    width: "fit-content",
-                    alignSelf: "end",
-                    marginTop: "20px",
-                  }}
-                  disabled={isSubmitting}
-                >
-                  {!isSubmitting ? (
-                    <>
-                      <ArrowsClockwise weight="bold" /> Atualizar informações
-                    </>
-                  ) : (
-                    <Spinner color="#FFF6D8" />
-                  )}
-                </Button>
-              </form>
-            </Section>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Field style={{ width: "63%" }}>
+                      <Text type="label" size="sm">
+                        Telefone
+                      </Text>
+                      <TextInput
+                        placeholder="Telefone do seu brechó"
+                        {...register("phone")}
+                        errorMessage={errors.phone?.message}
+                        hasErrorPlaceholder
+                      />
+                    </Field>
 
-            <UpdatePassword />
-          </Card>
-        </RightColumn>
-      </Main>
-    </Container>
+                    <Field style={{ width: "35%" }}>
+                      <Text type="label" size="sm">
+                        Público alvo
+                      </Text>
+                      <Controller
+                        name="targetCustomer"
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <SelectInput
+                            placeholder="Selecionar"
+                            value={value}
+                            onValueChange={onChange}
+                            errorMessage={errors.targetCustomer?.message}
+                            hasErrorPlaceholder
+                          >
+                            <SelectItem value="MALE">Moda Masculina</SelectItem>
+                            <SelectItem value="FEMALE">
+                              Moda Feminina
+                            </SelectItem>
+                            <SelectItem value="ALL">
+                              Todos os públicos
+                            </SelectItem>
+                          </SelectInput>
+                        )}
+                      />
+                    </Field>
+                  </div>
+
+                  <Field>
+                    <Text type="label" size="sm">
+                      Descrição
+                    </Text>
+                    <TextArea
+                      placeholder="Descrição do seu brechó"
+                      maxLength={400}
+                      {...register("description")}
+                    />
+                  </Field>
+
+                  <Button
+                    size="sm"
+                    style={{
+                      width: "fit-content",
+                      alignSelf: "end",
+                      marginTop: "20px",
+                    }}
+                    disabled={isSubmitting}
+                  >
+                    {!isSubmitting ? (
+                      <>
+                        <ArrowsClockwise weight="bold" /> Atualizar informações
+                      </>
+                    ) : (
+                      <Spinner color="#FFF6D8" />
+                    )}
+                  </Button>
+                </form>
+              </Section>
+
+              <UpdatePassword />
+            </Card>
+          </RightColumn>
+        </Main>
+      </Container>
+    </>
   );
 }

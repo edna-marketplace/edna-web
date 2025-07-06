@@ -27,6 +27,7 @@ import {
 } from "../../../styles/stores/address-info/styles";
 import { getViaCep } from "@/api/get-via-cep";
 import { updateAddress } from "@/api/update-address";
+import { NextSeo } from "next-seo";
 
 const cepRegex = /^\d{5}-?\d{3}$/;
 
@@ -137,126 +138,129 @@ export default function AddressInfo() {
   }, [cepValue]);
 
   return (
-    <Container>
-      <Header
-        title="Brechó"
-        description="Essa é a área do perfil do seu brechó, aqui você pode adicionar e alterar informações suas informações."
-      />
+    <>
+      <NextSeo title="Brechó | edna" />
+      <Container>
+        <Header
+          title="Brechó"
+          description="Essa é a área do perfil do seu brechó, aqui você pode adicionar e alterar informações suas informações."
+        />
 
-      <Main>
-        <ProfilePreview />
+        <Main>
+          <ProfilePreview />
 
-        <RightColumn>
-          <Button
-            variant="tertiary"
-            style={{ width: "fit-content" }}
-            onClick={() => router.push("/store")}
-          >
-            <CaretLeft weight="bold" />
-            Voltar
-          </Button>
+          <RightColumn>
+            <Button
+              variant="tertiary"
+              style={{ width: "fit-content" }}
+              onClick={() => router.push("/store")}
+            >
+              <CaretLeft weight="bold" />
+              Voltar
+            </Button>
 
-          <Card>
-            <Section>
-              <Title size="sm" style={{ marginBottom: "16px" }}>
-                Endereço
-              </Title>
+            <Card>
+              <Section>
+                <Title size="sm" style={{ marginBottom: "16px" }}>
+                  Endereço
+                </Title>
 
-              <form onSubmit={handleSubmit(handleUpdateAddressInfo)}>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "12px",
-                  }}
-                >
+                <form onSubmit={handleSubmit(handleUpdateAddressInfo)}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "12px",
+                    }}
+                  >
+                    <Field>
+                      <Text type="label" size="sm">
+                        CEP
+                      </Text>
+                      <TextInput
+                        placeholder="CEP seu brechó"
+                        maxLength={9}
+                        {...register("cep")}
+                        errorMessage={errors.cep?.message}
+                        hasErrorPlaceholder
+                      />
+                    </Field>
+
+                    <Field>
+                      <Text type="label" size="sm">
+                        Número
+                      </Text>
+                      <TextInput
+                        placeholder="Número do seu brechó"
+                        maxLength={6}
+                        {...register("number")}
+                        errorMessage={errors.number?.message}
+                        hasErrorPlaceholder
+                      />
+                    </Field>
+                  </div>
+
                   <Field>
                     <Text type="label" size="sm">
-                      CEP
+                      Rua
                     </Text>
                     <TextInput
-                      placeholder="CEP seu brechó"
-                      maxLength={9}
-                      {...register("cep")}
-                      errorMessage={errors.cep?.message}
+                      placeholder="Rua do seu brechó"
+                      maxLength={50}
+                      {...register("street")}
+                      errorMessage={errors.street?.message}
+                      readOnly
                       hasErrorPlaceholder
                     />
                   </Field>
 
                   <Field>
                     <Text type="label" size="sm">
-                      Número
+                      Bairro
                     </Text>
                     <TextInput
-                      placeholder="Número do seu brechó"
-                      maxLength={6}
-                      {...register("number")}
-                      errorMessage={errors.number?.message}
+                      placeholder="Bairro do seu brechó"
+                      {...register("neighborhood")}
+                      errorMessage={errors.neighborhood?.message}
+                      readOnly
                       hasErrorPlaceholder
                     />
                   </Field>
-                </div>
 
-                <Field>
-                  <Text type="label" size="sm">
-                    Rua
-                  </Text>
-                  <TextInput
-                    placeholder="Rua do seu brechó"
-                    maxLength={50}
-                    {...register("street")}
-                    errorMessage={errors.street?.message}
-                    readOnly
-                    hasErrorPlaceholder
-                  />
-                </Field>
+                  <Field>
+                    <Text type="label" size="sm">
+                      Cidade
+                    </Text>
+                    <TextInput
+                      placeholder="Cidade do seu brechó"
+                      {...register("city")}
+                      errorMessage={errors.city?.message}
+                      readOnly
+                      hasErrorPlaceholder
+                    />
+                  </Field>
 
-                <Field>
-                  <Text type="label" size="sm">
-                    Bairro
-                  </Text>
-                  <TextInput
-                    placeholder="Bairro do seu brechó"
-                    {...register("neighborhood")}
-                    errorMessage={errors.neighborhood?.message}
-                    readOnly
-                    hasErrorPlaceholder
-                  />
-                </Field>
-
-                <Field>
-                  <Text type="label" size="sm">
-                    Cidade
-                  </Text>
-                  <TextInput
-                    placeholder="Cidade do seu brechó"
-                    {...register("city")}
-                    errorMessage={errors.city?.message}
-                    readOnly
-                    hasErrorPlaceholder
-                  />
-                </Field>
-
-                <Button
-                  size="sm"
-                  style={{
-                    width: "fit-content",
-                    alignSelf: "end",
-                  }}
-                  disabled={isSubmitting || Object.keys(errors).length > 0}
-                >
-                  {!isSubmitting ? (
-                    <>
-                      <ArrowsClockwise weight="bold" /> Atualizar endereço
-                    </>
-                  ) : (
-                    <Spinner color="#FFF6D8" />
-                  )}
-                </Button>
-              </form>
-            </Section>
-          </Card>
-        </RightColumn>
-      </Main>
-    </Container>
+                  <Button
+                    size="sm"
+                    style={{
+                      width: "fit-content",
+                      alignSelf: "end",
+                    }}
+                    disabled={isSubmitting || Object.keys(errors).length > 0}
+                  >
+                    {!isSubmitting ? (
+                      <>
+                        <ArrowsClockwise weight="bold" /> Atualizar endereço
+                      </>
+                    ) : (
+                      <Spinner color="#FFF6D8" />
+                    )}
+                  </Button>
+                </form>
+              </Section>
+            </Card>
+          </RightColumn>
+        </Main>
+      </Container>
+    </>
   );
 }

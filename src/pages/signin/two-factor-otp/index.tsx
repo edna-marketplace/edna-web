@@ -18,6 +18,7 @@ import {
 } from "../../../styles/signin/two-factor-otp/styles";
 import { useSignIn } from "@/hooks/use-signin";
 import { twoFactorAuth } from "@/api/two-factor-auth";
+import { NextSeo } from "next-seo";
 
 const twoFactorOTPSchema = z.object({
   otp: z.string().min(6, "Preencha o código de verificação OTP"),
@@ -51,43 +52,47 @@ export default function TwoFactorOTP() {
   }
 
   return (
-    <Container>
-      <Heading>
-        <SpecialTitle>Verificação de Dois Fatores</SpecialTitle>
-        <Text>
-          A autenticação com dois fatores aumenta a segurança da plataforma!
-        </Text>
-      </Heading>
+    <>
+      <NextSeo title="Dois fatores | edna" />
 
-      <TwoFactorOTPForm>
-        <WarningContainer>
-          <Text weight="regular">
-            Foi enviado um e-mail para você com um código OTP, por favor insira
-            esse código no campo abaixo.
+      <Container>
+        <Heading>
+          <SpecialTitle>Verificação de Dois Fatores</SpecialTitle>
+          <Text>
+            A autenticação com dois fatores aumenta a segurança da plataforma!
           </Text>
-        </WarningContainer>
+        </Heading>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            Código OTP
-          </Text>
-          <TextInput
-            placeholder="OTP"
-            maxLength={6}
-            errorMessage={errors.otp?.message}
-            hasErrorPlaceholder
-            {...register("otp")}
-          />
-        </InputContainer>
+        <TwoFactorOTPForm>
+          <WarningContainer>
+            <Text weight="regular">
+              Foi enviado um e-mail para você com um código OTP, por favor
+              insira esse código no campo abaixo.
+            </Text>
+          </WarningContainer>
 
-        <Button
-          disabled={isSubmitting}
-          onClick={handleSubmit(handleTwoFactorAuth)}
-          style={{ width: "100%" }}
-        >
-          {!isSubmitting ? "Entrar" : <Spinner color="#FFF6D8" />}
-        </Button>
-      </TwoFactorOTPForm>
-    </Container>
+          <InputContainer>
+            <Text type="label" size="xs">
+              Código OTP
+            </Text>
+            <TextInput
+              placeholder="OTP"
+              maxLength={6}
+              errorMessage={errors.otp?.message}
+              hasErrorPlaceholder
+              {...register("otp")}
+            />
+          </InputContainer>
+
+          <Button
+            disabled={isSubmitting}
+            onClick={handleSubmit(handleTwoFactorAuth)}
+            style={{ width: "100%" }}
+          >
+            {!isSubmitting ? "Entrar" : <Spinner color="#FFF6D8" />}
+          </Button>
+        </TwoFactorOTPForm>
+      </Container>
+    </>
   );
 }

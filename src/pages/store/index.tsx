@@ -21,6 +21,7 @@ import Swal from "sweetalert2";
 import { destroyCookie } from "nookies";
 import { toast } from "sonner";
 import { deleteStore } from "@/api/deactivate-store";
+import { NextSeo } from "next-seo";
 
 export default function Store() {
   const router = useRouter();
@@ -60,73 +61,76 @@ export default function Store() {
   }
 
   return (
-    <Container>
-      <Header
-        title="Brechó"
-        description="Essa é a área do perfil do seu brechó, aqui você pode adicionar e alterar informações suas informações."
-      />
+    <>
+      <NextSeo title="Brechó | edna" />
+      <Container>
+        <Header
+          title="Brechó"
+          description="Essa é a área do perfil do seu brechó, aqui você pode adicionar e alterar informações suas informações."
+        />
 
-      <Main>
-        <ProfilePreview />
+        <Main>
+          <ProfilePreview />
 
-        <RightColumn>
-          <EditInfoButton onClick={() => router.push("/store/general-info")}>
-            <div>
-              <IdentificationCard size={28} color="#4F4C42" />
-
+          <RightColumn>
+            <EditInfoButton onClick={() => router.push("/store/general-info")}>
               <div>
-                <Title size="sm">Informações gerais</Title>
-                <Text size="sm">Informações da loja, imagens e senha</Text>
+                <IdentificationCard size={28} color="#4F4C42" />
+
+                <div>
+                  <Title size="sm">Informações gerais</Title>
+                  <Text size="sm">Informações da loja, imagens e senha</Text>
+                </div>
               </div>
-            </div>
 
-            <CaretRight size={30} color="#4F4C42" />
-          </EditInfoButton>
+              <CaretRight size={30} color="#4F4C42" />
+            </EditInfoButton>
 
-          <EditInfoButton onClick={() => router.push("/store/address-info")}>
-            <div>
-              <MapPin size={28} color="#4F4C42" />
-
+            <EditInfoButton onClick={() => router.push("/store/address-info")}>
               <div>
-                <Title size="sm">Endereço</Title>
-                <Text size="sm">Número, CEP, rua, bairro e cidade</Text>
+                <MapPin size={28} color="#4F4C42" />
+
+                <div>
+                  <Title size="sm">Endereço</Title>
+                  <Text size="sm">Número, CEP, rua, bairro e cidade</Text>
+                </div>
               </div>
-            </div>
 
-            <CaretRight size={30} color="#4F4C42" />
-          </EditInfoButton>
+              <CaretRight size={30} color="#4F4C42" />
+            </EditInfoButton>
 
-          <EditInfoButton onClick={() => router.push("/store/schedule-info")}>
-            <div>
-              <Clock size={28} color="#4F4C42" />
-
+            <EditInfoButton onClick={() => router.push("/store/schedule-info")}>
               <div>
-                <Title size="sm">Horário de atendimento</Title>
-                <Text size="sm">Dias e horários de funcionamento</Text>
+                <Clock size={28} color="#4F4C42" />
+
+                <div>
+                  <Title size="sm">Horário de atendimento</Title>
+                  <Text size="sm">Dias e horários de funcionamento</Text>
+                </div>
               </div>
-            </div>
 
-            <CaretRight size={30} color="#4F4C42" />
-          </EditInfoButton>
+              <CaretRight size={30} color="#4F4C42" />
+            </EditInfoButton>
 
-          <DeactivateAccountButton onClick={handleDeactivateAccount}>
-            <div>
-              <Skull size={28} color="red" />
-
+            <DeactivateAccountButton onClick={handleDeactivateAccount}>
               <div>
-                <Title size="sm" style={{ color: "red" }}>
-                  Desativar conta
-                </Title>
-                <Text size="sm" style={{ color: "red" }}>
-                  Ao fazer isso você não poderá recuperar sua conta
-                </Text>
-              </div>
-            </div>
+                <Skull size={28} color="red" />
 
-            <CaretRight size={30} color="red" />
-          </DeactivateAccountButton>
-        </RightColumn>
-      </Main>
-    </Container>
+                <div>
+                  <Title size="sm" style={{ color: "red" }}>
+                    Desativar conta
+                  </Title>
+                  <Text size="sm" style={{ color: "red" }}>
+                    Ao fazer isso você não poderá recuperar sua conta
+                  </Text>
+                </div>
+              </div>
+
+              <CaretRight size={30} color="red" />
+            </DeactivateAccountButton>
+          </RightColumn>
+        </Main>
+      </Container>
+    </>
   );
 }

@@ -17,6 +17,7 @@ import {
   WarningContainer,
 } from "../../../styles/signin/password-recovery/styles";
 import { sendNewPassword } from "@/api/send-new-password";
+import { NextSeo } from "next-seo";
 
 const passwordRecoverySchema = z.object({
   email: z
@@ -55,49 +56,52 @@ export default function PasswordRecovery() {
   }
 
   return (
-    <Container>
-      <Heading>
-        <SpecialTitle>Recuperação de senha</SpecialTitle>
-        <Text>Esqueceu sua senha? Não se preocupe, enviaremos uma nova!</Text>
-      </Heading>
+    <>
+      <NextSeo title="Recuperação de senha | edna" />
+      <Container>
+        <Heading>
+          <SpecialTitle>Recuperação de senha</SpecialTitle>
+          <Text>Esqueceu sua senha? Não se preocupe, enviaremos uma nova!</Text>
+        </Heading>
 
-      <PasswordRecoveryForm>
-        <WarningContainer>
-          <Text weight="regular">
-            Após você inserir seu e-mail e clicar no botão "Enviar senha",
-            enviaremos um e-mail contendo sua nova senha.
-          </Text>
-        </WarningContainer>
+        <PasswordRecoveryForm>
+          <WarningContainer>
+            <Text weight="regular">
+              Após você inserir seu e-mail e clicar no botão "Enviar senha",
+              enviaremos um e-mail contendo sua nova senha.
+            </Text>
+          </WarningContainer>
 
-        <InputContainer>
-          <Text type="label" size="xs">
-            E-mail
-          </Text>
-          <TextInput
-            placeholder="Seu email"
-            errorMessage={errors.email?.message}
-            hasErrorPlaceholder
-            {...register("email")}
-          />
-        </InputContainer>
+          <InputContainer>
+            <Text type="label" size="xs">
+              E-mail
+            </Text>
+            <TextInput
+              placeholder="Seu email"
+              errorMessage={errors.email?.message}
+              hasErrorPlaceholder
+              {...register("email")}
+            />
+          </InputContainer>
 
-        <ButtonContainer>
-          <Button
-            type="button"
-            variant="tertiary"
-            onClick={() => router.push("/signin")}
-            disabled={isSubmitting}
-          >
-            Fazer login
-          </Button>
-          <Button
-            disabled={isSubmitting}
-            onClick={handleSubmit(handleSendNewPasswordEmail)}
-          >
-            {!isSubmitting ? "Enviar senha" : <Spinner color="#FFF6D8" />}
-          </Button>
-        </ButtonContainer>
-      </PasswordRecoveryForm>
-    </Container>
+          <ButtonContainer>
+            <Button
+              type="button"
+              variant="tertiary"
+              onClick={() => router.push("/signin")}
+              disabled={isSubmitting}
+            >
+              Fazer login
+            </Button>
+            <Button
+              disabled={isSubmitting}
+              onClick={handleSubmit(handleSendNewPasswordEmail)}
+            >
+              {!isSubmitting ? "Enviar senha" : <Spinner color="#FFF6D8" />}
+            </Button>
+          </ButtonContainer>
+        </PasswordRecoveryForm>
+      </Container>
+    </>
   );
 }
