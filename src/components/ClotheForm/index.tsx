@@ -33,6 +33,7 @@ export const ClotheFormSchema = z.object({
   priceInCents: z
     .number({ message: "O valor é obrigatório." })
     .min(10, { message: "O valor mínimo é R$ 10,00." })
+    .max(20000000, { message: "O máximo é R$ 20.000.000,00" })
     .transform((val) => Math.round(val * 100)),
   category: z.enum(categories, { message: "Selecione uma categoria." }),
   categoryOther: z.string().optional().nullable(),
@@ -47,12 +48,14 @@ export const ClotheFormSchema = z.object({
   color: z.string().min(1, { message: "A cor é obrigatória." }),
   height: z
     .number()
+    .max(999, "O valor máximo é 999")
     .optional()
     .nullable()
     .or(z.nan().transform(() => undefined))
     .or(z.null().transform(() => undefined)),
   width: z
     .number()
+    .max(999, "O valor máximo é 999")
     .optional()
     .nullable()
     .or(z.nan().transform(() => undefined))
@@ -250,7 +253,7 @@ export function ClotheForm() {
             <Text type="label">Nome da peça*</Text>
             <TextInput
               placeholder="Nome da peça"
-              maxLength={60}
+              maxLength={84}
               errorMessage={errors.name?.message}
               hasErrorPlaceholder
               {...register("name")}
@@ -307,6 +310,7 @@ export function ClotheForm() {
             <Text type="label">Comprimento</Text>
             <TextInput
               suffix="cm"
+              maxLength={3}
               placeholder="0"
               step={1}
               type="number"
@@ -321,6 +325,7 @@ export function ClotheForm() {
             <Text type="label">Largura</Text>
             <TextInput
               suffix="cm"
+              maxLength={3}
               placeholder="0"
               step={1}
               type="number"
@@ -336,6 +341,7 @@ export function ClotheForm() {
         <Text type="label">Descrição</Text>
         <TextArea
           css={{ flex: 1 }}
+          maxLength={600}
           placeholder="Descrição"
           {...register("description")}
         />

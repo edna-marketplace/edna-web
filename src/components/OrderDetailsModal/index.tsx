@@ -13,8 +13,7 @@ import {
   SizeGenderBrandContainer,
 } from "./styles";
 import { useEffect, useState } from "react";
-import { GetOrderByIdResponse } from "@/api/get-clothe-by-id";
-import { getOrderById } from "@/api/get-order-by-id";
+import { getOrderById, GetOrderByIdResponse } from "@/api/get-order-by-id";
 import { Spinner } from "../Spinner";
 import { formatPhoneNumber } from "@/utils/format-phone-number";
 import {

@@ -100,6 +100,7 @@ export function ProductDetails({
           </Text>
           <TextInput
             placeholder="Categoria (Outra)"
+            maxLength={40}
             {...register("categoryOther")}
           />
         </InputContainer>
@@ -167,6 +168,7 @@ export function ProductDetails({
             <Text type="label">Marca (Outro)</Text>
             <TextInput
               placeholder="Marca (Outra)"
+              maxLength={54}
               {...register("brandOther")}
             />
           </InputContainer>
@@ -178,6 +180,7 @@ export function ProductDetails({
             <Text type="label">Tamanho (Outro)</Text>
             <TextInput
               placeholder="Tamanho (Outro)"
+              maxLength={11}
               {...register("sizeOther")}
             />
           </InputContainer>
@@ -191,6 +194,7 @@ export function ProductDetails({
           <Text type="label">Tecido*</Text>
           <TextInput
             placeholder="Tecido"
+            maxLength={36}
             errorMessage={errors.fabric?.message}
             hasErrorPlaceholder
             {...register("fabric")}
@@ -201,6 +205,7 @@ export function ProductDetails({
           <Text type="label">Cor*</Text>
           <TextInput
             placeholder="Cor"
+            maxLength={27}
             errorMessage={errors.color?.message}
             hasErrorPlaceholder
             {...register("color")}

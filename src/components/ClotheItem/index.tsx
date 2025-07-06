@@ -1,19 +1,22 @@
-import { Title } from '@/components/@ui/Title'
-import { ComponentProps } from 'react'
-import { ClotheImage, Container, Dot, InfoContainer } from './styles'
-import { ClotheSummary } from '@/api/fetch-clothes-with-filter'
-import { brandDisplayNames, sizeDisplayNames } from '@/utils/select-input-mapper'
+import { Title } from "@/components/@ui/Title";
+import { ComponentProps } from "react";
+import { ClotheImage, Container, Dot, InfoContainer } from "./styles";
+import { ClotheSummary } from "@/api/fetch-clothes-with-filter";
+import {
+  brandDisplayNames,
+  sizeDisplayNames,
+} from "@/utils/select-input-mapper";
 
 type ClotheItemProps = ComponentProps<typeof Container> & {
-  clothe: ClotheSummary
-}
+  clothe: ClotheSummary;
+};
 
 export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
-
   function getBrandDisplayName(clothe: ClotheSummary) {
-    let brandName = clothe.brand === 'OTHER'
-      ? (clothe.brandOther || brandDisplayNames.OTHER)
-      : brandDisplayNames[clothe.brand];
+    let brandName =
+      clothe.brand === "OTHER"
+        ? clothe.brandOther || brandDisplayNames.OTHER
+        : brandDisplayNames[clothe.brand];
 
     if (brandName.length > 10) {
       return `${brandName.slice(0, 7)}...`;
@@ -23,12 +26,13 @@ export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
   }
 
   function getSizeDisplayName(clothe: ClotheSummary) {
-    let size = clothe.size === 'OTHER'
-      ? (clothe.sizeOther || sizeDisplayNames.OTHER)
-      : sizeDisplayNames[clothe.size];
+    let size =
+      clothe.size === "OTHER"
+        ? clothe.sizeOther || sizeDisplayNames.OTHER
+        : sizeDisplayNames[clothe.size];
 
     if (size.length > 8) {
-      return `${size.slice(0, 7)}...`;
+      return `${size.slice(0, 6)}...`;
     }
 
     return size;
@@ -37,10 +41,10 @@ export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
   return (
     <Container {...props}>
       <ClotheImage src={clothe.imageURL} alt="" width={170} height={170} />
-      <Title className='price' size="sm">
-        {(clothe.priceInCents / 100).toLocaleString('pt-br', {
-          style: 'currency',
-          currency: 'BRL',
+      <Title className="price" size="sm">
+        {(clothe.priceInCents / 100).toLocaleString("pt-br", {
+          style: "currency",
+          currency: "BRL",
         })}
       </Title>
 
@@ -60,5 +64,5 @@ export function ClotheItem({ clothe, ...props }: ClotheItemProps) {
         </Title>
       </InfoContainer>
     </Container>
-  )
+  );
 }
