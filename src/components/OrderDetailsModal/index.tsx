@@ -65,8 +65,8 @@ export function OrderDetailsModal({ orderId }: OrderDetailsModalProps) {
         ? sizeOther || sizeDisplayNames.OTHER
         : sizeDisplayNames[size];
 
-    if (size.length > 8) {
-      return `${size.slice(0, 7)}...`;
+    if (sizeName.length > 8) {
+      return `${sizeName.slice(0, 7)}...`;
     }
 
     return sizeName;
@@ -95,9 +95,8 @@ export function OrderDetailsModal({ orderId }: OrderDetailsModalProps) {
                 <Dialog.Title
                   style={{
                     maxWidth: "400px",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
+                    wordBreak: "break-all",
+                    display: "inline-block",
                   }}
                 >
                   {orderDetails.clotheName}
@@ -126,9 +125,8 @@ export function OrderDetailsModal({ orderId }: OrderDetailsModalProps) {
                 <Text
                   css={{
                     maxWidth: "330px",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
+                    wordBreak: "break-all",
+                    display: "inline-block",
                   }}
                 >
                   {orderDetails.customerName}
@@ -145,9 +143,8 @@ export function OrderDetailsModal({ orderId }: OrderDetailsModalProps) {
                 <Text
                   css={{
                     maxWidth: "330px",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
+                    wordBreak: "break-all",
+                    display: "inline-block",
                   }}
                 >
                   {orderDetails.customerEmail}
@@ -162,9 +159,8 @@ export function OrderDetailsModal({ orderId }: OrderDetailsModalProps) {
                   <Text
                     style={{
                       maxWidth: "400px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      wordBreak: "break-all",
+                      display: "inline-block",
                     }}
                   >
                     {orderDetails.clotheName}

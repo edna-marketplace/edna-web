@@ -20,6 +20,16 @@ export const Content = styled(Dialog.Content, {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+
+  "@md": {
+    minWidth: "24rem",
+    padding: "$4",
+  },
+
+  "@sm": {
+    minWidth: "20rem",
+    padding: "$2",
+  },
 });
 
 export const Header = styled("div", {
@@ -44,6 +54,14 @@ export const CustomerInfoContainer = styled("div", {
     "&:not(:last-child)": {
       borderBottom: "1px solid $base500",
     },
+  },
+
+  "@md": {
+    gap: "$3",
+  },
+
+  "@sm": {
+    gap: "$2",
   },
 });
 
