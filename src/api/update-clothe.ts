@@ -24,6 +24,7 @@ export async function updateClothe({
     priceInCents,
     description,
     category,
+    categoryOther,
     gender,
     brand,
     brandOther,
